@@ -96,7 +96,6 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       if (firebase.auth().currentUser) {
         this.mAuth.auth.signOut();
-        // this.router.navigate(['/login']);
         resolve(true);
       } else {
         reject(false);

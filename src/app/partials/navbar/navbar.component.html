@@ -4,8 +4,7 @@
       <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-      data-target="navbarBasicExample">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -15,12 +14,12 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a routerLink="/" class="navbar-item">
+
+      <a routerLink="/" (click)="userStatus()" class="navbar-item">
         Home
       </a>
-
-      <a (click)="userStatus()" class="navbar-item">
-        Documentation
+      <a routerLink="/user" class="navbar-item">
+        User
       </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
@@ -49,17 +48,18 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-            <a routerLink="/register" class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a routerLink="/login" class="button is-light">
-              Log in
-            </a>
-            <a *ngIf="user" (click)="tryLogout()" class="button is-light">
-              Log out
-            </a>
+          <a *ngIf="!user" routerLink="/register" class="button is-primary">
+            <strong>Sign up</strong>
+          </a>
+          <a *ngIf="!user" routerLink="/login" class="button is-light">
+            Log in
+          </a>
+          <a *ngIf="user" (click)="tryLogout()" class="button is-primary">
+            Log out
+          </a>
         </div>
       </div>
     </div>
   </div>
 </nav>
+<div class="pageloader" [class.is-active]="activePreload"><span class="title">Pageloader</span></div>

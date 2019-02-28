@@ -4,26 +4,26 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
   user: any;
+  activePreload = true;
 
   constructor(
     public authService: AuthService,
     public mAuth: AngularFireAuth,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    // this.isLoggedIn();
     this.authService.getAuthState().subscribe(user => {
       console.log('subscribe', user);
       this.user = user;
+      this.activePreload = false;
     });
   }
 
@@ -35,12 +35,12 @@ export class NavbarComponent implements OnInit {
   }
 
   tryLogout() {
-    this.authService.doLogout()
-      .then(res => {
-        console.log('tryLogout', res);
-        setTimeout(() => {
-          this.router.navigate(['/register']);
-        }, 1);
-      }, err => console.log(err));
+    this.authService.doLogout().then(
+      res => {
+        // not needed: handled in user.service
+        // this.router.navigate(['/login']);
+      },
+      err => console.log(err)
+    );
   }
 }
