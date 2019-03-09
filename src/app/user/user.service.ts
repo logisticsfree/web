@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../core/auth.service';
 import { Router } from '@angular/router';
 import { FirebaseFirestore } from '@angular/fire';
 import { AngularFirestore } from '@angular/fire/firestore';

@@ -15,10 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './partials/navbar/navbar.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './core/login/login.component';
+import { RegisterComponent } from './core/register/register.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { UserComponent } from './user/user.component';
+import { AuthService } from './core/auth.service';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,10 @@ import { UserComponent } from './user/user.component';
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    NgxSpinnerModule
+    // AngularFirestoreModule,
+    // AngularFireAuthModule,
+    NgxSpinnerModule,
+    CoreModule
   ],
   providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent]
