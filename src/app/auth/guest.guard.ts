@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot
+  RouterStateSnapshot,
+  Router
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take, map, tap } from 'rxjs/operators';
@@ -15,8 +16,17 @@ import { UserService } from '../user/user.service';
 export class GuestGuard implements CanActivate {
   constructor(
     private authService: AuthService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private router: Router
+  ) {
+    this.authService.getAuthState().subscribe(user => {
+      if (user) {
+        // TODO: solve the issue
+        this.router.navigate(['/user']);
+        console.log('gues.guard', user);
+      }
+    });
+  }
 
   canActivate() {
     // if (this.userService.getUser()) {
