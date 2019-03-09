@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +16,17 @@ export class LoginComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
     this.createForm();
     console.log(this.email.errors);
+  }
+
+  clearErrors() {
+    this.errorMessage = '';
   }
 
   createForm() {
@@ -32,14 +38,23 @@ export class LoginComponent implements OnInit {
 
   tryLogin(value) {
     console.log(this);
-    // return;
+    this.spinner.show();
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.authService.doLogin(value).then(
       res => {
+        this.spinner.hide();
+
+        // TODO: solve the issue
         this.router.navigate(['/user']);
-        console.log(res);
+        console.log('tryLogin', res);
       },
       err => {
-        console.log(err);
+        this.spinner.hide();
+        console.log('loginError', err);
         this.errorMessage = err.message;
       }
     );

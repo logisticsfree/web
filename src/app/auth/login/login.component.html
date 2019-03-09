@@ -1,7 +1,7 @@
 <div class="container" style="margin-top:3em; min-height: 80vh;">
   <div class="columns is-centered">
-    <form [formGroup]="loginForm" class="is-half column">
 
+    <form [formGroup]="loginForm" class="is-half column">
       <div class="field">
         <label class="label">Email</label>
         <div class="control has-icons-left has-icons-right">
@@ -19,6 +19,7 @@
         </div>
         <div *ngIf="email.invalid && (email.dirty || email.touched)">
           <p *ngIf="email.errors.required" class="help is-danger">Please enter a Email</p>
+          <p *ngIf="email.errors.email" class="help is-danger">Email is invalid</p>
         </div>
       </div>
 
@@ -39,16 +40,21 @@
         </div>
         <div *ngIf="password.invalid && (password.dirty || password.touched)">
           <p *ngIf="password.errors.required" class="help is-danger">Please enter a password</p>
+          <p *ngIf="password.errors.minlength" class="help is-danger">Password too short</p>
         </div>
       </div>
 
       <div class="field is-grouped">
         <div class="control">
-          <button (click)="tryLogin(loginForm.value)" class="button is-success">Signin</button>
+          <button [disabled]="!loginForm.valid" (click)="tryLogin(loginForm.value)" class="button is-primary">Signin</button>
         </div>
         <div class="control">
           <button class="button is-text" routerLink="/register">New to site? <a style="margin-left:.5em;">Signup</a></button>
         </div>
+      </div>
+      <div *ngIf="errorMessage" class="notification is-danger">
+        <button class="delete" (click)="clearErrors()"></button>
+        {{ errorMessage }}
       </div>
     </form>
   </div>

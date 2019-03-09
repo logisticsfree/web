@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 
-import { of } from 'rxjs';
-import { UserService } from '../user/user.service';
+// import { of } from 'rxjs';
+import { take, map } from 'rxjs/operators';
+// import { UserService } from '../user/user.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +12,25 @@ import { UserService } from '../user/user.service';
 export class AuthGuard implements CanActivate {
   constructor(
     // public mAuth: AngularFireAuth,
-    // public authService: AuthService
-    public userService: UserService
+    // public userService: UserService
+    public authService: AuthService
   ) {}
 
   canActivate() {
-    if (this.userService.getUser()) {
-      // this.authService.router.
-      return of(true);
-    } else {
-      return of(false);
-    }
+    // return true;
+    const a = this.authService.getAuthState().pipe(
+      take(1),
+      map(user => !user)
+    );
+    console.log(a);
+    return a;
+
+    // if (this.userService.getUser()) {
+    //   // this.authService.router.
+    //   return of(true);
+    // } else {
+    //   return of(false);
+    // }
     // return this.authService.getAuthState().pipe(
     //   take(1),
     //   map(user => !user)

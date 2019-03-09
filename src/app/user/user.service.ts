@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { FirebaseFirestore } from '@angular/fire';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +11,25 @@ import { Router } from '@angular/router';
 export class UserService {
   user: firebase.User;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.authService.getAuthState().subscribe(user => {
-      this.user = user;
-
-      if (!user) {
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+  constructor(
+    // private authService: AuthService,
+    private router: Router,
+    private db: AngularFirestore
+  ) {}
 
   getUser() {
     return this.user;
+  }
+
+  addUser(id, formValues) {
+    this.db
+      .collection('users')
+      .doc(id)
+      .set({
+        fname: formValues.fname,
+        lname: formValues.lname,
+        phone: formValues.phone
+      });
   }
 
   getCurrentUser() {

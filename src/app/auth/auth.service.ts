@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { UserService } from '../user/user.service';
 
 interface User {
   uid: string;
@@ -17,17 +18,24 @@ interface User {
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
-
   authState: any;
   user: Observable<User>;
 
   constructor(
     public db: AngularFirestore,
     public mAuth: AngularFireAuth,
+    private userService: UserService,
     public router: Router
   ) {
+    // TODO : remove this
+    // redirect to login if logged out
+    this.getAuthState().subscribe(user => {
+      // this.user = user;
+      if (!user) {
+        this.router.navigate(['/login']);
+      }
+    });
     // this.mAuth.authState.subscribe((auth) => {
     //   console.log('construct auth', auth);
     //   this.authState = auth;
@@ -63,32 +71,45 @@ export class AuthService {
       const provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope('profile');
       provider.addScope('email');
-      this.mAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
+      this.mAuth.auth.signInWithPopup(provider).then(
+        res => {
           resolve(res);
-        }, err => {
+        },
+        err => {
           console.log(err);
           reject(err);
-        });
+        }
+      );
     });
   }
 
-  doRegister(value) {
+  doRegister(formValues) {
     return new Promise<any>((resolve, reject) => {
-      firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-        .then(res => {
-          resolve(res);
-        }, err => reject(err));
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(formValues.email, formValues.password)
+        .then(
+          res => {
+            this.userService.addUser(res.user.uid, formValues);
+            // console.log('doRegister', formValue);
+            resolve(res);
+          },
+          err => reject(err)
+        );
     });
   }
 
   doLogin(value) {
     return new Promise<any>((resolve, reject) => {
-      firebase.auth().signInWithEmailAndPassword(value.email, value.password)
-        .then(res => {
-          resolve(res);
-        }, err => reject(err));
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(value.email, value.password)
+        .then(
+          res => {
+            resolve(res);
+          },
+          err => reject(err)
+        );
     });
   }
 

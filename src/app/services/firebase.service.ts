@@ -5,10 +5,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class FirebaseService {
-
-  constructor(public db: AngularFirestore) { }
+  constructor(public db: AngularFirestore) {}
 
   getUsers() {
-    return  this.db.collection('users').valueChanges();
+    return this.db.collection('users').valueChanges();
   }
 }
