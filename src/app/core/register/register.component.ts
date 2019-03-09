@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../core/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.spinner.show();
-    this.authService.doRegister(formValues).then(
+    this.authService.signIn(formValues).then(
       res => {
         this.spinner.hide();
         this.router.navigate(['/user']);
