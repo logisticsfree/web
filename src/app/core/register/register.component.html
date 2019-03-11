@@ -3,7 +3,7 @@
     <form [formGroup]="registerForm" class="is-three-quarters column">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
-          <label class="label">Name</label>
+          <label class="label">Company Name</label>
         </div>
         <div class="field-body">
           <div class="field">
@@ -56,6 +56,7 @@
                 </a>
               </p>
               <p class="control is-expanded has-icons-right has-icons-left">
+
                 <input formControlName="phone" class="input" type="tel" autocomplete="tel-local" [class.is-danger]="phone.errors"
                   placeholder="Your phone number">
                 <span class="icon is-small is-right" *ngIf="phone.errors">
