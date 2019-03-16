@@ -10,6 +10,7 @@ import { GuestGuard } from './core/guest.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  
   { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },

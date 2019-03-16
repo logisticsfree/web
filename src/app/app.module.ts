@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { AgmCoreModule } from '@agm/core';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import {
@@ -30,7 +30,8 @@ import { CoreModule } from './core/core.module';
     LoginComponent,
     RegisterComponent,
     FooterComponent,
-    UserComponent
+    UserComponent,
+   
   ],
   imports: [
     BrowserModule,
