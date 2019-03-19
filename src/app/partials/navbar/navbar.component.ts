@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   user: any;
   activePreload = true;
   activeNavbar = false;
+  routerLinkOptions = { exact: true };
 
   constructor(
     public authService: AuthService,

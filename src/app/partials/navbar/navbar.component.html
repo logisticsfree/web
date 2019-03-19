@@ -16,10 +16,11 @@
   <div id="navbarBasicExample" [class.is-active]="activeNavbar" class="navbar-menu">
     <div class="navbar-start">
 
-      <a routerLink="/" (click)="userStatus()" class="navbar-item">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="routerLinkOptions" (click)="userStatus()"
+        class="navbar-item">
         Home
       </a>
-      <a routerLink="/user" class="navbar-item">
+      <a routerLink="/user" routerLinkActive="is-active" class="navbar-item">
         User
       </a>
 
