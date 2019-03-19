@@ -1,10 +1,11 @@
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" routerLink="/">
-      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+      <h1>LogsFree</h1>
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" (click)="toggleNavbar()" [class.is-active]="activeNavbar" class="navbar-burger burger" aria-label="menu"
+      aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -12,13 +13,14 @@
   </div>
   <!-- <div *ngIf="authService.user | async; then authenticated else guest"></div> -->
 
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div id="navbarBasicExample" [class.is-active]="activeNavbar" class="navbar-menu">
     <div class="navbar-start">
 
-      <a routerLink="/" (click)="userStatus()" class="navbar-item">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="routerLinkOptions" (click)="userStatus()"
+        class="navbar-item">
         Home
       </a>
-      <a routerLink="/user" class="navbar-item">
+      <a routerLink="/user" routerLinkActive="is-active" class="navbar-item">
         User
       </a>
 

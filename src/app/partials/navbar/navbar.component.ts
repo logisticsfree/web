@@ -12,6 +12,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class NavbarComponent implements OnInit {
   user: any;
   activePreload = true;
+  activeNavbar = false;
+  routerLinkOptions = { exact: true };
 
   constructor(
     public authService: AuthService,
@@ -33,6 +35,9 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  toggleNavbar() {
+    this.activeNavbar = !this.activeNavbar;
+  }
   tryLogout() {
     this.authService.signOut();
   }
