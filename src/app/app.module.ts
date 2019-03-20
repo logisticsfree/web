@@ -22,6 +22,7 @@ import { UserComponent } from './user/user.component';
 import { AuthService } from './core/auth.service';
 import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     RegisterComponent,
     FooterComponent,
     UserComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
