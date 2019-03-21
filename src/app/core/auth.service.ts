@@ -20,7 +20,8 @@ interface User {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user: Observable<User>;
+  user$: Observable<User>;
+  user: any;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -28,10 +29,11 @@ export class AuthService {
     private router: Router
   ) {
     //// Get auth data, then get firestore user document || null
-    this.user = this.afAuth.authState.pipe(
+    this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          return this.afs.doc<User>(`drivers/${user.uid}`).valueChanges();
+          this.user = user;
+          return this.afs.doc<User>(`companies/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
@@ -70,7 +72,9 @@ export class AuthService {
   private updateUserData(uid, user) {
     // Sets user data to firestore on login
 
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `companies/${uid}`
+    );
 
     const data: User = {
       uid: uid,

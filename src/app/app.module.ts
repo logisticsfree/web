@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -22,6 +24,8 @@ import { UserComponent } from './user/user.component';
 import { AuthService } from './core/auth.service';
 import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TestComponent } from './test/test.component';
+import { DatabaseModule } from './dashboard/database/database.module';
 
 @NgModule({
   declarations: [
@@ -32,10 +36,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     RegisterComponent,
     FooterComponent,
     UserComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    DatabaseModule,
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),

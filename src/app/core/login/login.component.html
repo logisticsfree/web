@@ -5,8 +5,8 @@
       <div class="field">
         <label class="label">Email</label>
         <div class="control has-icons-left has-icons-right">
-          <input formControlName="email" class="input" [class.is-danger]="email.errors" type="email" placeholder="Enter your email"
-            autocomplete="email">
+          <input formControlName="email" class="input" [class.is-danger]="email.invalid && (email.dirty || email.touched)"
+            type="email" placeholder="Enter your email" autocomplete="email">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -26,8 +26,8 @@
       <div class="field">
         <label class="label">Password</label>
         <div class="control has-icons-left has-icons-right">
-          <input formControlName="password" class="input" [class.is-danger]="password.errors" autocomplete="current-password"
-            type="password" placeholder="Choose a password">
+          <input formControlName="password" class="input" [class.is-danger]="password.invalid && (password.dirty || password.touched)"
+            autocomplete="current-password" type="password" placeholder="Choose a password">
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -46,7 +46,8 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <button [disabled]="!loginForm.valid" (click)="tryLogin(loginForm.value)" class="button is-primary">Signin</button>
+          <button [disabled]="!loginForm.valid" (click)="tryLogin(loginForm.value)" class="button is-primary"
+            [class.is-loading]="loading">Signin</button>
         </div>
         <div class="control">
           <button class="button is-text" routerLink="/register">New to site? <a style="margin-left:.5em;">Signup</a></button>

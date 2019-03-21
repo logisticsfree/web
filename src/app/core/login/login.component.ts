@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string;
+  loading = false;
 
   constructor(
     public authService: AuthService,
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   tryLogin(value) {
-    this.spinner.show();
+    this.loading = true;
 
     if (this.loginForm.invalid) {
       return;
@@ -45,13 +46,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(value).then(
       res => {
         this.router.navigate(['/user']);
-        this.spinner.hide();
-
-        // TODO: solve the issue
-        console.log('tryLogin', res);
+        // this.loading = false;
       },
       err => {
-        this.spinner.hide();
+        this.loading = false;
         console.log('loginError', err);
         this.errorMessage = err.message;
       }

@@ -1,0 +1,15 @@
+<aside>
+  <p class="menu-label is-hidden-touch">Navigation</p>
+  <ul class="menu-list">
+    <li>
+      <a [routerLink]="[{ outlets: { database: ['skus'] } }]" routerLinkActive="is-active">
+        <span class="icon"><i class="fa fa-puzzle-piece"></i></span> SKUs
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="[{ outlets: { database: ['distributors'] } }]" routerLinkActive="is-active">
+        <span class="icon"><i class="fa fa-warehouse"></i></span> Distributors
+      </a>
+    </li>
+  </ul>
+</aside>

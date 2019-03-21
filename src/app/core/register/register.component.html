@@ -8,8 +8,8 @@
         <div class="field-body">
           <div class="field">
             <div class="control is-expanded has-icons-left has-icons-right">
-              <input formControlName="fname" autocomplete="name" [class.is-danger]="fname.errors" class="input" type="text"
-                placeholder="First Name">
+              <input formControlName="fname" autocomplete="name" [class.is-danger]="fname.invalid && (fname.dirty || fname.touched)"
+                class="input" type="text" placeholder="First Name">
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -26,7 +26,7 @@
           </div>
           <div class="field">
             <div class="control is-expanded has-icons-left has-icons-right">
-              <input formControlName="lname" class="input" autocomplete="family-name" [class.is-danger]="lname.errors"
+              <input formControlName="lname" class="input" autocomplete="family-name" [class.is-danger]="lname.invalid && (lname.dirty || lname.touched)"
                 type="text" placeholder="Last Name">
               <span class="icon is-small is-left">
                 <i class="fas fa-users"></i>
@@ -46,7 +46,9 @@
       </div>
 
       <div class="field is-horizontal">
-        <div class="field-label"></div>
+        <div class="field-label is-normal">
+          <label class="label">Phone Number</label>
+        </div>
         <div class="field-body">
           <div class="field is-expanded">
             <div class="field has-addons">
@@ -57,8 +59,8 @@
               </p>
               <p class="control is-expanded has-icons-right has-icons-left">
 
-                <input formControlName="phone" class="input" type="tel" autocomplete="tel-local" [class.is-danger]="phone.errors"
-                  placeholder="Your phone number">
+                <input formControlName="phone" class="input" type="tel" autocomplete="tel-local" (keyup)="logs(email.errors)"
+                  [class.is-danger]="phone.invalid && (phone.dirty || phone.touched)" placeholder="Your phone number">
                 <span class="icon is-small is-right" *ngIf="phone.errors">
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
@@ -84,7 +86,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control has-icons-left has-icons-right">
-              <input formControlName="email" class="input" autocomplete="email" type="email" [class.is-danger]="email.errors"
+              <input formControlName="email" class="input" autocomplete="email" type="email" [class.is-danger]="email.invalid && (email.dirty || email.touched)"
                 placeholder="Enter your email">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
@@ -111,8 +113,8 @@
         <div class="field-body">
           <div class="field">
             <div class="control has-icons-left has-icons-right">
-              <input formControlName="password" [class.is-danger]="password.errors" class="input" autocomplete="new-password"
-                type="password" placeholder="Choose a Password">
+              <input formControlName="password" [class.is-danger]="password.invalid && (password.dirty || password.touched)"
+                class="input" autocomplete="new-password" type="password" placeholder="Choose a Password">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
@@ -138,7 +140,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control has-icons-left has-icons-right">
-              <input formControlName="cpassword" [class.is-danger]="registerForm.hasError('notSame') || cpassword.errors"
+              <input formControlName="cpassword" [class.is-danger]="(cpassword.invalid || registerForm.hasError('notSame')) && (cpassword.dirty || cpassword.touched)"
                 class="input" autocomplete="new-password" type="password" placeholder="Re-enter the password">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
