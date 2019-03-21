@@ -59,8 +59,8 @@
               </p>
               <p class="control is-expanded has-icons-right has-icons-left">
 
-                <input formControlName="phone" class="input" type="tel" autocomplete="tel-local" (keyup)="logs(email.errors)"
-                  [class.is-danger]="phone.invalid && (phone.dirty || phone.touched)" placeholder="Your phone number">
+                <input formControlName="phone" class="input" type="tel" autocomplete="tel-local" [class.is-danger]="phone.invalid && (phone.dirty || phone.touched)"
+                  placeholder="Your phone number">
                 <span class="icon is-small is-right" *ngIf="phone.errors">
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
