@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   animate,
   state,
@@ -6,130 +6,124 @@ import {
   transition,
   trigger
 } from '@angular/animations';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SkuService } from '../services/sku.service';
+import { SKU } from '../services/sku.service';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-sku',
   templateUrl: './sku.component.html',
   styleUrls: ['./sku.component.scss'],
   animations: [
-    trigger('detailExpand', [
+    trigger('openNewSKUModal', [
       state(
-        'collapsed',
-        style({ height: '0px', minHeight: '0', display: 'none' })
+        'close',
+        style({
+          height: '0px'
+        })
       ),
-      state('expanded', style({ height: '*' })),
+      state('open', style({ height: '*' })),
       transition(
-        'expanded <=> collapsed',
+        'close <=> open',
         animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
       )
     ])
   ]
 })
 export class SkuComponent implements OnInit {
-  constructor() {}
+  newSKUForm: FormGroup;
 
-  dataSource = ELEMENT_DATA;
-  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
-  expandedElement: PeriodicElement | null;
+  toggleNewSkuModal = false;
+  skuModelLoading = false;
 
-  ngOnInit() {}
-}
+  dataSource: any;
+  columnsToDisplay: any;
+  expandedElement: SKU | null;
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  description: string;
-}
+  @ViewChild('page') paginator: MatPaginator;
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    description: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`
-  },
-  {
-    position: 2,
-    name: 'Helium',
-    weight: 4.0026,
-    symbol: 'He',
-    description: `Helium is a chemical element with symbol He and atomic number 2. It is a
-        colorless, odorless, tasteless, non-toxic, inert, monatomic gas, the first in the noble gas
-        group in the periodic table. Its boiling point is the lowest among all the elements.`
-  },
-  {
-    position: 3,
-    name: 'Lithium',
-    weight: 6.941,
-    symbol: 'Li',
-    description: `Lithium is a chemical element with symbol Li and atomic number 3. It is a soft,
-        silvery-white alkali metal. Under standard conditions, it is the lightest metal and the
-        lightest solid element.`
-  },
-  {
-    position: 4,
-    name: 'Beryllium',
-    weight: 9.0122,
-    symbol: 'Be',
-    description: `Beryllium is a chemical element with symbol Be and atomic number 4. It is a
-        relatively rare element in the universe, usually occurring as a product of the spallation of
-        larger atomic nuclei that have collided with cosmic rays.`
-  },
-  {
-    position: 5,
-    name: 'Boron',
-    weight: 10.811,
-    symbol: 'B',
-    description: `Boron is a chemical element with symbol B and atomic number 5. Produced entirely
-        by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
-        low-abundance element in the Solar system and in the Earth's crust.`
-  },
-  {
-    position: 6,
-    name: 'Carbon',
-    weight: 12.0107,
-    symbol: 'C',
-    description: `Carbon is a chemical element with symbol C and atomic number 6. It is nonmetallic
-        and tetravalent—making four electrons available to form covalent chemical bonds. It belongs
-        to group 14 of the periodic table.`
-  },
-  {
-    position: 7,
-    name: 'Nitrogen',
-    weight: 14.0067,
-    symbol: 'N',
-    description: `Nitrogen is a chemical element with symbol N and atomic number 7. It was first
-        discovered and isolated by Scottish physician Daniel Rutherford in 1772.`
-  },
-  {
-    position: 8,
-    name: 'Oxygen',
-    weight: 15.9994,
-    symbol: 'O',
-    description: `Oxygen is a chemical element with symbol O and atomic number 8. It is a member of
-         the chalcogen group on the periodic table, a highly reactive nonmetal, and an oxidizing
-         agent that readily forms oxides with most elements as well as with other compounds.`
-  },
-  {
-    position: 9,
-    name: 'Fluorine',
-    weight: 18.9984,
-    symbol: 'F',
-    description: `Fluorine is a chemical element with symbol F and atomic number 9. It is the
-        lightest halogen and exists as a highly toxic pale yellow diatomic gas at standard
-        conditions.`
-  },
-  {
-    position: 10,
-    name: 'Neon',
-    weight: 20.1797,
-    symbol: 'Ne',
-    description: `Neon is a chemical element with symbol Ne and atomic number 10. It is a noble gas.
-        Neon is a colorless, odorless, inert monatomic gas under standard conditions, with about
-        two-thirds the density of air.`
+  constructor(private fb: FormBuilder, private skuService: SkuService) {}
+
+  ngOnInit() {
+    this.createForm();
+    this.fillTable();
+    // this.dataSource.paginator = this.paginator;
   }
-];
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  addSKU(formValues) {
+    if (this.newSKUForm.invalid) {
+      return;
+    }
+
+    this.skuModelLoading = true;
+    this.skuService
+      .addSku(formValues)
+      .then(res => {
+        this.skuModelLoading = false;
+        this.toggleNewSkuModal = false;
+
+        // add a new row to table
+        const newData = this.dataSource.data;
+        newData.push(res);
+        this.dataSource = new MatTableDataSource(newData);
+        this.dataSource.paginator = this.paginator;
+
+        this.newSKUForm.reset();
+      })
+      .catch(err => (this.skuModelLoading = false));
+  }
+
+  fillTable() {
+    const unsubscribe = this.skuService.getSKUs().subscribe(skus => {
+      this.dataSource = new MatTableDataSource(Object.values(skus.data()));
+      this.columnsToDisplay = Object.keys(this.dataSource.data[0]);
+
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+      });
+      console.log(this.dataSource);
+
+      unsubscribe.unsubscribe();
+    });
+  }
+
+  createForm() {
+    this.newSKUForm = this.fb.group({
+      code: ['', Validators.required],
+      name: ['', Validators.required],
+      volume: [
+        '',
+        [Validators.required, Validators.min(0), Validators.pattern('[0-9.]*')]
+      ],
+      weight: [
+        '',
+        [Validators.required, Validators.min(0), Validators.pattern('[0-9.]*')]
+      ],
+      value: [
+        '',
+        [Validators.required, Validators.min(0), Validators.pattern('[0-9.]*')]
+      ]
+    });
+  }
+
+  get code() {
+    return this.newSKUForm.get('code');
+  }
+  get name() {
+    return this.newSKUForm.get('name');
+  }
+  get volume() {
+    return this.newSKUForm.get('volume');
+  }
+  get weight() {
+    return this.newSKUForm.get('weight');
+  }
+  get value() {
+    return this.newSKUForm.get('value');
+  }
+}

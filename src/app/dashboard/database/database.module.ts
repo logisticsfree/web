@@ -5,15 +5,22 @@ import { DatabaseRoutingModule } from './database-routing.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DatabaseHomeComponent } from './database-home/database-home.component';
 
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DistributorsComponent } from './distributors/distributors.component';
 
 @NgModule({
-  declarations: [SkuComponent, SidebarComponent, DatabaseHomeComponent],
+  declarations: [
+    SkuComponent,
+    SidebarComponent,
+    DatabaseHomeComponent,
+    DistributorsComponent
+  ],
   imports: [
     CommonModule,
     DatabaseRoutingModule,
     MatTableModule,
+    MatPaginatorModule,
     ReactiveFormsModule
   ]
 })
