@@ -1,70 +1,70 @@
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" routerLink="/">
-      <h1>LogsFree</h1>
-    </a>
-
-    <a role="button" (click)="toggleNavbar()" [class.is-active]="activeNavbar" class="navbar-burger burger" aria-label="menu"
-      aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <!-- <div *ngIf="authService.user | async; then authenticated else guest"></div> -->
-
-  <div id="navbarBasicExample" [class.is-active]="activeNavbar" class="navbar-menu">
-    <div class="navbar-start">
-
-      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="routerLinkOptions" (click)="userStatus()"
-        class="navbar-item">
-        Vehicle procurement
-      </a>
-      <a routerLink="/user" routerLinkActive="is-active" class="navbar-item">
-        Operations
-      </a>
-      <a routerLink="/database" routerLinkActive="is-active" class="navbar-item">
-        Database
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More
+    <div class="navbar-brand">
+        <a class="navbar-item" routerLink="/">
+            <h1>LogsFree</h1>
         </a>
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            About
-          </a>
-          <a class="navbar-item">
-            Jobs
-          </a>
-          <a class="navbar-item">
-            Contact
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            Report an issue
-          </a>
-        </div>
-      </div>
+        <a role="button" (click)="toggleNavbar()" [class.is-active]="activeNavbar" class="navbar-burger burger"
+            aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
     </div>
+    <!-- <div *ngIf="authService.user | async; then authenticated else guest"></div> -->
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a *ngIf="!user" routerLink="/register" class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a *ngIf="!user" routerLink="/login" class="button is-light">
-            Log in
-          </a>
-          <a *ngIf="user" (click)="tryLogout()" class="button is-primary">
-            Log out
-          </a>
+    <div id="navbarBasicExample" [class.is-active]="activeNavbar" class="navbar-menu">
+        <div class="navbar-start">
+
+            <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="routerLinkOptions" (click)="userStatus()"
+                class="navbar-item">
+                Vehicle procurement
+            </a>
+            <a routerLink="/user" routerLinkActive="is-active" class="navbar-item">
+                Operations
+            </a>
+            <a routerLink="/database" routerLinkActive="is-active" class="navbar-item">
+                Database
+            </a>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    More
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                        About
+                    </a>
+                    <a class="navbar-item">
+                        Jobs
+                    </a>
+                    <a class="navbar-item">
+                        Contact
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item">
+                        Report an issue
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a *ngIf="!user" routerLink="/register" class="button is-primary">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a *ngIf="!user" routerLink="/login" class="button is-light">
+                        Log in
+                    </a>
+                    <a *ngIf="user" (click)="tryLogout()" class="button is-primary">
+                        Log out
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>
-<div class="pageloader" [class.is-active]="activePreload"><span class="title">Pageloader</span></div>
+<div class="pageloader" [class.is-active]="activePreload"><span class="title">Loading...</span></div>

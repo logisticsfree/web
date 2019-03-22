@@ -86,7 +86,6 @@ export class SkuComponent implements OnInit {
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
       });
-      console.log(this.dataSource);
 
       unsubscribe.unsubscribe();
     });
