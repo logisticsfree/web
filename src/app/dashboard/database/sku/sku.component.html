@@ -1,7 +1,7 @@
 <div class="buttons">
     <button class="button is-primary" (click)="toggleNewSkuModal = true">New SKU</button>
 </div>
-
+<!-- ADD NEW SKU MODAL -->
 <div class="modal" [class.is-active]="toggleNewSkuModal">
     <div class="modal-background" (click)="toggleNewSkuModal = false"></div>
     <form [formGroup]="newSKUForm" class="modal-content box" [@openNewSKUModal]="toggleNewSkuModal ? 'open' : 'close'"
@@ -9,7 +9,8 @@
         <div class="field">
             <label class="label">Code</label>
             <div class="control has-icons-left has-icons-right">
-                <input formControlName="code" class="input is-success" type="text" placeholder="Code" [class.is-danger]="code.invalid && (code.dirty || code.touched)" />
+                <input formControlName="code" class="input is-success" type="text" placeholder="Code"
+                    [class.is-danger]="code.invalid && (code.dirty || code.touched)" />
                 <span class="icon is-small is-left">
                     <i class="fas fa-tag"></i>
                 </span>
@@ -23,7 +24,8 @@
         <div class="field">
             <label class="label">Name</label>
             <div class="control has-icons-left has-icons-right">
-                <input formControlName="name" class="input is-success" type="text" placeholder="Name" [class.is-danger]="name.invalid && (name.dirty || name.touched)">
+                <input formControlName="name" class="input is-success" type="text" placeholder="Name"
+                    [class.is-danger]="name.invalid && (name.dirty || name.touched)">
                 <span class="icon is-small is-left">
                     <i class="fas fa-file-signature"></i>
                 </span>
@@ -81,7 +83,8 @@
 
         <div class="field is-grouped">
             <div class="control">
-                <button class="button is-link" [class.is-loading]="skuModelLoading" [disabled]="newSKUForm.invalid">Add</button>
+                <button class="button is-link" [class.is-loading]="skuModelLoading"
+                    [disabled]="newSKUForm.invalid">Add</button>
             </div>
             <div class="control">
                 <button class="button is-text" (click)="toggleNewSkuModal = false">Cancel</button>
