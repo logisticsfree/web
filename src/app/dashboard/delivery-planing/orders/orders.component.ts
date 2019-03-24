@@ -12,18 +12,25 @@ import { DistributorService } from '../../database/services/distributor.service'
 })
 export class OrdersComponent implements OnInit {
     newOrderForm: FormGroup;
+    addSKUForm: FormGroup;
     newOrderFormeLoading;
-    dataSource;
+    ordersTableDataSource;
+    skusTableDataSource;
     SKUs;
     distributors;
 
-    columnsToDisplay: string[] = [
+    showNewOrderForm = true;
+    showNewSKUModal = false;
+    selectedOrder: Order;
+
+    ordersColumnsToDisplay: string[] = [
         'invoice',
         'distributor',
         'volume',
         'weight',
         'value'
     ];
+
     expandedElement: Order | null;
 
     constructor(
@@ -33,7 +40,8 @@ export class OrdersComponent implements OnInit {
         private distributorService: DistributorService
     ) {}
 
-    @ViewChild('page') paginator: MatPaginator;
+    @ViewChild('ordersPaginator') orderPaginator: MatPaginator;
+    @ViewChild('skusPaginator') skuPaginator: MatPaginator;
 
     ngOnInit() {
         this.createForm();
@@ -44,13 +52,19 @@ export class OrdersComponent implements OnInit {
                 this.distributors = Object.values(dists.data());
                 unc.unsubscribe();
             });
-        // this.skuService.getSKUs().subscribe(skus => {
-        //     this.SKUs = Object.values(skus.data());
-        // });
     }
 
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+    selectInvoice(row) {
+        this.showNewOrderForm = false;
+        this.selectedOrder = row;
+        this.skusTableDataSource = new MatTableDataSource(row.skus);
+        console.log(this.skusTableDataSource);
+    }
+    applyOrderFilter(filterValue: string) {
+        this.ordersTableDataSource.filter = filterValue.trim().toLowerCase();
+    }
+    applySKUFilter(filterValue: string) {
+        this.skusTableDataSource.filter = filterValue.trim().toLowerCase();
     }
 
     addOrder(formValues) {
@@ -65,26 +79,24 @@ export class OrdersComponent implements OnInit {
                 this.newOrderFormeLoading = false;
 
                 // add a new row to table
-                const newData = this.dataSource.data;
+                const newData = this.ordersTableDataSource.data;
                 newData.push(res);
-                this.dataSource = new MatTableDataSource(newData);
-                this.dataSource.paginator = this.paginator;
+                this.ordersTableDataSource = new MatTableDataSource(newData);
+                this.ordersTableDataSource.paginator = this.orderPaginator;
 
                 this.newOrderForm.reset();
             })
             .catch(err => (this.newOrderFormeLoading = false));
     }
     fillTable() {
-        const unsubscribe = this.orderService.getOrders().subscribe(skus => {
-            this.dataSource = new MatTableDataSource(
-                Object.values(skus.data())
+        const unsubscribe = this.orderService.getOrders().subscribe(orders => {
+            this.ordersTableDataSource = new MatTableDataSource(
+                Object.values(orders.data())
             );
 
             setTimeout(() => {
-                this.dataSource.paginator = this.paginator;
+                this.ordersTableDataSource.paginator = this.orderPaginator;
             });
-
-            console.log(this.dataSource.data);
 
             unsubscribe.unsubscribe();
         });

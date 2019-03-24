@@ -4,6 +4,7 @@ import { DeliveryHomeComponent } from './delivery-home/delivery-home.component';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { OrdersComponent } from './orders/orders.component';
 import { CreateTripComponent } from './create-trip/create-trip.component';
+import { AssignSkusComponent } from './assign-skus/assign-skus.component';
 
 const routes: Routes = [
     {
@@ -19,7 +20,13 @@ const routes: Routes = [
             {
                 path: 'orders',
                 component: OrdersComponent,
-                outlet: 'delivery'
+                outlet: 'delivery',
+                children: [
+                    {
+                        path: ':id',
+                        component: AssignSkusComponent
+                    }
+                ]
             },
             {
                 path: 'create-trip',

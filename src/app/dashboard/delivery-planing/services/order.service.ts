@@ -5,6 +5,7 @@ import {
     AngularFirestore
 } from '@angular/fire/firestore';
 import { Distributor } from '../../database/services/distributor.service';
+import { SKU } from '../../database/services/sku.service';
 
 export interface Order {
     invoice: string;
@@ -18,6 +19,30 @@ export interface Order {
 })
 export class OrderService {
     constructor(private auth: AuthService, private afs: AngularFirestore) {}
+
+    assignSKU(invoice, values) {
+        return new Promise((resolve, reject) => {
+            const uid = this.auth.user.uid;
+            const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
+                `orders/${uid}`
+            );
+            const sku: SKU = {
+                code: values.code.code,
+                name: values.name,
+                volume: values.volume,
+                weight: values.weight,
+                value: values.value
+            };
+
+            orderRef
+                .set(
+                    { [invoice]: { skus: { [sku.code]: sku } } },
+                    { merge: true }
+                )
+                .then(res => resolve(sku))
+                .catch(err => reject(err));
+        });
+    }
 
     getOrders() {
         const uid = this.auth.user.uid;

@@ -1,5 +1,9 @@
+<div *ngIf="!showNewOrderForm" class="buttons">
+    <button class="button is-primary" (click)="showNewOrderForm = true">New Order</button>
+</div>
 <div class="columns">
-    <div class="column is-one-third">
+    <!-- new Order Form -->
+    <div *ngIf="showNewOrderForm" class="column is-one-third">
         <form [formGroup]="newOrderForm" class="card" (submit)="addOrder(newOrderForm.value)">
             <div class="card-header">
                 <div class="card-header-title">
@@ -100,7 +104,9 @@
             </div>
         </form>
     </div>
-    <div class="column">
+
+    <!-- Orders table -->
+    <div class="column" [class.is-half]="!showNewOrderForm">
         <div class="card">
             <div class="card-header">
                 <div class="card-header-title">
@@ -111,7 +117,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-success" (keyup)="applyFilter($event.target.value)"
+                                    <input class="input is-success" (keyup)="applyOrderFilter($event.target.value)"
                                         type="text" placeholder="Filter">
                                 </div>
                             </div>
@@ -121,8 +127,8 @@
 
             </div>
             <div class="card-content">
-                <div *ngIf="dataSource" class="content">
-                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows
+                <div *ngIf="ordersTableDataSource" class="content">
+                    <table mat-table [dataSource]="ordersTableDataSource" multiTemplateDataRows
                         class="table is-striped is-hoverable">
                         <!-- <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
                             <th class="md-table-header" mat-header-cell *matHeaderCellDef> {{column}} </th>
@@ -130,37 +136,41 @@
                         </ng-container> -->
 
                         <ng-container matColumnDef="invoice">
-                            <th mat-header-cell *matHeaderCellDef> Invoice No. </th>
+                            <th class="md-table-header" mat-header-cell *matHeaderCellDef> Invoice No. </th>
                             <td mat-cell *matCellDef="let element"> {{element.invoice}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="distributor">
-                            <th mat-header-cell *matHeaderCellDef> Distributor </th>
+                            <th mat-header-cell class="md-table-header" *matHeaderCellDef> Distributor </th>
                             <td mat-cell *matCellDef="let element"> {{element.distributor.name}} </td>
                         </ng-container>
                         <ng-container matColumnDef="volume">
-                            <th mat-header-cell *matHeaderCellDef> Volume </th>
+                            <th mat-header-cell class="md-table-header" *matHeaderCellDef> Volume </th>
                             <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
                         </ng-container>
                         <ng-container matColumnDef="weight">
-                            <th mat-header-cell *matHeaderCellDef> Weight </th>
+                            <th mat-header-cell class="md-table-header" *matHeaderCellDef> Weight </th>
                             <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
                         </ng-container>
                         <ng-container matColumnDef="value">
-                            <th mat-header-cell *matHeaderCellDef> Value </th>
+                            <th mat-header-cell class="md-table-header" *matHeaderCellDef> Value </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                         </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row">
+                        <tr mat-header-row *matHeaderRowDef="ordersColumnsToDisplay"></tr>
+                        <tr [class.is-selected]="element === selectedOrder" mat-row (click)="selectInvoice(element)"
+                            *matRowDef="let element; columns: ordersColumnsToDisplay;" class="example-element-row">
                         </tr>
 
                     </table>
-                    <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator #ordersPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+                    </mat-paginator>
                 </div>
             </div>
         </div>
         <br />
-
     </div>
 
+    <!-- SKUs table -->
+    <app-assign-skus [selectedOrder]="selectedOrder" *ngIf="!showNewOrderForm" class="column"
+        [class.is-half]="!showNewOrderForm"></app-assign-skus>
 </div>

@@ -8,13 +8,15 @@ import { DeliveryHomeComponent } from './delivery-home/delivery-home.component';
 import { CreateTripComponent } from './create-trip/create-trip.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
+import { AssignSkusComponent } from './assign-skus/assign-skus.component';
 
 @NgModule({
     declarations: [
         OrdersComponent,
         SidebarComponent,
         DeliveryHomeComponent,
-        CreateTripComponent
+        CreateTripComponent,
+        AssignSkusComponent
     ],
     imports: [
         CommonModule,
