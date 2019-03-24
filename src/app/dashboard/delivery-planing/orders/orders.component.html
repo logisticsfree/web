@@ -3,7 +3,7 @@
 </div>
 <div class="columns">
     <!-- new Order Form -->
-    <div *ngIf="showNewOrderForm" class="column is-one-third">
+    <div *ngIf="showNewOrderForm" class="column is-one-third" [@slideInOut]>
         <form [formGroup]="newOrderForm" class="card" (submit)="addOrder(newOrderForm.value)">
             <div class="card-header">
                 <div class="card-header-title">
@@ -172,5 +172,5 @@
 
     <!-- SKUs table -->
     <app-assign-skus [selectedOrder]="selectedOrder" *ngIf="!showNewOrderForm" class="column"
-        [class.is-half]="!showNewOrderForm"></app-assign-skus>
+        [class.is-half]="!showNewOrderForm" [@slideInOutFromLeft]></app-assign-skus>
 </div>

@@ -35,6 +35,18 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
                 'close <=> open',
                 animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
             )
+        ]),
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({ transform: 'translateY(-100%)' }),
+                animate('200ms ease-in', style({ transform: 'translateY(0%)' }))
+            ]),
+            transition(':leave', [
+                animate(
+                    '200ms ease-in',
+                    style({ transform: 'translateY(-100%)' })
+                )
+            ])
         ])
     ]
 })

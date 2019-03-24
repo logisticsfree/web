@@ -4,11 +4,38 @@ import { Order, OrderService } from '../services/order.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SkuService } from '../../database/services/sku.service';
 import { DistributorService } from '../../database/services/distributor.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-orders',
     templateUrl: './orders.component.html',
-    styleUrls: ['./orders.component.scss']
+    styleUrls: ['./orders.component.scss'],
+    animations: [
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({ transform: 'translateY(-100%)' }),
+                animate('200ms ease-in', style({ transform: 'translateY(0%)' }))
+            ]),
+            transition(':leave', [
+                animate(
+                    '200ms ease-in',
+                    style({ transform: 'translateY(-100%)' })
+                )
+            ])
+        ]),
+        trigger('slideInOutFromLeft', [
+            transition(':enter', [
+                style({ transform: 'translateX(100%)' }),
+                animate('200ms ease-in', style({ transform: 'translateX(0%)' }))
+            ]),
+            transition(':leave', [
+                animate(
+                    '200ms ease-in',
+                    style({ transform: 'translateX(100%)' })
+                )
+            ])
+        ])
+    ]
 })
 export class OrdersComponent implements OnInit {
     newOrderForm: FormGroup;
