@@ -20,7 +20,7 @@ export interface Order {
 export class OrderService {
     constructor(private auth: AuthService, private afs: AngularFirestore) {}
 
-    assignSKU(invoice, values) {
+    assignSKU(invoice, values): Promise<any> {
         return new Promise((resolve, reject) => {
             const uid = this.auth.user.uid;
             const orderRef: AngularFirestoreDocument<any> = this.afs.doc(

@@ -1,10 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Order, OrderService } from '../services/order.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import {
+    MatTableDataSource,
+    MatPaginator,
+    MatTab,
+    MatTable
+} from '@angular/material';
 import { SkuService } from '../../database/services/sku.service';
 import { DistributorService } from '../../database/services/distributor.service';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+    trigger,
+    transition,
+    style,
+    animate,
+    state
+} from '@angular/animations';
 
 @Component({
     selector: 'app-orders',
@@ -34,6 +45,11 @@ import { trigger, transition, style, animate } from '@angular/animations';
                     style({ transform: 'translateX(100%)' })
                 )
             ])
+        ]),
+        trigger('moveLeft', [
+            state('left', style({})),
+            state('right', style({})),
+            transition('left <=> right', animate('2000ms ease-in'))
         ])
     ]
 })
@@ -49,6 +65,7 @@ export class OrdersComponent implements OnInit {
     showNewOrderForm = true;
     showNewSKUModal = false;
     selectedOrder: Order;
+    orderTableState = 'right';
 
     ordersColumnsToDisplay: string[] = [
         'invoice',
@@ -80,6 +97,18 @@ export class OrdersComponent implements OnInit {
                 unc.unsubscribe();
             });
     }
+    addNewlyAddedSkuToOrdersTable(sku) {
+        const newData = this.ordersTableDataSource.data;
+        for (let i = 0; i < newData.length; i++) {
+            if (sku.invoice == newData[i].invoice) newData[i] = sku;
+        }
+        // this.ordersTableDataSource = new
+        console.log(newData);
+        // newData.forEach(element => {
+        // });
+
+        this.ordersTableDataSource = new MatTableDataSource(newData);
+    }
 
     selectInvoice(row) {
         this.showNewOrderForm = false;
@@ -89,6 +118,7 @@ export class OrdersComponent implements OnInit {
     }
     applyOrderFilter(filterValue: string) {
         this.ordersTableDataSource.filter = filterValue.trim().toLowerCase();
+        // console.log(this.orderTableState);
     }
     applySKUFilter(filterValue: string) {
         this.skusTableDataSource.filter = filterValue.trim().toLowerCase();

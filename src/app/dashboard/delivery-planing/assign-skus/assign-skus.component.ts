@@ -4,7 +4,8 @@ import {
     Input,
     ViewChild,
     OnChanges,
-    SimpleChanges
+    SimpleChanges,
+    Output
 } from '@angular/core';
 import { Order, OrderService } from '../services/order.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -17,6 +18,7 @@ import {
 } from '@angular/animations';
 import { SkuService, SKU } from '../../database/services/sku.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-assign-skus',
@@ -51,7 +53,9 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
     ]
 })
 export class AssignSkusComponent implements OnInit, OnChanges {
-    @Input() selectedOrder;
+    // TODO: add newly added SKU to ordersTable
+    @Input() selectedOrder: any;
+    @Output() skuAdded = new EventEmitter();
 
     addSKUForm: FormGroup;
     addSKUFormLoading = false;
@@ -85,7 +89,7 @@ export class AssignSkusComponent implements OnInit, OnChanges {
             );
         }
         this.dataSource.paginator = this.paginator;
-        console.log('assign-sku', this.dataSource);
+        // console.log('assign-sku', this.dataSource);
 
         this.createNewSKUForm();
         const unc = this.skuService.getSKUs().subscribe(skus => {
@@ -95,6 +99,8 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         });
 
         this.addSKUForm.get('code').valueChanges.subscribe(val => {
+            if (!val) return;
+
             Object.keys(val).forEach(key => {
                 if (key != 'code')
                     this.addSKUForm.patchValue({ [key]: val[key] });
@@ -102,7 +108,7 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         });
     }
     ngOnChanges(changes: SimpleChanges) {
-        console.log(this.selectedOrder);
+        // console.log(this.selectedOrder);
 
         if (!this.selectedOrder.skus) {
             this.dataSource = new MatTableDataSource([]);
@@ -127,6 +133,11 @@ export class AssignSkusComponent implements OnInit, OnChanges {
                 newData.push(res);
                 this.dataSource = new MatTableDataSource(newData);
                 this.dataSource.paginator = this.paginator;
+
+                const newRow = this.selectedOrder;
+                console.log('emit', res);
+                newRow.skus[res.code] = res;
+                this.skuAdded.emit(newRow);
 
                 this.addSKUFormLoading = false;
                 this.showNewSkuModal = false;
