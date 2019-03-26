@@ -13,15 +13,15 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'skus',
-                pathMatch: 'full'
-                // component: SkuComponent,
-                // outlet: 'database'
+                // redirectTo: 'skus',
+                // pathMatch: 'full'
+                component: SkuComponent,
+                outlet: 'database'
             },
             {
                 path: 'skus',
-                component: SkuComponent
-                // outlet: 'database'
+                component: SkuComponent,
+                outlet: 'database'
             },
             {
                 path: 'distributors',

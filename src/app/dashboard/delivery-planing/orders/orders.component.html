@@ -172,7 +172,8 @@
     </div>
 
     <!-- SKUs table -->
-    <app-assign-skus (skuAdded)="addNewlyAddedSkuToOrdersTable($event)" [selectedOrder]="selectedOrder"
-        *ngIf="!showNewOrderForm" class="column" [class.is-half]="!showNewOrderForm" [@slideInOutFromLeft]>
+    <app-assign-skus (skuDeleted)="unassignSKU($event)" (skuAdded)="addNewlyAddedSkuToOrdersTable($event)"
+        [selectedOrder]="selectedOrder" *ngIf="!showNewOrderForm" class="column" [class.is-half]="!showNewOrderForm"
+        [@slideInOutFromLeft]>
     </app-assign-skus>
 </div>

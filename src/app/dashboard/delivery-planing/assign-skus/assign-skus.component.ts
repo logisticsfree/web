@@ -53,12 +53,13 @@ import { EventEmitter } from '@angular/core';
     ]
 })
 export class AssignSkusComponent implements OnInit, OnChanges {
-    // TODO: add newly added SKU to ordersTable
     @Input() selectedOrder: any;
     @Output() skuAdded = new EventEmitter();
+    @Output() skuDeleted = new EventEmitter();
 
     addSKUForm: FormGroup;
     addSKUFormLoading = false;
+    unassignSKULoading = {};
     showNewSkuModal = false;
 
     dataSource;
@@ -68,7 +69,8 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         'volume',
         'weight',
         'value',
-        'qty'
+        'qty',
+        'actions'
     ];
 
     SKUs: SKU[];
@@ -108,8 +110,6 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         });
     }
     ngOnChanges(changes: SimpleChanges) {
-        // console.log(this.selectedOrder);
-
         if (!this.selectedOrder.skus) {
             this.dataSource = new MatTableDataSource([]);
         } else {
@@ -124,19 +124,35 @@ export class AssignSkusComponent implements OnInit, OnChanges {
     applySKUFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
+    unassignSKU(invoice, sku) {
+        this.unassignSKULoading[sku.code] = true;
+        this.orderService.unassignSKU(invoice, sku).then(res => {
+            let updatedData = this.dataSource.data;
+
+            for (let i = 0; i < updatedData.length; i++) {
+                if (updatedData[i].code == sku.code)
+                    updatedData = updatedData.splice(i, 1);
+            }
+            this.dataSource = new MatTableDataSource(updatedData);
+            this.skuDeleted.emit({ invoice: this.selectedOrder.invoice, sku });
+            this.unassignSKULoading[sku.code] = false;
+        });
+    }
     assignSKU(invoice, values) {
         this.addSKUFormLoading = true;
         this.orderService
             .assignSKU(invoice, values)
             .then(res => {
-                const newData = this.dataSource.data;
-                newData.push(res);
-                this.dataSource = new MatTableDataSource(newData);
+                const newRow = this.selectedOrder;
+                newRow.skus[res.code] = res;
+
+                // update skus table
+                this.dataSource = new MatTableDataSource(
+                    Object.values(this.selectedOrder.skus)
+                );
                 this.dataSource.paginator = this.paginator;
 
-                const newRow = this.selectedOrder;
-                console.log('emit', res);
-                newRow.skus[res.code] = res;
+                // send new row to orders table
                 this.skuAdded.emit(newRow);
 
                 this.addSKUFormLoading = false;

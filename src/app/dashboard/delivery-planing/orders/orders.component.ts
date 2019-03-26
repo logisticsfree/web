@@ -58,7 +58,6 @@ export class OrdersComponent implements OnInit {
     addSKUForm: FormGroup;
     newOrderFormeLoading;
     ordersTableDataSource;
-    skusTableDataSource;
     SKUs;
     distributors;
 
@@ -85,7 +84,6 @@ export class OrdersComponent implements OnInit {
     ) {}
 
     @ViewChild('ordersPaginator') orderPaginator: MatPaginator;
-    @ViewChild('skusPaginator') skuPaginator: MatPaginator;
 
     ngOnInit() {
         this.createForm();
@@ -97,31 +95,34 @@ export class OrdersComponent implements OnInit {
                 unc.unsubscribe();
             });
     }
-    addNewlyAddedSkuToOrdersTable(sku) {
+    unassignSKU(sku) {
+        let newData = this.ordersTableDataSource.data;
+
+        for (let i = 0; i < newData.length; i++) {
+            if (sku.invoice == newData[i].invoice)
+                delete newData[i].skus[sku.sku.code];
+        }
+
+        this.ordersTableDataSource = new MatTableDataSource(newData);
+    }
+    addNewlyAddedSkuToOrdersTable(row) {
         const newData = this.ordersTableDataSource.data;
         for (let i = 0; i < newData.length; i++) {
-            if (sku.invoice == newData[i].invoice) newData[i] = sku;
+            if (row.invoice == newData[i].invoice) newData[i] = row;
         }
-        // this.ordersTableDataSource = new
-        console.log(newData);
-        // newData.forEach(element => {
-        // });
 
+        console.log(this.selectedOrder, row);
+        this.selectedOrder = row;
         this.ordersTableDataSource = new MatTableDataSource(newData);
     }
 
     selectInvoice(row) {
         this.showNewOrderForm = false;
         this.selectedOrder = row;
-        this.skusTableDataSource = new MatTableDataSource(row.skus);
-        console.log(this.skusTableDataSource);
+        // console.log(row);
     }
     applyOrderFilter(filterValue: string) {
         this.ordersTableDataSource.filter = filterValue.trim().toLowerCase();
-        // console.log(this.orderTableState);
-    }
-    applySKUFilter(filterValue: string) {
-        this.skusTableDataSource.filter = filterValue.trim().toLowerCase();
     }
 
     addOrder(formValues) {
