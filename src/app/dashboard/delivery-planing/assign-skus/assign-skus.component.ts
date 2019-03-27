@@ -4,7 +4,8 @@ import {
     Input,
     ViewChild,
     OnChanges,
-    SimpleChanges
+    SimpleChanges,
+    Output
 } from '@angular/core';
 import { Order, OrderService } from '../services/order.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -17,6 +18,7 @@ import {
 } from '@angular/animations';
 import { SkuService, SKU } from '../../database/services/sku.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-assign-skus',
@@ -51,10 +53,13 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
     ]
 })
 export class AssignSkusComponent implements OnInit, OnChanges {
-    @Input() selectedOrder;
+    @Input() selectedOrder: any;
+    @Output() skuAdded = new EventEmitter();
+    @Output() skuDeleted = new EventEmitter();
 
     addSKUForm: FormGroup;
     addSKUFormLoading = false;
+    unassignSKULoading = {};
     showNewSkuModal = false;
 
     dataSource;
@@ -64,7 +69,8 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         'volume',
         'weight',
         'value',
-        'qty'
+        'qty',
+        'actions'
     ];
 
     SKUs: SKU[];
@@ -85,7 +91,7 @@ export class AssignSkusComponent implements OnInit, OnChanges {
             );
         }
         this.dataSource.paginator = this.paginator;
-        console.log('assign-sku', this.dataSource);
+        // console.log('assign-sku', this.dataSource);
 
         this.createNewSKUForm();
         const unc = this.skuService.getSKUs().subscribe(skus => {
@@ -95,6 +101,8 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         });
 
         this.addSKUForm.get('code').valueChanges.subscribe(val => {
+            if (!val) return;
+
             Object.keys(val).forEach(key => {
                 if (key != 'code')
                     this.addSKUForm.patchValue({ [key]: val[key] });
@@ -102,8 +110,6 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         });
     }
     ngOnChanges(changes: SimpleChanges) {
-        console.log(this.selectedOrder);
-
         if (!this.selectedOrder.skus) {
             this.dataSource = new MatTableDataSource([]);
         } else {
@@ -118,15 +124,36 @@ export class AssignSkusComponent implements OnInit, OnChanges {
     applySKUFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
+    unassignSKU(invoice, sku) {
+        this.unassignSKULoading[sku.code] = true;
+        this.orderService.unassignSKU(invoice, sku).then(res => {
+            let updatedData = this.dataSource.data;
+
+            for (let i = 0; i < updatedData.length; i++) {
+                if (updatedData[i].code == sku.code)
+                    updatedData = updatedData.splice(i, 1);
+            }
+            this.dataSource = new MatTableDataSource(updatedData);
+            this.skuDeleted.emit({ invoice: this.selectedOrder.invoice, sku });
+            this.unassignSKULoading[sku.code] = false;
+        });
+    }
     assignSKU(invoice, values) {
         this.addSKUFormLoading = true;
         this.orderService
             .assignSKU(invoice, values)
             .then(res => {
-                const newData = this.dataSource.data;
-                newData.push(res);
-                this.dataSource = new MatTableDataSource(newData);
+                const newRow = this.selectedOrder;
+                newRow.skus[res.code] = res;
+
+                // update skus table
+                this.dataSource = new MatTableDataSource(
+                    Object.values(this.selectedOrder.skus)
+                );
                 this.dataSource.paginator = this.paginator;
+
+                // send new row to orders table
+                this.skuAdded.emit(newRow);
 
                 this.addSKUFormLoading = false;
                 this.showNewSkuModal = false;
