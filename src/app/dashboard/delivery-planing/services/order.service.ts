@@ -5,9 +5,15 @@ import {
     AngularFirestoreDocument
 } from '@angular/fire/firestore';
 import { Distributor } from '../../database/services/distributor.service';
-import { SKU } from '../../database/services/sku.service';
 import * as firebase from 'firebase';
-
+interface SKU {
+    code: string;
+    name: string
+    volume: number;
+    weight: number;
+    value: number;
+    qty: number;
+}
 export interface Order {
     invoice: string;
     distributor: Distributor;
@@ -15,12 +21,13 @@ export interface Order {
     weight: number;
     value: number;
     skus: {};
+    status: number;
 }
 @Injectable({
     providedIn: 'root'
 })
 export class OrderService {
-    constructor(private auth: AuthService, private afs: AngularFirestore) {}
+    constructor(private auth: AuthService, private afs: AngularFirestore) { }
 
     unassignSKU(invoice, sku): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -33,7 +40,7 @@ export class OrderService {
                 .update({
                     [`${invoice}.skus.${
                         sku.code
-                    }`]: firebase.firestore.FieldValue.delete()
+                        }`]: firebase.firestore.FieldValue.delete()
                 })
                 .then(res => resolve())
                 .catch(err => reject(err));
@@ -51,7 +58,8 @@ export class OrderService {
                 name: values.name,
                 volume: values.volume,
                 weight: values.weight,
-                value: values.value
+                value: values.value,
+                qty: values.qty
             };
 
             orderRef
@@ -70,11 +78,18 @@ export class OrderService {
             `orders/${uid}`
         );
 
-        return orderRef.get();
+        return orderRef.valueChanges();
     }
 
     addOrder(values) {
         return this.updateOrderData(this.auth.user.uid, values);
+    }
+    setStatus (order, status) {
+        const uid = this.auth.user.uid;
+        const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
+            `orders/${uid}`
+        );
+        return orderRef.set({[order.invoice]: {status}}, {merge: true})
     }
 
     updateOrderData(uid, data): Promise<Order> {
@@ -89,6 +104,7 @@ export class OrderService {
                 volume: data.volume,
                 weight: data.weight,
                 value: data.value,
+                status: 0,
                 skus: {}
             };
 

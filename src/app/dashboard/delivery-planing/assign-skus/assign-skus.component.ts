@@ -80,7 +80,7 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         private fb: FormBuilder,
         private skuService: SkuService,
         private orderService: OrderService
-    ) {}
+    ) { }
 
     ngOnInit() {
         if (!this.selectedOrder.skus) {
@@ -130,8 +130,9 @@ export class AssignSkusComponent implements OnInit, OnChanges {
             let updatedData = this.dataSource.data;
 
             for (let i = 0; i < updatedData.length; i++) {
-                if (updatedData[i].code == sku.code)
-                    updatedData = updatedData.splice(i, 1);
+                if (updatedData[i].code == sku.code) {
+                    updatedData.splice(i, 1);
+                }
             }
             this.dataSource = new MatTableDataSource(updatedData);
             this.skuDeleted.emit({ invoice: this.selectedOrder.invoice, sku });
@@ -195,6 +196,14 @@ export class AssignSkusComponent implements OnInit, OnChanges {
                     Validators.min(0),
                     Validators.pattern('[0-9.]*')
                 ]
+            ],
+            qty: [
+                '',
+                [
+                    Validators.required,
+                    Validators.min(0),
+                    Validators.pattern('[0-9.]*')
+                ]
             ]
         });
     }
@@ -213,5 +222,9 @@ export class AssignSkusComponent implements OnInit, OnChanges {
     }
     get value() {
         return this.addSKUForm.get('value');
+    }
+
+    get qty() {
+        return this.addSKUForm.get('qty');
     }
 }
