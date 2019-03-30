@@ -134,7 +134,7 @@ export class CreateTripComponent implements OnInit {
     fillTable() {
         const unsubscribe = this.orderService.getOrders().subscribe(orders => {
             let pendingOrders = Object.values(orders).filter(order =>
-                order.status ? null : order
+                order['status'] ? null : order
             );
             this.ordersTableDataSource = new MatTableDataSource(pendingOrders);
 
