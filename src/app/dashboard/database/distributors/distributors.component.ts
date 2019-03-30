@@ -6,7 +6,8 @@ import {
   state,
   style,
   transition,
-  animate
+  animate,
+  keyframes
 } from '@angular/animations';
 import {
   DistributorService,
@@ -19,17 +20,20 @@ import {
   styleUrls: ['./distributors.component.scss'],
   animations: [
     trigger('openNewDistritutorModal', [
-      state(
-        'close',
-        style({
-          width: '0px'
-        })
-      ),
-      state('open', style({ width: '*' })),
-      transition(
-        'close <=> open',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      )
+      transition('* => close', [
+        animate('225ms', keyframes([
+          style({ transform: 'scale(1)', offset: 0 }),
+          style({ transform: 'scale(1.2)', offset: 0.6 }),
+          style({ transform: 'scale(0.1)', offset: 1.0 }),
+        ]))
+      ]),
+      transition('* => open', [
+        animate('225ms', keyframes([
+          style({ transform: 'scale(0.1)', offset: 0 }),
+          style({ transform: 'scale(1.2)', offset: 0.6 }),
+          style({ transform: 'scale(1)', offset: 1.0 })
+        ]))
+      ]),
     ]),
     trigger('detailExpand', [
       state(
@@ -59,7 +63,7 @@ export class DistributorsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private distributorService: DistributorService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.createForm();

@@ -4,7 +4,8 @@ import {
   state,
   style,
   transition,
-  trigger
+  trigger,
+  keyframes
 } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SkuService } from '../services/sku.service';
@@ -17,17 +18,20 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
   styleUrls: ['./sku.component.scss'],
   animations: [
     trigger('openNewSKUModal', [
-      state(
-        'close',
-        style({
-          height: '0px'
-        })
-      ),
-      state('open', style({ height: '*' })),
-      transition(
-        'close <=> open',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      )
+      transition('* => close', [
+        animate('225ms', keyframes([
+          style({ transform: 'scale(1)', offset: 0 }),
+          style({ transform: 'scale(1.2)', offset: 0.6 }),
+          style({ transform: 'scale(0.1)', offset: 1.0 }),
+        ]))
+      ]),
+      transition('* => open', [
+        animate('225ms', keyframes([
+          style({ transform: 'scale(0.1)', offset: 0 }),
+          style({ transform: 'scale(1.2)', offset: 0.6 }),
+          style({ transform: 'scale(1)', offset: 1.0 })
+        ]))
+      ]),
     ])
   ]
 })
@@ -43,7 +47,7 @@ export class SkuComponent implements OnInit {
 
   @ViewChild('page') paginator: MatPaginator;
 
-  constructor(private fb: FormBuilder, private skuService: SkuService) {}
+  constructor(private fb: FormBuilder, private skuService: SkuService) { }
 
   ngOnInit() {
     this.createForm();

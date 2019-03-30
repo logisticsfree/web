@@ -16,7 +16,7 @@ import { AssignSkusComponent } from './assign-skus/assign-skus.component';
         SidebarComponent,
         DeliveryHomeComponent,
         CreateTripComponent,
-        AssignSkusComponent
+        AssignSkusComponent,
     ],
     imports: [
         CommonModule,
