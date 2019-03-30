@@ -14,7 +14,8 @@ import {
     state,
     style,
     transition,
-    animate
+    animate,
+    keyframes
 } from '@angular/animations';
 import { SkuService, SKU } from '../../database/services/sku.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
@@ -26,17 +27,20 @@ import { EventEmitter } from '@angular/core';
     styleUrls: ['./assign-skus.component.scss'],
     animations: [
         trigger('openNewSKUModal', [
-            state(
-                'close',
-                style({
-                    width: '0px'
-                })
-            ),
-            state('open', style({ width: '*' })),
-            transition(
-                'close <=> open',
-                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-            )
+            transition('* => close', [
+                animate('225ms', keyframes([
+                    style({ transform: 'scale(1)', offset: 0 }),
+                    style({ transform: 'scale(1.2)', offset: 0.6 }),
+                    style({ transform: 'scale(0.1)', offset: 1.0 }),
+                ]))
+            ]),
+            transition('* => open', [
+                animate('225ms', keyframes([
+                    style({ transform: 'scale(0.1)', offset: 0 }),
+                    style({ transform: 'scale(1.2)', offset: 0.6 }),
+                    style({ transform: 'scale(1)', offset: 1.0 })
+                ]))
+            ]),
         ]),
         trigger('slideInOut', [
             transition(':enter', [
@@ -80,7 +84,7 @@ export class AssignSkusComponent implements OnInit, OnChanges {
         private fb: FormBuilder,
         private skuService: SkuService,
         private orderService: OrderService
-    ) {}
+    ) { }
 
     ngOnInit() {
         if (!this.selectedOrder.skus) {
@@ -130,8 +134,9 @@ export class AssignSkusComponent implements OnInit, OnChanges {
             let updatedData = this.dataSource.data;
 
             for (let i = 0; i < updatedData.length; i++) {
-                if (updatedData[i].code == sku.code)
-                    updatedData = updatedData.splice(i, 1);
+                if (updatedData[i].code == sku.code) {
+                    updatedData.splice(i, 1);
+                }
             }
             this.dataSource = new MatTableDataSource(updatedData);
             this.skuDeleted.emit({ invoice: this.selectedOrder.invoice, sku });
@@ -195,6 +200,14 @@ export class AssignSkusComponent implements OnInit, OnChanges {
                     Validators.min(0),
                     Validators.pattern('[0-9.]*')
                 ]
+            ],
+            qty: [
+                '',
+                [
+                    Validators.required,
+                    Validators.min(0),
+                    Validators.pattern('[0-9.]*')
+                ]
             ]
         });
     }
@@ -213,5 +226,9 @@ export class AssignSkusComponent implements OnInit, OnChanges {
     }
     get value() {
         return this.addSKUForm.get('value');
+    }
+
+    get qty() {
+        return this.addSKUForm.get('qty');
     }
 }

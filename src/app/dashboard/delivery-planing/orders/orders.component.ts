@@ -79,7 +79,6 @@ export class OrdersComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private orderService: OrderService,
-        private skuService: SkuService,
         private distributorService: DistributorService
     ) {}
 
@@ -149,7 +148,7 @@ export class OrdersComponent implements OnInit {
     fillTable() {
         const unsubscribe = this.orderService.getOrders().subscribe(orders => {
             this.ordersTableDataSource = new MatTableDataSource(
-                Object.values(orders.data())
+                Object.values(orders)
             );
 
             setTimeout(() => {
