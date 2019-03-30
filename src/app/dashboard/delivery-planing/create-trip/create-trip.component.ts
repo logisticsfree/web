@@ -56,12 +56,9 @@ import {
     ]
 })
 export class CreateTripComponent implements OnInit {
-<<<<<<< HEAD
     // TODO: add two progress bars for weight and volume
     // TODO: fix animation
     
-=======
->>>>>>> 28d8f5d7a5abc11b21a924dd3f52a3c28ebd09b2
     trucks: any;
     ordersTableDataSource: any;
     ordersColumnsToDisplay: string[] = [
@@ -137,11 +134,7 @@ export class CreateTripComponent implements OnInit {
     fillTable() {
         const unsubscribe = this.orderService.getOrders().subscribe(orders => {
             let pendingOrders = Object.values(orders).filter(order =>
-<<<<<<< HEAD
                 order['status'] ? null : order
-=======
-                order.status ? null : order
->>>>>>> 28d8f5d7a5abc11b21a924dd3f52a3c28ebd09b2
             );
             this.ordersTableDataSource = new MatTableDataSource(pendingOrders);
 
