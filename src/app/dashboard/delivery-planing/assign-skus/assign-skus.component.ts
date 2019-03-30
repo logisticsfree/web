@@ -14,7 +14,8 @@ import {
     state,
     style,
     transition,
-    animate
+    animate,
+    keyframes
 } from '@angular/animations';
 import { SkuService, SKU } from '../../database/services/sku.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
@@ -26,17 +27,20 @@ import { EventEmitter } from '@angular/core';
     styleUrls: ['./assign-skus.component.scss'],
     animations: [
         trigger('openNewSKUModal', [
-            state(
-                'close',
-                style({
-                    width: '0px'
-                })
-            ),
-            state('open', style({ width: '*' })),
-            transition(
-                'close <=> open',
-                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-            )
+            transition('* => close', [
+                animate('225ms', keyframes([
+                    style({ transform: 'scale(1)', offset: 0 }),
+                    style({ transform: 'scale(1.2)', offset: 0.6 }),
+                    style({ transform: 'scale(0.1)', offset: 1.0 }),
+                ]))
+            ]),
+            transition('* => open', [
+                animate('225ms', keyframes([
+                    style({ transform: 'scale(0.1)', offset: 0 }),
+                    style({ transform: 'scale(1.2)', offset: 0.6 }),
+                    style({ transform: 'scale(1)', offset: 1.0 })
+                ]))
+            ]),
         ]),
         trigger('slideInOut', [
             transition(':enter', [

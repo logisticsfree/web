@@ -6,7 +6,7 @@
         <h1 *ngIf="assignOrdersView">Assign Orders</h1>
       </div>
       <div class="columns is-multiline">
-        <div *ngFor="let truck of trucks" [class.column]="assignOrdersViewData[truck.truck.vid] || !assignOrdersView"
+        <div [@grow]="assignOrdersView ? 'open' : 'close'" *ngFor="let truck of trucks" [class.column]="assignOrdersViewData[truck.truck.vid] || !assignOrdersView"
           [class.is-full]="assignOrdersView" [class.is-6]="!assignOrdersView">
           <div *ngIf="assignOrdersViewData[truck.truck.vid] || !assignOrdersView" class="card">
             <div class="card-content">
@@ -112,37 +112,18 @@
                   <!-- end Orders Table -->
                 </div>
                 <div class="buttons">
-                  <button *ngIf="assignOrdersView" (click)="saveOrders(truck)" class="button is-primary">Save Orders</button>
+                  <button *ngIf="assignOrdersView" (click)="showAssignOrdersView(truck)" class="button is-primary">Dismiss</button>
                   <button *ngIf="!assignOrdersView" (click)="showAssignOrdersView(truck)"
                     class="button is-primary">Assign Orders</button>
-                  <button *ngIf="assignOrdersView" (click)="showAssignOrdersView(truck)"
-                    class="button is-light">Cancel</button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-title">
-                <div class="field is-horizontal">
-                  <div class="fix-label field-label is-normal">
-                    <label class="label">LP-2342</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="content">asf</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- suggestions panel -->
-    <div *ngIf="!assignOrdersView" class="column">
+    <div *ngIf="!assignOrdersView" class="column" [@slideInOutFromLeft]>
       <div class="content is-small">
         <h1>Trip Suggestions</h1>
       </div>
