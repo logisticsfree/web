@@ -77,7 +77,6 @@ export class CreateTripComponent implements OnInit {
     constructor(
         private truckService: TruckService,
         private orderService: OrderService,
-        private element: ElementRef
     ) {}
 
     @ViewChild("ordersPaginator") orderPaginator: MatPaginator;
@@ -89,18 +88,13 @@ export class CreateTripComponent implements OnInit {
 
         this.fillTable();
     }
-    saveOrders(truck) {
-        this.truckService.saveOrderedTruck(truck);
-    }
     unassignOrder(truck, order) {
         order.status = 0;
 
         if (order.status) this.orderService.setStatus(order, order.status);
         else this.orderService.setStatus(order, 0);
 
-        delete truck.orders[order.invoice];
-
-        this.saveOrders(truck);
+        this.truckService.removeOrder(truck, order);
     }
     assignOrder(truck, order) {
         order.status = 1;
@@ -113,7 +107,7 @@ export class CreateTripComponent implements OnInit {
         if (order.status) this.orderService.setStatus(order, order.status);
         else this.orderService.setStatus(order, 0);
 
-        this.saveOrders(truck);
+        this.truckService.saveOrderedTruck(truck);
     }
 
     showAssignOrdersView(truck) {
