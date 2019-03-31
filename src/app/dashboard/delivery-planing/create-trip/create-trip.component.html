@@ -11,7 +11,8 @@
           <div *ngIf="assignOrdersViewData[truck.truck.vid] || !assignOrdersView" class="card">
             <div class="card-content">
               <div class="content">
-                <h3>{{ truck.truck.vid }}</h3>
+                <!-- <h3>{{ truck.truck.vid }}</h3> -->
+                <app-driver-card [truck]="truck.truck"></app-driver-card>
                 <p>Max Volume: {{ truck.truck.volume }}
                   <progress class="progress is-large" [value]="getTotalVolume(truck)" [max]="truck.truck.volume">60%</progress>
                 </p>
