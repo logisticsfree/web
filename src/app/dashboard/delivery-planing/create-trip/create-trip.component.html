@@ -12,7 +12,12 @@
             <div class="card-content">
               <div class="content">
                 <h3>{{ truck.truck.vid }}</h3>
-                <p>Max Volume: {{ truck.truck.volume }} | Max weight: {{ truck.truck.weight }}</p>
+                <p>Max Volume: {{ truck.truck.volume }}
+                  <progress class="progress is-large" [value]="getTotalVolume(truck)" [max]="truck.truck.volume">60%</progress>
+                </p>
+                <p>Max weight: {{ truck.truck.weight }}
+                  <progress class="progress is-large" [value]="getTotalWeight(truck)" [max]="truck.truck.weight">60%</progress>
+                </p>
 
                 <div *ngIf="assignOrdersView" class="columns">
                   <div class="column if-half">
@@ -24,6 +29,7 @@
                         <li *ngFor="let order of getOrders(truck)"><a>Invoice No:
                             <strong>{{ order.invoice }}</strong> -
                             Distributor: <strong>{{ order.distributor.name }}</strong>
+                            
                             <button (click)="unassignOrder(truck, order)" style="margin-left:10px"
                               class="button is-danger is-outlined is-small">
                               <span>Remove</span>

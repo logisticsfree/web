@@ -125,6 +125,24 @@ export class CreateTripComponent implements OnInit {
         this.ordersTableDataSource.filter = filterValue.trim().toLowerCase();
     }
 
+    // TODO : replace with firebase Function
+    getTotalWeight(truck) {
+        let totalWeight = 0;
+        Object.values(truck.orders).forEach(order => {
+            totalWeight += parseFloat(order['weight']);
+        });
+        return totalWeight;
+    }
+
+    // TODO : replace with firebase Function
+    getTotalVolume(truck) {
+        let totalVolume = 0;
+        Object.values(truck.orders).forEach(order => {
+            totalVolume += parseFloat(order['volume']);
+        });
+        return totalVolume;
+    }
+
     fillTable() {
         const unsubscribe = this.orderService.getOrders().subscribe(orders => {
             let pendingOrders = Object.values(orders).filter(order =>
