@@ -9,6 +9,7 @@ import { CreateTripComponent } from './create-trip/create-trip.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { AssignSkusComponent } from './assign-skus/assign-skus.component';
+import { DriverCardComponent } from 'src/app/partials/driver-card/driver-card.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { AssignSkusComponent } from './assign-skus/assign-skus.component';
         SidebarComponent,
         DeliveryHomeComponent,
         CreateTripComponent,
-        AssignSkusComponent
+        AssignSkusComponent,
+        DriverCardComponent
     ],
     imports: [
         CommonModule,

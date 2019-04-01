@@ -1,10 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Order, OrderService } from '../services/order.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import {
+    MatTableDataSource,
+    MatPaginator,
+    MatTab,
+    MatTable
+} from '@angular/material';
 import { SkuService } from '../../database/services/sku.service';
 import { DistributorService } from '../../database/services/distributor.service';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+    trigger,
+    transition,
+    style,
+    animate,
+    state
+} from '@angular/animations';
 
 @Component({
     selector: 'app-orders',
@@ -34,6 +45,11 @@ import { trigger, transition, style, animate } from '@angular/animations';
                     style({ transform: 'translateX(100%)' })
                 )
             ])
+        ]),
+        trigger('moveLeft', [
+            state('left', style({})),
+            state('right', style({})),
+            transition('left <=> right', animate('2000ms ease-in'))
         ])
     ]
 })
@@ -42,13 +58,13 @@ export class OrdersComponent implements OnInit {
     addSKUForm: FormGroup;
     newOrderFormeLoading;
     ordersTableDataSource;
-    skusTableDataSource;
     SKUs;
     distributors;
 
     showNewOrderForm = true;
     showNewSKUModal = false;
     selectedOrder: Order;
+    orderTableState = 'right';
 
     ordersColumnsToDisplay: string[] = [
         'invoice',
@@ -63,12 +79,10 @@ export class OrdersComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private orderService: OrderService,
-        private skuService: SkuService,
         private distributorService: DistributorService
     ) {}
 
     @ViewChild('ordersPaginator') orderPaginator: MatPaginator;
-    @ViewChild('skusPaginator') skuPaginator: MatPaginator;
 
     ngOnInit() {
         this.createForm();
@@ -80,18 +94,34 @@ export class OrdersComponent implements OnInit {
                 unc.unsubscribe();
             });
     }
+    unassignSKU(sku) {
+        let newData = this.ordersTableDataSource.data;
+
+        for (let i = 0; i < newData.length; i++) {
+            if (sku.invoice == newData[i].invoice)
+                delete newData[i].skus[sku.sku.code];
+        }
+
+        this.ordersTableDataSource = new MatTableDataSource(newData);
+    }
+    addNewlyAddedSkuToOrdersTable(row) {
+        const newData = this.ordersTableDataSource.data;
+        for (let i = 0; i < newData.length; i++) {
+            if (row.invoice == newData[i].invoice) newData[i] = row;
+        }
+
+        console.log(this.selectedOrder, row);
+        this.selectedOrder = row;
+        this.ordersTableDataSource = new MatTableDataSource(newData);
+    }
 
     selectInvoice(row) {
         this.showNewOrderForm = false;
         this.selectedOrder = row;
-        this.skusTableDataSource = new MatTableDataSource(row.skus);
-        console.log(this.skusTableDataSource);
+        // console.log(row);
     }
     applyOrderFilter(filterValue: string) {
         this.ordersTableDataSource.filter = filterValue.trim().toLowerCase();
-    }
-    applySKUFilter(filterValue: string) {
-        this.skusTableDataSource.filter = filterValue.trim().toLowerCase();
     }
 
     addOrder(formValues) {
@@ -118,7 +148,7 @@ export class OrdersComponent implements OnInit {
     fillTable() {
         const unsubscribe = this.orderService.getOrders().subscribe(orders => {
             this.ordersTableDataSource = new MatTableDataSource(
-                Object.values(orders.data())
+                Object.values(orders)
             );
 
             setTimeout(() => {

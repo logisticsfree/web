@@ -1,26 +1,53 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/core/auth.service';
 import {
-    AngularFirestoreDocument,
-    AngularFirestore
+    AngularFirestore,
+    AngularFirestoreDocument
 } from '@angular/fire/firestore';
 import { Distributor } from '../../database/services/distributor.service';
-import { SKU } from '../../database/services/sku.service';
-
+import * as firebase from 'firebase';
+interface SKU {
+    code: string;
+    name: string
+    volume: number;
+    weight: number;
+    value: number;
+    qty: number;
+}
 export interface Order {
     invoice: string;
     distributor: Distributor;
     volume: number;
     weight: number;
     value: number;
+    skus: {};
+    status: number;
 }
 @Injectable({
     providedIn: 'root'
 })
 export class OrderService {
-    constructor(private auth: AuthService, private afs: AngularFirestore) {}
+    constructor(private auth: AuthService, private afs: AngularFirestore) { }
 
-    assignSKU(invoice, values) {
+    unassignSKU(invoice, sku): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const uid = this.auth.user.uid;
+            const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
+                `orders/${uid}`
+            );
+
+            orderRef
+                .update({
+                    [`${invoice}.skus.${
+                        sku.code
+                        }`]: firebase.firestore.FieldValue.delete()
+                })
+                .then(res => resolve())
+                .catch(err => reject(err));
+        });
+    }
+
+    assignSKU(invoice, values): Promise<any> {
         return new Promise((resolve, reject) => {
             const uid = this.auth.user.uid;
             const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
@@ -31,7 +58,8 @@ export class OrderService {
                 name: values.name,
                 volume: values.volume,
                 weight: values.weight,
-                value: values.value
+                value: values.value,
+                qty: values.qty
             };
 
             orderRef
@@ -50,11 +78,18 @@ export class OrderService {
             `orders/${uid}`
         );
 
-        return orderRef.get();
+        return orderRef.valueChanges();
     }
 
     addOrder(values) {
         return this.updateOrderData(this.auth.user.uid, values);
+    }
+    setStatus (order, status) {
+        const uid = this.auth.user.uid;
+        const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
+            `orders/${uid}`
+        );
+        return orderRef.set({[order.invoice]: {status}}, {merge: true})
     }
 
     updateOrderData(uid, data): Promise<Order> {
@@ -68,7 +103,9 @@ export class OrderService {
                 invoice: data.invoice,
                 volume: data.volume,
                 weight: data.weight,
-                value: data.value
+                value: data.value,
+                status: 0,
+                skus: {}
             };
 
             return orderRef
