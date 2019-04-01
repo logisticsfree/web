@@ -27,6 +27,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { TestComponent } from './test/test.component';
 import { DatabaseModule } from './dashboard/database/database.module';
 import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-planing.module';
+import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicle-procurement.module';
+
+
+
 
 @NgModule({
     declarations: [
@@ -38,12 +42,14 @@ import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-pla
         FooterComponent,
         UserComponent,
         PageNotFoundComponent,
-        TestComponent
+        TestComponent,
+        
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         DatabaseModule,
+        VehicleProcurementModule,
         DeliveryPlaningModule,
         AppRoutingModule,
         ReactiveFormsModule,
