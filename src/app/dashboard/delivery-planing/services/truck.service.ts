@@ -6,6 +6,7 @@ import {
 import { AuthService } from "src/app/core/auth.service";
 import * as firebase from 'firebase';
 
+
 interface Truck {
     date: string;
     time: string;

@@ -1,0 +1,10 @@
+.is-scrolable {
+    height: 100%;
+
+    .columns {
+        height: 75vh;
+        display: flex;
+        overflow-y: auto;
+        flex-direction: row;
+    }
+}

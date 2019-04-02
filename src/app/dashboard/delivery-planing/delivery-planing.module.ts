@@ -10,6 +10,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { AssignSkusComponent } from './assign-skus/assign-skus.component';
 import { DriverCardComponent } from 'src/app/partials/driver-card/driver-card.component';
+import { EditRouteComponent } from './edit-route/edit-route.component';
+import { EditRouteMapComponent } from './edit-route-map/edit-route-map.component';
+import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
     declarations: [
@@ -18,14 +23,20 @@ import { DriverCardComponent } from 'src/app/partials/driver-card/driver-card.co
         DeliveryHomeComponent,
         CreateTripComponent,
         AssignSkusComponent,
-        DriverCardComponent
+        DriverCardComponent,
+        EditRouteComponent,
+        EditRouteMapComponent
     ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         DeliveryPlaningRoutingModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        AgmCoreModule.forRoot({
+            apiKey: environment.firebase.apiKey
+        }),
+        AgmDirectionModule
     ]
 })
 export class DeliveryPlaningModule {}

@@ -1,37 +1,43 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DeliveryHomeComponent } from './delivery-home/delivery-home.component';
-import { AuthGuard } from 'src/app/core/auth.guard';
-import { OrdersComponent } from './orders/orders.component';
-import { CreateTripComponent } from './create-trip/create-trip.component';
-import { AssignSkusComponent } from './assign-skus/assign-skus.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { DeliveryHomeComponent } from "./delivery-home/delivery-home.component";
+import { AuthGuard } from "src/app/core/auth.guard";
+import { OrdersComponent } from "./orders/orders.component";
+import { CreateTripComponent } from "./create-trip/create-trip.component";
+import { AssignSkusComponent } from "./assign-skus/assign-skus.component";
+import { EditRouteComponent } from "./edit-route/edit-route.component";
 
 const routes: Routes = [
     {
-        path: 'delivery-planing',
+        path: "delivery-planing",
         component: DeliveryHomeComponent,
         canActivate: [AuthGuard],
         children: [
             {
-                path: '',
+                path: "",
                 component: OrdersComponent,
-                outlet: 'delivery'
+                outlet: "delivery"
             },
             {
-                path: 'orders',
+                path: "orders",
                 component: OrdersComponent,
-                outlet: 'delivery',
+                outlet: "delivery",
                 children: [
                     {
-                        path: ':id',
+                        path: ":id",
                         component: AssignSkusComponent
                     }
                 ]
             },
             {
-                path: 'create-trip',
+                path: "create-trip",
                 component: CreateTripComponent,
-                outlet: 'delivery'
+                outlet: "delivery"
+            },
+            {
+                path: "edit-route",
+                component: EditRouteComponent,
+                outlet: "delivery"
             }
         ]
     }
