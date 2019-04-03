@@ -22,4 +22,4 @@ import { OrderVehicleComponent } from './order-vehicle/order-vehicle.component';
             apiKey: environment.firebase.apiKey
         })]
 })
-export class VehicleProcurementModule {}
+ export class VehicleProcurementModule {}
