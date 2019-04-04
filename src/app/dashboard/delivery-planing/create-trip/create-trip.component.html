@@ -6,18 +6,19 @@
         <h1 *ngIf="assignOrdersView">Assign Orders</h1>
       </div>
       <div class="columns is-multiline">
-        <div [@grow]="assignOrdersView ? 'open' : 'close'" *ngFor="let truck of trucks" [class.column]="assignOrdersViewData[truck.truck.vid] || !assignOrdersView"
+        <div [@grow]="assignOrdersView ? 'open' : 'close'" *ngFor="let truck of trucks" [class.column]="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView"
           [class.is-full]="assignOrdersView" [class.is-6]="!assignOrdersView">
-          <div *ngIf="assignOrdersViewData[truck.truck.vid] || !assignOrdersView" class="card">
+          <div *ngIf="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView" class="card">
             <div class="card-content">
               <div class="content">
                 <!-- <h3>{{ truck.truck.vid }}</h3> -->
-                <app-driver-card [truck]="truck.truck"></app-driver-card>
-                <p>Max Volume: {{ truck.truck.volume }}
-                  <progress class="progress is-large" [value]="getTotalVolume(truck)" [max]="truck.truck.volume">60%</progress>
+                <app-driver-card *ngIf="truck.truck" [truck]="truck.truck"></app-driver-card>
+
+                <p>Max Volume: {{ truck.truck?.volume || 100}}
+                  <progress class="progress is-large" [value]="getTotalVolume(truck)" [max]="truck.truck?.volume || 0">60%</progress>
                 </p>
-                <p>Max weight: {{ truck.truck.weight }}
-                  <progress class="progress is-large" [value]="getTotalWeight(truck)" [max]="truck.truck.weight">60%</progress>
+                <p>Max weight: {{ truck.truck?.weight || 100 }}
+                  <progress class="progress is-large" [value]="getTotalWeight(truck)" [max]="truck.truck?.weight || 0">60%</progress>
                 </p>
 
                 <div *ngIf="assignOrdersView" class="columns">
