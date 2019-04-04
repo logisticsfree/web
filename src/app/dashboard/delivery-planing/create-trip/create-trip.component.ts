@@ -56,9 +56,8 @@ import {
     ]
 })
 export class CreateTripComponent implements OnInit {
-    // TODO: add two progress bars for weight and volume
     // TODO: fix animation
-    
+
     trucks: any;
     ordersTableDataSource: any;
     ordersColumnsToDisplay: string[] = [
@@ -76,7 +75,7 @@ export class CreateTripComponent implements OnInit {
 
     constructor(
         private truckService: TruckService,
-        private orderService: OrderService,
+        private orderService: OrderService
     ) {}
 
     @ViewChild("ordersPaginator") orderPaginator: MatPaginator;
@@ -127,18 +126,20 @@ export class CreateTripComponent implements OnInit {
 
     // TODO : replace with firebase Function
     getTotalWeight(truck) {
+        if (!truck.orders) return 0;
         let totalWeight = 0;
         Object.values(truck.orders).forEach(order => {
-            totalWeight += parseFloat(order['weight']);
+            totalWeight += parseFloat(order["weight"]);
         });
         return totalWeight;
     }
 
     // TODO : replace with firebase Function
     getTotalVolume(truck) {
+        if (!truck.orders) return 0;
         let totalVolume = 0;
         Object.values(truck.orders).forEach(order => {
-            totalVolume += parseFloat(order['volume']);
+            totalVolume += parseFloat(order["volume"]);
         });
         return totalVolume;
     }
@@ -146,7 +147,7 @@ export class CreateTripComponent implements OnInit {
     fillTable() {
         const unsubscribe = this.orderService.getOrders().subscribe(orders => {
             let pendingOrders = Object.values(orders).filter(order =>
-                order['status'] ? null : order
+                order["status"] ? null : order
             );
             this.ordersTableDataSource = new MatTableDataSource(pendingOrders);
 

@@ -11,5 +11,10 @@
                 <span class="icon"><i class="fa fa-drafting-compass"></i></span> Create Trip
             </a>
         </li>
+        <li>
+            <a [routerLink]="[{ outlets: { delivery: ['edit-route'] } }]" routerLinkActive="is-active">
+                <span class="icon"><i class="fa fa-route"></i></span> Edit Route
+            </a>
+        </li>
     </ul>
 </aside>
