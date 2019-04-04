@@ -8,9 +8,9 @@ import { Component, OnInit, Input } from "@angular/core";
 export class EditRouteMapComponent implements OnInit {
     origin: any;
     waypoints = [];
-	destination: any;
+    destination: any;
     private _trip: any;
-	
+
     constructor() {}
 
     @Input() set trip(trip: any) {
@@ -20,17 +20,20 @@ export class EditRouteMapComponent implements OnInit {
 
         let last: any = orders[orders.length - 1]["distributor"];
         this.origin = { lat: first.latitude, lng: first.longitude };
-		this.destination = { lat: last.latitude, lng: last.longitude };
+        this.destination = { lat: last.latitude, lng: last.longitude };
 
-		if (orders.length > 2) {
-			for (let i = 1; i < orders.length - 1; i++) {
-				const order = orders[i];
-				console.log(this, order);
-				const waypoint = {location: {lat: order['distributor'].latitude, lng: order['distributor'].longitude}};
-				this.waypoints.push(waypoint);
-			}
-		}
-
+        if (orders.length > 2) {
+            for (let i = 1; i < orders.length - 1; i++) {
+                const order = orders[i];
+                const waypoint = {
+                    location: {
+                        lat: order["distributor"].latitude,
+                        lng: order["distributor"].longitude
+                    }
+                };
+                this.waypoints.push(waypoint);
+            }
+        }
     }
 
     get trip() {

@@ -1,19 +1,17 @@
 <div class="content">
-    <h1>{{ trip.truck.vid }}</h1>
+	<h1>{{ trip.truck.vid }}</h1>
 </div>
 
-<agm-map
-[fitBounds]="true"
-    [latitude]="origin.lat"
-    [longitude]="origin.lng">
-    <!-- <agm-marker
+<agm-map [fitBounds]="true" [latitude]="origin.lat" [longitude]="origin.lng">
+	<!-- <agm-marker
         [markerDraggable]="true"
         [title]="trip.truck.vid"
         [latitude]="element.latitude"
         [longitude]="element.longitude"
 	></agm-marker> -->
 	<agm-direction
-	[origin]="origin"
-	[waypoints]="waypoints"
-	[destination]="destination"></agm-direction>
+		[origin]="origin"
+		[waypoints]="waypoints"
+		[destination]="destination"
+	></agm-direction>
 </agm-map>
