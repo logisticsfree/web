@@ -13,8 +13,9 @@ import { OrderTruckComponent } from './order-truck/order-truck.component';
 import { HistoryComponent } from './history/history.component';
 import { OrderSpecificVeficleComponent } from './order-specific-veficle/order-specific-veficle.component';
 import { OrderVehicleComponent } from './order-vehicle/order-vehicle.component';
+import { ShowOrderMapComponent } from './show-order-map/show-order-map.component';
 @NgModule({
-  declarations: [VehicleProcurementHomeComponent, OrderComponent, SidebarComponent, OrderTruckComponent, HistoryComponent, OrderSpecificVeficleComponent, OrderVehicleComponent],
+  declarations: [VehicleProcurementHomeComponent, OrderComponent, SidebarComponent, OrderTruckComponent, HistoryComponent, OrderSpecificVeficleComponent, OrderVehicleComponent, ShowOrderMapComponent],
   imports: [CommonModule, VehicleProcurementRoutingModule,  MatTableModule,
         MatPaginatorModule,
         ReactiveFormsModule,
