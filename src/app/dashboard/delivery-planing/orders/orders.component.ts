@@ -81,7 +81,6 @@ export class OrdersComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private orderService: OrderService,
-        private warehouseServie: WarehouseService,
         private distributorService: DistributorService
     ) {}
 
@@ -95,12 +94,6 @@ export class OrdersComponent implements OnInit {
             .subscribe(dists => {
                 this.distributors = Object.values(dists.data());
                 unc.unsubscribe();
-            });
-        const uns = this.warehouseServie
-            .getWarehouses()
-            .subscribe(warehouses => {
-                this.warehouses = Object.values(warehouses.data());
-                uns.unsubscribe();
             });
     }
     unassignSKU(sku) {
@@ -174,10 +167,6 @@ export class OrdersComponent implements OnInit {
                 "Please Select..",
                 [Validators.required, Validators.pattern("((?!Select).)*")]
             ],
-            warehouse: [
-                "Please Select..",
-                [Validators.required, Validators.pattern("((?!Select).)*")]
-            ],
             invoice: ["", Validators.required],
             volume: [
                 "",
@@ -208,9 +197,6 @@ export class OrdersComponent implements OnInit {
 
     get distributor() {
         return this.newOrderForm.get("distributor");
-    }
-    get warehouse() {
-        return this.newOrderForm.get("warehouse");
     }
     get invoice() {
         return this.newOrderForm.get("invoice");

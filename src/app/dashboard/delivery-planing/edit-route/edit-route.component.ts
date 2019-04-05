@@ -19,8 +19,8 @@ export class EditRouteComponent implements OnInit {
                 return truck;
             }
         });
-	}
-	
+    }
+
     selectedTrip: any;
 
     constructor(private truckService: TruckService) {}
@@ -33,7 +33,7 @@ export class EditRouteComponent implements OnInit {
 
     selectTrip(truck) {
         this.selectedTrip = truck;
-        console.log(this.selectedTrip);
+        console.log("selectedTrip", this.selectedTrip);
     }
 
     // TODO : replace with firebase Function
