@@ -4,18 +4,22 @@
 <div class="columns">
 	<div class="column is-scrolable is-one-third">
 		<div class="columns is-multiline is-fullheight" *ngIf="trucks" >
-			<div *ngFor="let truck of trucksWithOrders" class="column is-full">
-				<div class="card is-hoverable" (click)="selectTrip(truck)">
+			<div *ngFor="let truck of trucksWithOrders" class="column is-full" 
+			[class.fade]="selectedTrip && selectedTrip?.truck.vid !== truck?.truck.vid">
+				<div class="card is-hoverable" (click)="selectTrip(truck)" 
+				[class.is-selected]="selectedTrip && selectedTrip?.truck.vid === truck?.truck.vid">
 					<div class="card-content">
 						<div class="content">
                 			<app-driver-card *ngIf="truck.truck" [truck]="truck.truck">
                 			</app-driver-card>
-							<p>Max Volume: {{ truck.truck?.volume || 100}}
-			                  <progress class="progress is-small" [value]="getTotalVolume(truck)" [max]="truck.truck?.volume || 0">60%</progress>
-			                </p>
-			                <p>Max weight: {{ truck.truck?.weight || 100 }}
-			                  <progress class="progress is-small" [value]="getTotalWeight(truck)" [max]="truck.truck?.weight || 0">60%</progress>
-			                </p>
+							<p>Est. Time: 
+								<span *ngIf="truck.estimate"> {{ formatDuration(truck.estimate.duration) }} </span>
+								<span *ngIf="!truck.estimate" class="menu-label"> Click to calculate </span>
+							</p>
+							<p>Est. Distance: 
+								<span *ngIf="truck.estimate"> {{ formatDistance(truck.estimate.distance) }} </span>
+								<span *ngIf="!truck.estimate" class="menu-label"> Click to calculate </span>
+							</p>
 						</div>
 						<div class="buttons">
 							<div class="button is-primary" (click)="selectTrip(truck)">Select</div>
@@ -27,7 +31,7 @@
 	</div>
 	<div class="column">
 		<div *ngIf="selectedTrip">
-			<app-edit-route-map [trip]="selectedTrip"></app-edit-route-map>
+			<app-edit-route-map [trip]="selectedTrip" (onChange)="gotDirection($event)"></app-edit-route-map>
 		</div>
 	</div>
 </div>

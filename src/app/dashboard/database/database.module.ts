@@ -10,13 +10,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DistributorsComponent } from './distributors/distributors.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
+import { WarehousesComponent } from './warehouses/warehouses.component';
 
 @NgModule({
     declarations: [
         SkuComponent,
         SidebarComponent,
         DatabaseHomeComponent,
-        DistributorsComponent
+        DistributorsComponent,
+        WarehousesComponent
     ],
     imports: [
         CommonModule,

@@ -1,0 +1,73 @@
+.md-table-header {
+    border-bottom: 1px solid rgb(230, 230, 230);
+    text-align: initial;
+    font-size: initial;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+    border-width: 0 0 2px;
+    color: #363636;
+}
+
+.table thead td,
+.table thead th {
+    border-width: 0 0 2px;
+    color: #363636;
+}
+
+.table td,
+.table th {
+    border: 1px solid #dbdbdb;
+    border-width: 0 0 1px;
+    padding: 0.5em 0.75em;
+    vertical-align: top;
+    text-align: left;
+}
+
+.row-expand-should-hide td {
+    padding: 0;
+}
+
+table {
+    width: 100%;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+    width: 100%;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+agm-map {
+    height: 300px;
+}

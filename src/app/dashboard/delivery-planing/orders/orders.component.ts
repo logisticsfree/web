@@ -1,55 +1,56 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Order, OrderService } from '../services/order.service';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Order, OrderService } from "../services/order.service";
 import {
     MatTableDataSource,
     MatPaginator,
     MatTab,
     MatTable
-} from '@angular/material';
-import { SkuService } from '../../database/services/sku.service';
-import { DistributorService } from '../../database/services/distributor.service';
+} from "@angular/material";
+import { SkuService } from "../../database/services/sku.service";
+import { DistributorService } from "../../database/services/distributor.service";
+import { WarehouseService } from "../../database/services/warehouse.service";
 import {
     trigger,
     transition,
     style,
     animate,
     state
-} from '@angular/animations';
+} from "@angular/animations";
 
 @Component({
-    selector: 'app-orders',
-    templateUrl: './orders.component.html',
-    styleUrls: ['./orders.component.scss'],
+    selector: "app-orders",
+    templateUrl: "./orders.component.html",
+    styleUrls: ["./orders.component.scss"],
     animations: [
-        trigger('slideInOut', [
-            transition(':enter', [
-                style({ transform: 'translateY(-100%)' }),
-                animate('200ms ease-in', style({ transform: 'translateY(0%)' }))
+        trigger("slideInOut", [
+            transition(":enter", [
+                style({ transform: "translateY(-100%)" }),
+                animate("200ms ease-in", style({ transform: "translateY(0%)" }))
             ]),
-            transition(':leave', [
+            transition(":leave", [
                 animate(
-                    '200ms ease-in',
-                    style({ transform: 'translateY(-100%)' })
+                    "200ms ease-in",
+                    style({ transform: "translateY(-100%)" })
                 )
             ])
         ]),
-        trigger('slideInOutFromLeft', [
-            transition(':enter', [
-                style({ transform: 'translateX(100%)' }),
-                animate('200ms ease-in', style({ transform: 'translateX(0%)' }))
+        trigger("slideInOutFromLeft", [
+            transition(":enter", [
+                style({ transform: "translateX(100%)" }),
+                animate("200ms ease-in", style({ transform: "translateX(0%)" }))
             ]),
-            transition(':leave', [
+            transition(":leave", [
                 animate(
-                    '200ms ease-in',
-                    style({ transform: 'translateX(100%)' })
+                    "200ms ease-in",
+                    style({ transform: "translateX(100%)" })
                 )
             ])
         ]),
-        trigger('moveLeft', [
-            state('left', style({})),
-            state('right', style({})),
-            transition('left <=> right', animate('2000ms ease-in'))
+        trigger("moveLeft", [
+            state("left", style({})),
+            state("right", style({})),
+            transition("left <=> right", animate("2000ms ease-in"))
         ])
     ]
 })
@@ -60,18 +61,19 @@ export class OrdersComponent implements OnInit {
     ordersTableDataSource;
     SKUs;
     distributors;
+    warehouses;
 
     showNewOrderForm = true;
     showNewSKUModal = false;
     selectedOrder: Order;
-    orderTableState = 'right';
+    orderTableState = "right";
 
     ordersColumnsToDisplay: string[] = [
-        'invoice',
-        'distributor',
-        'volume',
-        'weight',
-        'value'
+        "invoice",
+        "distributor",
+        "volume",
+        "weight",
+        "value"
     ];
 
     expandedElement: Order | null;
@@ -82,7 +84,7 @@ export class OrdersComponent implements OnInit {
         private distributorService: DistributorService
     ) {}
 
-    @ViewChild('ordersPaginator') orderPaginator: MatPaginator;
+    @ViewChild("ordersPaginator") orderPaginator: MatPaginator;
 
     ngOnInit() {
         this.createForm();
@@ -162,50 +164,50 @@ export class OrdersComponent implements OnInit {
     createForm() {
         this.newOrderForm = this.fb.group({
             distributor: [
-                'Please Select..',
-                [Validators.required, Validators.pattern('((?!Select).)*')]
+                "Please Select..",
+                [Validators.required, Validators.pattern("((?!Select).)*")]
             ],
-            invoice: ['', Validators.required],
+            invoice: ["", Validators.required],
             volume: [
-                '',
+                "",
                 [
                     Validators.required,
                     Validators.min(0),
-                    Validators.pattern('[0-9.]*')
+                    Validators.pattern("[0-9.]*")
                 ]
             ],
             weight: [
-                '',
+                "",
                 [
                     Validators.required,
                     Validators.min(0),
-                    Validators.pattern('[0-9.]*')
+                    Validators.pattern("[0-9.]*")
                 ]
             ],
             value: [
-                '',
+                "",
                 [
                     Validators.required,
                     Validators.min(0),
-                    Validators.pattern('[0-9.]*')
+                    Validators.pattern("[0-9.]*")
                 ]
             ]
         });
     }
 
     get distributor() {
-        return this.newOrderForm.get('distributor');
+        return this.newOrderForm.get("distributor");
     }
     get invoice() {
-        return this.newOrderForm.get('invoice');
+        return this.newOrderForm.get("invoice");
     }
     get volume() {
-        return this.newOrderForm.get('volume');
+        return this.newOrderForm.get("volume");
     }
     get weight() {
-        return this.newOrderForm.get('weight');
+        return this.newOrderForm.get("weight");
     }
     get value() {
-        return this.newOrderForm.get('value');
+        return this.newOrderForm.get("value");
     }
 }
