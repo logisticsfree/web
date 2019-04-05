@@ -6,7 +6,8 @@
 		<div class="columns is-multiline is-fullheight" *ngIf="trucks" >
 			<div *ngFor="let truck of trucksWithOrders" class="column is-full" 
 			[class.fade]="selectedTrip && selectedTrip?.truck.vid !== truck?.truck.vid">
-				<div class="card is-hoverable" (click)="selectTrip(truck)" [class.is-selected]="selectedTrip && selectedTrip?.truck.vid === truck?.truck.vid">
+				<div class="card is-hoverable" (click)="selectTrip(truck)" 
+				[class.is-selected]="selectedTrip && selectedTrip?.truck.vid === truck?.truck.vid">
 					<div class="card-content">
 						<div class="content">
                 			<app-driver-card *ngIf="truck.truck" [truck]="truck.truck">
