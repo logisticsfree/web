@@ -35,6 +35,20 @@ export class TruckService {
                 .catch(err => reject(err));
         });
     }
+    saveEstimates(truck) {
+        const uid = this.auth.user.uid;
+        const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
+            `ordered-trucks/${uid}`
+        );
+        return orderedTrucksRef.set(
+            {
+                [truck.truck.vid]: {
+                    estimate: truck.estimate
+                }
+            },
+            { merge: true }
+        );
+    }
 
     saveOrderedTruck(truck) {
         const uid = this.auth.user.uid;

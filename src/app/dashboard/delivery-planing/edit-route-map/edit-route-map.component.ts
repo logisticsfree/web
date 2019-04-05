@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component, Input, Output, OnInit, EventEmitter } from "@angular/core";
 import { TruckService } from "../services/truck.service";
 
 @Component({
@@ -15,9 +15,15 @@ export class EditRouteMapComponent implements OnInit {
     coordinates: any = {};
     private _trip: any;
 
+    @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
+
     constructor(private truckService: TruckService) {}
 
     ngOnInit() {}
+
+    onMapChange(event) {
+        this.onChange.emit(event);
+    }
 
     @Input() set trip(trip: any) {
         this._trip = trip;

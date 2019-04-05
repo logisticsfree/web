@@ -5,6 +5,7 @@
 	
 <agm-map [fitBounds]="true" [latitude]="coordinates.warehouse.lat" [longitude]="coordinates.warehouse.lng">
 	<agm-direction
+		(onChange)="onMapChange($event)"
 		[origin]="coordinates.warehouse"
 		[waypoints]="coordinates.waypoints"
 		[destination]="coordinates.destination">

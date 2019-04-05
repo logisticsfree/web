@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TruckService } from "../services/truck.service";
+import * as moment from "moment";
 
 @Component({
     selector: "app-edit-route",
@@ -29,6 +30,40 @@ export class EditRouteComponent implements OnInit {
         this.truckService.getOrderedTrucks().subscribe(trucks => {
             this.trucks = Object.values(trucks);
         });
+    }
+
+    gotDirection(event) {
+        const legs = event.routes[0].legs;
+        let distance = 0;
+        let duration = 0;
+        legs.forEach(leg => {
+            distance += leg.distance.value;
+            duration += leg.duration.value;
+        });
+
+        let estimates = { distance, duration };
+        if (
+            this.selectedTrip.estimate &&
+            this.selectedTrip.estimate.duration == estimates.duration &&
+            this.selectedTrip.estimate.distance == estimates.distance
+        ) {
+            return;
+        }
+
+        this.selectedTrip.estimate = estimates;
+        this.truckService.saveEstimates(this.selectedTrip);
+    }
+
+    formatDuration(time) {
+        return moment.duration(time, "seconds").humanize();
+    }
+    formatDistance(distance) {
+        let km = distance / 1000;
+        if (km < 1) {
+            return distance + " m";
+        } else {
+            return km + " km";
+        }
     }
 
     selectTrip(truck) {
