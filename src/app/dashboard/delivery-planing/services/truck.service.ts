@@ -4,8 +4,7 @@ import {
     AngularFirestoreDocument
 } from "@angular/fire/firestore";
 import { AuthService } from "src/app/core/auth.service";
-import * as firebase from 'firebase';
-
+import * as firebase from "firebase";
 
 interface Truck {
     date: string;
@@ -22,19 +21,33 @@ export class TruckService {
 
     removeOrder(truck, order) {
         return new Promise((resolve, reject) => {
+            const uid = this.auth.user.uid;
+            const orderedTrucksRef: AngularFirestoreDocument<
+                any
+            > = this.afs.doc(`ordered-trucks/${uid}`);
+            orderedTrucksRef
+                .update({
+                    [`${truck.truck.vid}.orders.${
+                        order.invoice
+                    }`]: firebase.firestore.FieldValue.delete()
+                })
+                .then(res => resolve())
+                .catch(err => reject(err));
+        });
+    }
+    saveEstimates(truck) {
         const uid = this.auth.user.uid;
         const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
             `ordered-trucks/${uid}`
         );
-        orderedTrucksRef
-            .update({
-                [`${truck.truck.vid}.orders.${
-                    order.invoice
-                }`]: firebase.firestore.FieldValue.delete()
-            })
-            .then(res => resolve())
-            .catch(err => reject(err));
-        })
+        return orderedTrucksRef.set(
+            {
+                [truck.truck.vid]: {
+                    estimate: truck.estimate
+                }
+            },
+            { merge: true }
+        );
     }
 
     saveOrderedTruck(truck) {
@@ -44,6 +57,19 @@ export class TruckService {
         );
         return this.updateOrderedTruck(uid, truck);
         // console.log(truck);
+    }
+
+    updateOrders(truckId, orders) {
+        const uid = this.auth.user.uid;
+        const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
+            `ordered-trucks/${uid}`
+        );
+        return orderedTrucksRef.set(
+            {
+                [truckId]: { orders }
+            },
+            { merge: true }
+        );
     }
 
     updateOrderedTruck(uid, truck) {

@@ -4,6 +4,7 @@ import { SkuComponent } from './sku/sku.component';
 import { DatabaseHomeComponent } from './database-home/database-home.component';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { DistributorsComponent } from './distributors/distributors.component';
+import { WarehousesComponent } from './warehouses/warehouses.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,11 @@ const routes: Routes = [
             {
                 path: 'distributors',
                 component: DistributorsComponent,
+                outlet: 'database'
+            },
+            {
+                path: 'warehouses',
+                component: WarehousesComponent,
                 outlet: 'database'
             }
         ]

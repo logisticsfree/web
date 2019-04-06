@@ -1,19 +1,27 @@
 <div class="content">
-    <h1>{{ trip.truck.vid }}</h1>
+	<h1>{{ trip.truck.vid }}</h1>
+</div>
+<div class="content">
+	
+<agm-map [fitBounds]="true" [latitude]="coordinates.warehouse.lat" [longitude]="coordinates.warehouse.lng">
+	<agm-direction
+		(onChange)="onMapChange($event)"
+		[origin]="coordinates.warehouse"
+		[waypoints]="coordinates.waypoints"
+		[destination]="coordinates.destination">
+		</agm-direction>
+</agm-map>
 </div>
 
-<agm-map
-[fitBounds]="true"
-    [latitude]="origin.lat"
-    [longitude]="origin.lng">
-    <!-- <agm-marker
-        [markerDraggable]="true"
-        [title]="trip.truck.vid"
-        [latitude]="element.latitude"
-        [longitude]="element.longitude"
-	></agm-marker> -->
-	<agm-direction
-	[origin]="origin"
-	[waypoints]="waypoints"
-	[destination]="destination"></agm-direction>
-</agm-map>
+<div class="content">
+	<h3>Rearrange the Order</h3>
+	<p class="menu-label is-hidden-touch">drag and drop to change the order</p>
+
+	<div class="content">
+		<div cdkDropList class="example-list is-lower-alpha" (cdkDropListDropped)="drop($event)">
+		  <div class="example-box " *ngFor="let order of orders" cdkDrag> 
+		  	<h5> <strong> {{ order.seqNo + 1 }}) </strong> {{ order.distributor.name }}</h5>
+		  </div>
+		</div>
+	</div>
+</div>

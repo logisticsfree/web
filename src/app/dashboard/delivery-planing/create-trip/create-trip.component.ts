@@ -9,6 +9,7 @@ import {
 import { TruckService } from "../services/truck.service";
 import { MatTableDataSource, MatPaginator } from "@angular/material";
 import { OrderService } from "../services/order.service";
+import { WarehouseService } from "../../database/services/warehouse.service";
 import {
     style,
     animate,
@@ -59,6 +60,7 @@ export class CreateTripComponent implements OnInit {
     // TODO: fix animation
 
     trucks: any;
+    warehouses: any;
     ordersTableDataSource: any;
     ordersColumnsToDisplay: string[] = [
         "invoice",
@@ -75,7 +77,8 @@ export class CreateTripComponent implements OnInit {
 
     constructor(
         private truckService: TruckService,
-        private orderService: OrderService
+        private orderService: OrderService,
+        private warehouseService: WarehouseService
     ) {}
 
     @ViewChild("ordersPaginator") orderPaginator: MatPaginator;
@@ -85,6 +88,12 @@ export class CreateTripComponent implements OnInit {
             this.trucks = Object.values(trucks);
         });
 
+        const uns = this.warehouseService
+            .getWarehouses()
+            .subscribe(warehouses => {
+                this.warehouses = Object.values(warehouses.data());
+                uns.unsubscribe();
+            });
         this.fillTable();
     }
     unassignOrder(truck, order) {
@@ -164,4 +173,7 @@ export class CreateTripComponent implements OnInit {
     getOrders(truck) {
         return truck.orders ? Object.values(truck.orders) : [];
     }
+    // get warehouse() {
+    //     return this.newOrderForm.get("warehouse");
+    // }
 }

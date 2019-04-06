@@ -8,7 +8,7 @@
       <div class="columns is-multiline">
         <div [@grow]="assignOrdersView ? 'open' : 'close'" *ngFor="let truck of trucks" [class.column]="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView"
           [class.is-full]="assignOrdersView" [class.is-6]="!assignOrdersView">
-          <div *ngIf="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView" class="card">
+          <div *ngIf="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView" class="card is-hoverable">
             <div class="card-content">
               <div class="content">
                 <!-- <h3>{{ truck.truck.vid }}</h3> -->
@@ -20,6 +20,24 @@
                 <p>Max weight: {{ truck.truck?.weight || 100 }}
                   <progress class="progress is-large" [value]="getTotalWeight(truck)" [max]="truck.truck?.weight || 0">60%</progress>
                 </p>
+
+                <div class="content">
+                    <div class="field">
+                      <label class="label">Warehouse (pickpoint)</label>
+                      <div class="control has-icons-left has-icons-right">
+                          <div class="select is-success">
+                              <select ng-dropdown >
+                                  <option>Please Select..</option>
+                                  <option *ngFor="let warehouse of warehouses" [ngValue]="warehouse">
+                                      {{ warehouse.name }}</option>
+                              </select>
+                          </div>
+                          <span class="icon is-small is-left">
+                              <i class="fas fa-warehouse"></i>
+                          </span>
+                      </div>
+                    </div>
+                </div>
 
                 <div *ngIf="assignOrdersView" class="columns">
                   <div class="column if-half">
