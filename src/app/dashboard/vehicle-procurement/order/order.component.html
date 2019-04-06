@@ -1,3 +1,12 @@
-<div class="content">
-    <h1>Orders</h1>
+<div *ngIf="orders?.length > 0;else noOrders">
+	<ul *ngFor= "let order of order" class="collection">
+		<li class="collection-order"><strong>{{orders.invoice}}: </strong> {{orders.distributer}}</li>
+		
+	</ul>
 </div>
+
+<ng-template #noOrders>
+	<hr>
+	<h5>There are noo order to show</h5>
+
+</ng-template>	
