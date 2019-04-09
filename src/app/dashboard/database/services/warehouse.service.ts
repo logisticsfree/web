@@ -4,6 +4,8 @@ import {
     AngularFirestore,
     AngularFirestoreDocument
 } from "@angular/fire/firestore";
+import { UserService } from 'src/app/core/user.service';
+import { flatMap, tap, take } from 'rxjs/operators';
 
 export interface Warehouse {
     name: string;
@@ -14,18 +16,25 @@ export interface Warehouse {
     providedIn: "root"
 })
 export class WarehouseService {
-    constructor(private auth: AuthService, private afs: AngularFirestore) {}
+    companyID: string;
+
+    constructor(private userService: UserService, private afs: AngularFirestore) {}
 
     getWarehouses() {
-        const uid = this.auth.user.uid;
-        const warehouseRef: AngularFirestoreDocument<any> = this.afs.doc(
-            `warehouses/${uid}`
+        const companyID$ = this.userService.getCompanyID();
+        return companyID$.pipe(
+            take(1),
+            tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
+            flatMap(cid => {
+                const warehouseRef: AngularFirestoreDocument<any> = this.afs.doc(
+                    `warehouses/${cid}`
+                );
+                return warehouseRef.valueChanges();
+            }),
         );
-
-        return warehouseRef.get();
     }
     addWarehouse(values) {
-        return this.updateWarehouseData(this.auth.user.uid, values);
+        return this.updateWarehouseData(this.companyID, values);
     }
 
     updateWarehouseData(uid, data): Promise<Warehouse> {

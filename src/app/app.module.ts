@@ -17,8 +17,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './partials/navbar/navbar.component';
-import { LoginComponent } from './core/login/login.component';
-import { RegisterComponent } from './core/register/register.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { UserComponent } from './user/user.component';
 import { AuthService } from './core/auth.service';
@@ -39,8 +37,6 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
         AppComponent,
         HomeComponent,
         NavbarComponent,
-        LoginComponent,
-        RegisterComponent,
         FooterComponent,
         UserComponent,
         PageNotFoundComponent,
@@ -51,6 +47,7 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        CoreModule,
         DatabaseModule,
         VehicleProcurementModule,
         DeliveryPlaningModule,

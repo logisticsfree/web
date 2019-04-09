@@ -102,10 +102,10 @@ export class DistributorsComponent implements OnInit {
       .getDistributors()
       .subscribe(distributors => {
         this.dataSource = new MatTableDataSource(
-          Object.values(distributors.data())
+          Object.values(distributors)
         );
         this.columnsToDisplay = Object.keys(this.dataSource.data[0]).reverse();
-        console.log(this.columnsToDisplay);
+        // console.log(this.columnsToDisplay);
 
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;

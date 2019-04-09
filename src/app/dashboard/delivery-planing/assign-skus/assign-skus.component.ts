@@ -99,7 +99,7 @@ export class AssignSkusComponent implements OnInit, OnChanges {
 
         this.createNewSKUForm();
         const unc = this.skuService.getSKUs().subscribe(skus => {
-            this.SKUs = Object.values(skus.data());
+            this.SKUs = Object.values(skus);
 
             unc.unsubscribe();
         });
