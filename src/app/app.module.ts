@@ -29,6 +29,7 @@ import { DatabaseModule } from './dashboard/database/database.module';
 import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-planing.module';
 import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicle-procurement.module';
 //import { OrderService } from '../services/order.service';
+//import { AlertModule } from 'ngx-bootstrap';
 
 
 
@@ -45,6 +46,7 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
         PageNotFoundComponent,
         TestComponent,
         
+        
     ],
     imports: [
         BrowserModule,
@@ -59,6 +61,7 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
         // AngularFireAuthModule,
         NgxSpinnerModule,
         CoreModule
+        //AlertModule.forRoot()
     ],
     providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
     bootstrap: [AppComponent]
