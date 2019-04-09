@@ -92,7 +92,7 @@ export class OrdersComponent implements OnInit {
         const unc = this.distributorService
             .getDistributors()
             .subscribe(dists => {
-                this.distributors = Object.values(dists.data());
+                this.distributors = Object.values(dists);
                 unc.unsubscribe();
             });
     }

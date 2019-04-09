@@ -17,8 +17,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './partials/navbar/navbar.component';
-import { LoginComponent } from './core/login/login.component';
-import { RegisterComponent } from './core/register/register.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { UserComponent } from './user/user.component';
 import { AuthService } from './core/auth.service';
@@ -33,8 +31,6 @@ import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-pla
         AppComponent,
         HomeComponent,
         NavbarComponent,
-        LoginComponent,
-        RegisterComponent,
         FooterComponent,
         UserComponent,
         PageNotFoundComponent,
@@ -43,6 +39,7 @@ import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-pla
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        CoreModule,
         DatabaseModule,
         DeliveryPlaningModule,
         AppRoutingModule,
@@ -51,7 +48,6 @@ import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-pla
         // AngularFirestoreModule,
         // AngularFireAuthModule,
         NgxSpinnerModule,
-        CoreModule
     ],
     providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
     bootstrap: [AppComponent]

@@ -1,0 +1,213 @@
+<form [formGroup]="registerForm">
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Name</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control is-expanded has-icons-left has-icons-right">
+          <input formControlName="fname" autocomplete="name" [class.is-danger]="fname.invalid && (fname.dirty || fname.touched)"
+            class="input" type="text" placeholder="First Name">
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="fname.errors">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="!fname.errors">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+        <div *ngIf="fname.invalid && (fname.dirty || fname.touched)">
+          <p *ngIf="fname.errors.required" class="help is-danger">Please enter you first name</p>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control is-expanded has-icons-left has-icons-right">
+          <input formControlName="lname" class="input" autocomplete="family-name" [class.is-danger]="lname.invalid && (lname.dirty || lname.touched)"
+            type="text" placeholder="Last Name">
+          <span class="icon is-small is-left">
+            <i class="fas fa-users"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="lname.errors">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="!lname.errors">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+        <div *ngIf="lname.invalid && (lname.dirty || lname.touched)">
+          <p *ngIf="lname.errors.required" class="help is-danger">Please enter you last name</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Company ID</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control is-expanded has-icons-left has-icons-right">
+          <input formControlName="companyID" autocomplete="name" [class.is-danger]="companyID.invalid && (companyID.dirty || companyID.touched)"
+            class="input" type="text" placeholder="Company ID">
+          <span class="icon is-small is-left">
+            <i class="fas fa-building"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="companyID.errors">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="!companyID.errors">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+        <div *ngIf="companyID.invalid && (companyID.dirty || companyID.touched)">
+          <p *ngIf="companyID.errors.required" class="help is-danger">Please enter you company ID</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Phone Number</label>
+    </div>
+    <div class="field-body">
+      <div class="field is-expanded">
+        <div class="field has-addons">
+          <p class="control">
+            <a class="button is-static">
+              +94
+            </a>
+          </p>
+          <p class="control is-expanded has-icons-right has-icons-left">
+
+            <input formControlName="phone" class="input" type="tel" autocomplete="tel-local" [class.is-danger]="phone.invalid && (phone.dirty || phone.touched)"
+              placeholder="Your phone number">
+            <span class="icon is-small is-right" *ngIf="phone.errors">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            <span class="icon is-small is-right" *ngIf="!phone.errors">
+              <i class="fas fa-check"></i>
+            </span>
+          </p>
+        </div>
+        <p class="help">Do not enter the first zero</p>
+        <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+          <p *ngIf="phone.errors.required || phone.errors.minlength || phone.errors.pattern" class="help is-danger">Please
+            enter valid
+            phone number</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Email</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input formControlName="email" class="input" autocomplete="email" type="email" [class.is-danger]="email.invalid && (email.dirty || email.touched)"
+            placeholder="Enter your email">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="email.errors">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="!email.errors">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+        <div *ngIf="email.invalid && (email.dirty || email.touched)">
+          <p *ngIf="email.errors?.required" class="help is-danger">Please enter your email</p>
+          <p *ngIf="email.errors?.email" class="help is-danger">Email is invalid</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Password</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input formControlName="password" [class.is-danger]="password.invalid && (password.dirty || password.touched)"
+            class="input" autocomplete="new-password" type="password" placeholder="Choose a Password">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="password.errors">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="!password.errors">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)">
+          <p *ngIf="password.errors?.required" class="help is-danger">Please enter a password</p>
+          <p *ngIf="password.errors?.minlength" class="help is-danger">Password too short</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Confirm-Password</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input formControlName="cpassword" [class.is-danger]="(cpassword.invalid || registerForm.hasError('notSame')) && (cpassword.dirty || cpassword.touched)"
+            class="input" autocomplete="new-password" type="password" placeholder="Re-enter the password">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="cpassword.errors">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <span class="icon is-small is-right" *ngIf="!cpassword.errors">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+        <div *ngIf="(cpassword.invalid || registerForm.hasError('notSame')) && (cpassword.dirty || cpassword.touched)">
+          <p *ngIf="cpassword.errors?.required || registerForm.hasError('notSame')" class="help is-danger">Passwords
+            not match</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <!-- Left empty for spacing -->
+    </div>
+    <div class="field-body">
+      <div class="field is-grouped">
+        <div class="control">
+          <button [disabled]="registerForm.invalid" (click)="tryRegister(registerForm.value)" class="button is-primary">
+            Join With Us
+          </button>
+        </div>
+        <div class="control">
+          <button class="button is-text" routerLink="/login">Already a member? <a style="margin-left:.5em;">Signin</a></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label"></div>
+    <div class="field-body">
+      <div *ngIf="errorMessage" class="notification is-danger">
+        <button class="delete" (click)="clearErrors()"></button>
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</form>
