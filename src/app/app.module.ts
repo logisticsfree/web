@@ -25,6 +25,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { TestComponent } from './test/test.component';
 import { DatabaseModule } from './dashboard/database/database.module';
 import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-planing.module';
+import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicle-procurement.module';
+//import { OrderService } from '../services/order.service';
+//import { AlertModule } from 'ngx-bootstrap';
+
+
+
 
 @NgModule({
     declarations: [
@@ -34,20 +40,25 @@ import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-pla
         FooterComponent,
         UserComponent,
         PageNotFoundComponent,
-        TestComponent
+        TestComponent,
+        
+        
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         CoreModule,
         DatabaseModule,
+        VehicleProcurementModule,
         DeliveryPlaningModule,
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
-        // AngularFirestoreModule,
+        AngularFirestoreModule,
         // AngularFireAuthModule,
         NgxSpinnerModule,
+        CoreModule
+        //AlertModule.forRoot()
     ],
     providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
     bootstrap: [AppComponent]

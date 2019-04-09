@@ -9,6 +9,7 @@ import { AuthGuard } from './core/auth.guard';
 import { GuestGuard } from './core/guest.guard';
 import { TestComponent } from './test/test.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+//import { SkuComponent } from './dashboard/database/sku/sku.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
+  //{path : 'sku',component :SkuComponent},
   { path: '**', component: PageNotFoundComponent, pathMatch: 'full' }
 ];
 
