@@ -84,7 +84,9 @@ export class SkuComponent implements OnInit {
 
   fillTable() {
     const unsubscribe = this.skuService.getSKUs().subscribe(skus => {
-      this.dataSource = new MatTableDataSource(Object.values(skus.data()));
+      console.log();
+      
+      this.dataSource = new MatTableDataSource(Object.values(skus));
       this.columnsToDisplay = Object.keys(this.dataSource.data[0]);
 
       setTimeout(() => {

@@ -91,7 +91,7 @@ export class CreateTripComponent implements OnInit {
         const uns = this.warehouseService
             .getWarehouses()
             .subscribe(warehouses => {
-                this.warehouses = Object.values(warehouses.data());
+                this.warehouses = Object.values(warehouses);
                 uns.unsubscribe();
             });
         this.fillTable();

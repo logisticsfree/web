@@ -70,7 +70,7 @@ export class WarehousesComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private warehouseService: WarehouseService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.createForm();
@@ -111,15 +111,14 @@ export class WarehousesComponent implements OnInit {
         const unsubscribe = this.warehouseService
             .getWarehouses()
             .subscribe(warehouses => {
-                if (!warehouses.data()) {
+                if (!warehouses) {
                     this.dataSource = new MatTableDataSource();
                 } else {
-                    this.dataSource = new MatTableDataSource(Object.values(warehouses.data()));
+                    this.dataSource = new MatTableDataSource(Object.values(warehouses));
                 }
                 setTimeout(() => {
                     this.dataSource.paginator = this.paginator;
                 });
-
                 unsubscribe.unsubscribe();
             });
     }

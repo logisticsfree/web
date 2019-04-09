@@ -7,6 +7,8 @@ import {
 import { Distributor } from "../../database/services/distributor.service";
 import { Warehouse } from "../../database/services/warehouse.service";
 import * as firebase from "firebase";
+import { UserService } from 'src/app/core/user.service';
+import { take, tap, flatMap } from 'rxjs/operators';
 
 interface SKU {
     code: string;
@@ -30,21 +32,18 @@ export interface Order {
     providedIn: "root"
 })
 export class OrderService {
-    constructor(private auth: AuthService, private afs: AngularFirestore) {}
+    companyID: string;
+    constructor(private userService: UserService, private afs: AngularFirestore) { }
 
     unassignSKU(invoice, sku): Promise<any> {
         return new Promise((resolve, reject) => {
-            const uid = this.auth.user.uid;
             const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
-                `orders/${uid}`
+                `orders/${this.companyID}`
             );
 
-            orderRef
-                .update({
-                    [`${invoice}.skus.${
-                        sku.code
-                    }`]: firebase.firestore.FieldValue.delete()
-                })
+            orderRef.update({
+                [`${invoice}.skus.${sku.code}`]: firebase.firestore.FieldValue.delete()
+            })
                 .then(res => resolve())
                 .catch(err => reject(err));
         });
@@ -52,9 +51,8 @@ export class OrderService {
 
     assignSKU(invoice, values): Promise<any> {
         return new Promise((resolve, reject) => {
-            const uid = this.auth.user.uid;
             const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
-                `orders/${uid}`
+                `orders/${this.companyID}`
             );
             const sku: SKU = {
                 code: values.code.code,
@@ -76,21 +74,26 @@ export class OrderService {
     }
 
     getOrders() {
-        const uid = this.auth.user.uid;
-        const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
-            `orders/${uid}`
-        );
+        const companyID$ = this.userService.getCompanyID();
+        return companyID$.pipe(
+            take(1),
+            tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
+            flatMap(cid => {
+                const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
+                    `orders/${cid}`
+                );
 
-        return orderRef.valueChanges();
+                return orderRef.valueChanges();
+            }),
+        );
     }
 
     addOrder(values) {
-        return this.updateOrderData(this.auth.user.uid, values);
+        return this.updateOrderData(this.companyID, values);
     }
     setStatus(order, status) {
-        const uid = this.auth.user.uid;
         const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
-            `orders/${uid}`
+            `orders/${this.companyID}`
         );
         return orderRef.set({ [order.invoice]: { status } }, { merge: true });
     }
