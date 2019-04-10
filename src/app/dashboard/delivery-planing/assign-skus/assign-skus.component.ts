@@ -7,19 +7,19 @@ import {
     SimpleChanges,
     Output
 } from '@angular/core';
-import { Order, OrderService } from '../services/order.service';
+import { OrderService } from '../services/order.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
     trigger,
-    state,
     style,
     transition,
     animate,
     keyframes
 } from '@angular/animations';
-import { SkuService, SKU } from '../../database/services/sku.service';
+import { SkuService } from '../../database/services/sku.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { EventEmitter } from '@angular/core';
+import { SKU } from 'src/app/models/SKU';
 
 @Component({
     selector: 'app-assign-skus',

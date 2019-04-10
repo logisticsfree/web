@@ -26,6 +26,7 @@ import { TestComponent } from './test/test.component';
 import { DatabaseModule } from './dashboard/database/database.module';
 import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-planing.module';
 import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicle-procurement.module';
+import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
 //import { OrderService } from '../services/order.service';
 //import { AlertModule } from 'ngx-bootstrap';
 
@@ -54,6 +55,7 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
         AngularFirestoreModule,
         // AngularFireAuthModule,
         NgxSpinnerModule,
