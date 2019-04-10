@@ -3,17 +3,10 @@ import {
     AngularFirestore,
     AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { AuthService } from "src/app/core/auth.service";
 import * as firebase from "firebase";
 import { take, tap, flatMap } from 'rxjs/operators';
-import { UserService } from 'src/app/core/user.service';
 
-interface Truck {
-    date: string;
-    time: string;
-    truck: any;
-    orders: any;
-}
+import { UserService } from 'src/app/core/user.service';
 
 @Injectable({
     providedIn: "root"

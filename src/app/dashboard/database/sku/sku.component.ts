@@ -9,8 +9,8 @@ import {
 } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SkuService } from '../services/sku.service';
-import { SKU } from '../services/sku.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { SKU } from 'src/app/models/SKU';
 
 @Component({
   selector: 'app-sku',

@@ -4,15 +4,10 @@ import {
     AngularFirestore
 } from "@angular/fire/firestore";
 
-import { UserService } from "src/app/core/user.service";
-import { map, take, tap, flatMap } from "rxjs/operators";
-import { AuthService } from "src/app/core/auth.service";
+import { take, tap, flatMap } from "rxjs/operators";
 
-export interface Distributor {
-    name: string;
-    latitude: number;
-    longitude: number;
-}
+import { UserService } from "src/app/core/user.service";
+import { Distributor } from 'src/app/models/Distributor';
 
 @Injectable({
     providedIn: "root"
@@ -21,7 +16,6 @@ export class DistributorService {
     // TODO : edit table rows
     companyID: string;
     constructor(
-        private auth: AuthService,
         private userService: UserService,
         private afs: AngularFirestore
     ) { }
