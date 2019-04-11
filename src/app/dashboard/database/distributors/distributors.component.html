@@ -1,10 +1,11 @@
-<div class="buttons">
-    <button class="button is-primary" (click)="toggleNewDistributorModal = true">New Distributor</button>
-</div>
+<div class="column">
+    <div class="column is-one-third">
+    
 
-<div class="modal" [class.is-active]="toggleNewDistributorModal">
-    <div class="modal-background" (click)="toggleNewDistributorModal = false"></div>
-    <form [formGroup]="newDistributorForm" class="modal-content box" [@openNewDistritutorModal]="toggleNewDistributorModal ? 'open' : 'close'"
+
+<div class="form" [class.is-active]="toggleNewDistributorModal">
+    <div class="form-background" (click)="toggleNewDistributorModal = false"></div>
+    <form [formGroup]="newDistributorForm" class="form-content box"
         (submit)="addDistritutor(newDistributorForm.value)">
 
         <div class="field">
@@ -62,9 +63,13 @@
             </div>
         </div>
     </form>
-    <button class="modal-close is-large" aria-label="close" (click)="toggleNewDistributorModal = false"></button>
 </div>
 
+    <button class="modal-close is-small" aria-label="close" (click)="toggleNewDistributorModal = false"></button>
+</div>
+    
+
+<div class="column">
 <div class="card">
     <div class="card-header">
         <div class="card-header-title">
@@ -84,6 +89,7 @@
         </div>
 
     </div>
+    <div class="column is-horizontal">
     <div class="card-content">
         <div *ngIf="dataSource" class="content">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-hoverable">
@@ -117,5 +123,8 @@
             <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
+    </div>
 </div>
-<br />
+</div>
+</div>
+

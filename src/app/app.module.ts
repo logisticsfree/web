@@ -20,6 +20,7 @@ import { NavbarComponent } from './partials/navbar/navbar.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { UserComponent } from './user/user.component';
 import { AuthService } from './core/auth.service';
+import { SkuService } from './dashboard/database/services/sku.service';
 import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TestComponent } from './test/test.component';
@@ -60,7 +61,7 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
         CoreModule
         //AlertModule.forRoot()
     ],
-    providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
+    providers: [{ provide: FirestoreSettingsToken, useValue: {}}, SkuService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

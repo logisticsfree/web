@@ -1,12 +1,14 @@
-<div class="buttons">
-    <button class="button is-primary" (click)="toggleNewSkuModal = true">New SKU</button>
-</div>
+<div class="column">
+    <div class="column is-one-third">
+    
+
 <!-- ADD NEW SKU MODAL -->
-<div class="modal" [class.is-active]="toggleNewSkuModal">
-    <div class="modal-background" (click)="toggleNewSkuModal = false"></div>
-    <form [formGroup]="newSKUForm" class="modal-content box" [@openNewSKUModal]="toggleNewSkuModal ? 'open' : 'close'"
+<div class="form-left" [class.is-active]="toggleNewSkuModal">
+    <div class="form-background" (click)="toggleNewSkuModal = false"></div>
+    <form [formGroup]="newSKUForm" class="modal-content box"
         (submit)="addSKU(newSKUForm.value)">
         <div class="field">
+            <label class="label">Create New Order</label>
             <label class="label">Code</label>
             <div class="control has-icons-left has-icons-right">
                 <input formControlName="code" class="input is-success" type="text" placeholder="Code"
@@ -91,8 +93,13 @@
             </div>
         </div>
     </form>
-    <button class="modal-close is-large" aria-label="close" (click)="toggleNewSkuModal = false"></button>
+    <button class="modal-close is-large" aria-label="close" (click)="toggleNewSkuModal = false">
+    </button>
+    </div>
+
+        
 </div>
+<div class="column is-two-third">
 
 <div class="card">
     <div class="card-header">
@@ -129,5 +136,6 @@
             <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
+</div>
 </div>
 <br />
