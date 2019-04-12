@@ -92,7 +92,7 @@
     <div class="column is-horizontal">
     <div class="card-content">
         <div *ngIf="dataSource" class="content">
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-hoverable">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-horizontal">
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
                     <th class="md-table-header" mat-header-cell *matHeaderCellDef> {{column}} </th>
                     <td mat-cell *matCellDef="let distributor"> {{distributor[column]}} </td>
