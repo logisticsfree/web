@@ -16,8 +16,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './partials/navbar/navbar.component';
-import { FooterComponent } from './partials/footer/footer.component';
+import { NavbarComponent } from './common/navbar/navbar.component';
+import { FooterComponent } from './common/footer/footer.component';
 import { UserComponent } from './user/user.component';
 import { AuthService } from './core/auth.service';
 import { CoreModule } from './core/core.module';
@@ -26,6 +26,9 @@ import { TestComponent } from './test/test.component';
 import { DatabaseModule } from './dashboard/database/database.module';
 import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-planing.module';
 import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicle-procurement.module';
+import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
+import { DriverCardComponent } from './common/driver-card/driver-card.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 //import { OrderService } from '../services/order.service';
 //import { AlertModule } from 'ngx-bootstrap';
 
@@ -34,6 +37,7 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
 
 @NgModule({
     declarations: [
+        // DriverCardComponent,
         AppComponent,
         HomeComponent,
         NavbarComponent,
@@ -41,19 +45,16 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
         UserComponent,
         PageNotFoundComponent,
         TestComponent,
-        
-        
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        DashboardModule,
         CoreModule,
-        DatabaseModule,
-        VehicleProcurementModule,
-        DeliveryPlaningModule,
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
         AngularFirestoreModule,
         // AngularFireAuthModule,
         NgxSpinnerModule,
@@ -63,4 +64,4 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
     providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

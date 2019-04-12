@@ -14,9 +14,9 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
-                path: "",
-                component: OrdersComponent,
-                outlet: "delivery"
+                path: '',
+                redirectTo: '/delivery-planing/(delivery:orders)',
+                pathMatch: 'full'
             },
             {
                 path: "orders",
@@ -47,4 +47,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DeliveryPlaningRoutingModule {}
+export class DeliveryPlaningRoutingModule { }

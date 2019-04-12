@@ -1,9 +1,112 @@
-<div class="tabs is-centered">
-  <ul>
-    <li class="is-active"><a>Find Your Driver</a></li>
-    
-  </ul>
-</div><br><br>
+<div class="content">
+    <h3>Search Trucks</h3>
+</div>
+<form [formGroup]="orderVehiclesForm" class="box" (ngSubmit)="placeOrder(orderVehiclesForm.value)">
+    <div class="field">
+        <label class="label">Volume</label>
+        <div class="control has-icons-left has-icons-right">
+            <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
+                [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)" />
+            <span class="icon is-small is-left">
+                <i class="fas fa-arrows-alt"></i>
+            </span>
+            <span *ngIf="!volume.invalid" class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+            </span>
+        </div>
+        <p *ngIf="!volume.invalid" class="help is-success">Volume is looking good</p>
+    </div>
 
-
-
+    <div class="field">
+        <label class="label">Amount</label>
+        <div class="control has-icons-left has-icons-right">
+            <input formControlName="amount" class="input is-success" type="text" placeholder="Amount"
+                [class.is-danger]="amount.invalid && (amount.dirty || amount.touched)">
+            <span class="icon is-small is-left">
+                <i class="fas fa-file-signature"></i>
+            </span>
+            <span *ngIf="!amount.invalid" class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+            </span>
+        </div>
+        <p *ngIf="!amount.invalid" class="help is-success">Amount is looking good</p>
+    </div>
+    <div class="field">
+        <div class="field-body">
+            <div class="field">
+                <label class="label">Date</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input formControlName="date" class="input is-success" type="date" placeholder="Date"
+                        [class.is-danger]="date.invalid && (date.dirty || date.touched)">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-calendar"></i>
+                    </span>
+                    <span *ngIf="!date.invalid" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <p *ngIf="!date.invalid" class="help is-success">Date is looking good</p>
+            </div>
+            <div class="field">
+                <label class="label">Time</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input formControlName="time" class="input is-success" type="time" placeholder="Time"
+                        [class.is-danger]="time.invalid && (time.dirty || time.touched)">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-calendar"></i>
+                    </span>
+                    <span *ngIf="!time.invalid" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <p *ngIf="!time.invalid" class="help is-success">Time is looking good</p>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Warehouse</label>
+        <div class="control has-icons-left">
+            <div class="select">
+                <select ng-dropdown formControlName="warehouse">
+                    <option>Please Select...</option>
+                    <option *ngFor="let warehouse of warehouses" [ngValue]="warehouse">{{ warehouse.name }}</option>
+                </select>
+            </div>
+            <div class="icon is-small is-left">
+                <i class="fas fa-globe"></i>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <button [disabled]="orderVehiclesForm.invalid" class="button is-primary">Place order</button>
+    </div>
+</form>
+<div *ngIf="availableTrucks">
+    <div class="content">
+        <h3>Available Trucks</h3>
+    </div>
+    <div class="columns is-multiline">
+        <div *ngFor="let truck of availableTrucks" class="column is-one-third">
+            <div class="card is-hoverable">
+                <div class="card-content">
+                    <div class="content">
+                        <app-driver-card *ngIf="truck.truck" [truck]="truck.truck">
+                        </app-driver-card>
+                        <p>Max Volume:
+                            <span> {{ truck.truck.volume }} </span>
+                        </p>
+                        <p>Max Weight:
+                            <span> {{ truck.truck.weight }} </span>
+                        </p>
+                    </div>
+                    <div class="buttons">
+                        <div class="button is-primary" (click)="sendOrder(truck)">Order Now</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <p *ngIf="!availableTrucks.length">No Available trucks :(</p>
+        </div>
+    </div>
+</div>

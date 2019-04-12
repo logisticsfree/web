@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { WarehouseService } from "../services/warehouse.service";
 import { MatTableDataSource, MatPaginator } from "@angular/material";
 import {
     trigger,
@@ -11,11 +10,8 @@ import {
     state
 } from "@angular/animations";
 
-interface Warehouse {
-    name: string;
-    latitude: number;
-    longitude: number;
-}
+import { WarehouseService } from "../services/warehouse.service";
+import { Warehouse } from 'src/app/models/Warehouse';
 
 @Component({
     selector: "app-warehouses",

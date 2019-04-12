@@ -1,33 +1,11 @@
 import { Injectable } from "@angular/core";
-import { AuthService } from "src/app/core/auth.service";
-import {
-    AngularFirestore,
-    AngularFirestoreDocument
-} from "@angular/fire/firestore";
-import { Distributor } from "../../database/services/distributor.service";
-import { Warehouse } from "../../database/services/warehouse.service";
+import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
 import * as firebase from "firebase";
+import { flatMap, take, tap } from 'rxjs/operators';
 import { UserService } from 'src/app/core/user.service';
-import { take, tap, flatMap } from 'rxjs/operators';
+import { Order } from 'src/app/models/Order';
+import { SKU } from 'src/app/models/SKU';
 
-interface SKU {
-    code: string;
-    name: string;
-    volume: number;
-    weight: number;
-    value: number;
-    qty: number;
-}
-export interface Order {
-    invoice: string;
-    distributor: Distributor;
-    warehouse: Warehouse;
-    volume: number;
-    weight: number;
-    value: number;
-    skus: {};
-    status: number;
-}
 @Injectable({
     providedIn: "root"
 })
@@ -98,15 +76,15 @@ export class OrderService {
         return orderRef.set({ [order.invoice]: { status } }, { merge: true });
     }
 
-    updateOrderData(uid, data): Promise<Order> {
+    updateOrderData(uid, data: Order): Promise<Order> {
         return new Promise((resolve, reject) => {
             const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
                 `orders/${uid}`
             );
 
             const newOrder: Order = {
-                distributor: data.distributor,
                 invoice: data.invoice,
+                distributor: data.distributor,
                 warehouse: data.warehouse,
                 volume: data.volume,
                 weight: data.weight,
