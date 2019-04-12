@@ -227,7 +227,6 @@ export class AssignSkusComponent implements OnInit, OnChanges {
     get value() {
         return this.addSKUForm.get('value');
     }
-
     get qty() {
         return this.addSKUForm.get('qty');
     }

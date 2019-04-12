@@ -15,6 +15,7 @@ import { OrderSpecificVeficleComponent } from './order-specific-veficle/order-sp
 import { OrderVehicleComponent } from './order-vehicle/order-vehicle.component';
 import { ShowOrderMapComponent } from './show-order-map/show-order-map.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { SharedModule } from 'src/app/common/shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -25,12 +26,13 @@ import { BrowserModule } from '@angular/platform-browser';
         HistoryComponent,
         OrderSpecificVeficleComponent,
         OrderVehicleComponent,
-        ShowOrderMapComponent
+        ShowOrderMapComponent,
     ],
     imports: [
         CommonModule,
         BrowserModule,
         FormsModule,
+        SharedModule,
         VehicleProcurementRoutingModule,
         MatTableModule,
         MatPaginatorModule,

@@ -21,13 +21,13 @@ const routes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'orders',
-                component: OrderComponent,
+                path: 'order-truck',
+                component: OrderTruckComponent,
                 outlet: 'procurement'
             },
             {
-                path: 'order-truck',
-                component: OrderTruckComponent,
+                path: 'orders',
+                component: OrderComponent,
                 outlet: 'procurement'
             },
             {
