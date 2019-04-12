@@ -131,11 +131,15 @@ export class OrdersComponent implements OnInit {
         if (this.newOrderForm.invalid) {
             return;
         }
+        // console.log(formValues);
+        
 
         this.newOrderFormeLoading = true;
         this.orderService
             .addOrder(formValues)
             .then(res => {
+                // console.log('hit');
+                
                 this.newOrderFormeLoading = false;
 
                 // add a new row to table

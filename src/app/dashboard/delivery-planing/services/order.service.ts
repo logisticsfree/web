@@ -67,6 +67,7 @@ export class OrderService {
     }
 
     addOrder(values) {
+
         return this.updateOrderData(this.companyID, values);
     }
     setStatus(order, status) {
@@ -76,16 +77,16 @@ export class OrderService {
         return orderRef.set({ [order.invoice]: { status } }, { merge: true });
     }
 
-    updateOrderData(uid, data: Order): Promise<Order> {
+    updateOrderData(cid, data: Order): Promise<Order> {
+
         return new Promise((resolve, reject) => {
             const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
-                `orders/${uid}`
+                `orders/${cid}`
             );
 
             const newOrder: Order = {
                 invoice: data.invoice,
                 distributor: data.distributor,
-                warehouse: data.warehouse,
                 volume: data.volume,
                 weight: data.weight,
                 value: data.value,
@@ -95,8 +96,13 @@ export class OrderService {
 
             return orderRef
                 .set({ [newOrder.invoice]: newOrder }, { merge: true })
-                .then(res => resolve(newOrder))
-                .then(err => reject(err));
+                .then(res => { 
+                    resolve(newOrder)
+                })
+                .then(err => {
+                    reject(err)
+                })
+                ;
         });
     }
 }
