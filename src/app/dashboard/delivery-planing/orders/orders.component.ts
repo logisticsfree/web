@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Order, OrderService } from "../services/order.service";
+import { OrderService } from "../services/order.service";
 import {
     MatTableDataSource,
     MatPaginator,
@@ -17,6 +17,7 @@ import {
     animate,
     state
 } from "@angular/animations";
+import { Order } from 'src/app/models/Order';
 
 @Component({
     selector: "app-orders",

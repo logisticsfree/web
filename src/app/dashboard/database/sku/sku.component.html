@@ -1,14 +1,11 @@
 <div class="columns">
     <div class="column is-one-third">
-    
-
-<!-- ADD NEW SKU MODAL -->
         <div class="form" [class.is-active]="toggleNewSkuModal">
             <div class="form-background" (click)="toggleNewSkuModal = false"></div>
-            <form [formGroup]="newSKUForm" class="modal-content box is-small"
+            <form [formGroup]="newSKUForm" class="form-content box"
                 (submit)="addSKU(newSKUForm.value)">
                 <div class="field">
-                    <label class="label">Create New Order</label>
+                    <label class="label">Create New Skus</label>
                     <label class="label">Code</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="code" class="input is-success" type="text" placeholder="Code"
@@ -100,45 +97,45 @@
 
         
 
-<div class="column">
+    <div class="column">
 
-    <div class="card">
-        <div class="card-header">
-            <div class="card-header-title">
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">SKUs</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input is-success" (keyup)="applyFilter($event.target.value)" type="text"
-                                    placeholder="Filter">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-title">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">SKUs</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-success" (keyup)="applyFilter($event.target.value)" type="text"
+                                        placeholder="Filter">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
+            <div class="column is-horizontal">
+                <div class="card-content">
+                <div *ngIf="dataSource" class="content">
+                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
+                            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                                <th class="md-table-header" mat-header-cell *matHeaderCellDef> {{column}} </th>
+                                <td mat-cell *matCellDef="let sku"> {{sku[column]}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row">
+                            </tr>
+
+                        </table>
+                        <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+                </div>
+            </div>    
         </div>
-        <div class="column is-horizontal">
-            <div class="card-content">
-            <div *ngIf="dataSource" class="content">
-                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
-                        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                            <th class="md-table-header" mat-header-cell *matHeaderCellDef> {{column}} </th>
-                            <td mat-cell *matCellDef="let sku"> {{sku[column]}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row">
-                        </tr>
-
-                    </table>
-                    <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-            </div>
-            </div>
-        </div>    
     </div>
-</div>
 </div>

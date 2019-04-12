@@ -4,17 +4,10 @@ import {
     AngularFirestore,
     AngularFirestoreDocument
 } from '@angular/fire/firestore';
-import { AuthService } from 'src/app/core/auth.service';
-import { UserService } from 'src/app/core/user.service';
-import { take, tap, map, flatMap } from 'rxjs/operators';
+import { take, tap, flatMap } from 'rxjs/operators';
 
-export interface SKU {
-    code: string;
-    name: string;
-    volume: number;
-    weight: number;
-    value: number;
-}
+import { UserService } from 'src/app/core/user.service';
+import { SKU } from 'src/app/models/SKU';
 
 @Injectable({
     providedIn: 'root'

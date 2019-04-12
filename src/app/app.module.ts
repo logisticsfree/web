@@ -16,8 +16,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './partials/navbar/navbar.component';
-import { FooterComponent } from './partials/footer/footer.component';
+import { NavbarComponent } from './common/navbar/navbar.component';
+import { FooterComponent } from './common/footer/footer.component';
 import { UserComponent } from './user/user.component';
 import { AuthService } from './core/auth.service';
 import { SkuService } from './dashboard/database/services/sku.service';
@@ -27,7 +27,13 @@ import { TestComponent } from './test/test.component';
 import { DatabaseModule } from './dashboard/database/database.module';
 import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-planing.module';
 import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicle-procurement.module';
+<<<<<<< HEAD
 import { BayOperationsModule } from './dashboard/bay-operations/bay-operations.module';
+=======
+import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
+import { DriverCardComponent } from './common/driver-card/driver-card.component';
+import { DashboardModule } from './dashboard/dashboard.module';
+>>>>>>> 6abda702f9500e55d610372309396ed77000f654
 //import { OrderService } from '../services/order.service';
 //import { AlertModule } from 'ngx-bootstrap';
 
@@ -36,6 +42,7 @@ import { BayOperationsModule } from './dashboard/bay-operations/bay-operations.m
 
 @NgModule({
     declarations: [
+        // DriverCardComponent,
         AppComponent,
         HomeComponent,
         NavbarComponent,
@@ -43,20 +50,23 @@ import { BayOperationsModule } from './dashboard/bay-operations/bay-operations.m
         UserComponent,
         PageNotFoundComponent,
         TestComponent,
-        
-        
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        DashboardModule,
         CoreModule,
+<<<<<<< HEAD
         DatabaseModule,
         VehicleProcurementModule,
         DeliveryPlaningModule,
         BayOperationsModule,
+=======
+>>>>>>> 6abda702f9500e55d610372309396ed77000f654
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
         AngularFirestoreModule,
         // AngularFireAuthModule,
         NgxSpinnerModule,
@@ -66,4 +76,4 @@ import { BayOperationsModule } from './dashboard/bay-operations/bay-operations.m
     providers: [{ provide: FirestoreSettingsToken, useValue: {}}, SkuService],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

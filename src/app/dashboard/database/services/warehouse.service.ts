@@ -4,14 +4,11 @@ import {
     AngularFirestore,
     AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { UserService } from 'src/app/core/user.service';
 import { flatMap, tap, take } from 'rxjs/operators';
 
-export interface Warehouse {
-    name: string;
-    latitude: number;
-    longitude: number;
-}
+import { UserService } from 'src/app/core/user.service';
+import { Warehouse } from 'src/app/models/Warehouse';
+
 @Injectable({
     providedIn: "root"
 })

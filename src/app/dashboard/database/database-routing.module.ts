@@ -14,10 +14,8 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                // redirectTo: 'skus',
-                // pathMatch: 'full'
-                component: SkuComponent,
-                outlet: 'database'
+                redirectTo: '/database/(database:skus)',
+                pathMatch: 'full'
             },
             {
                 path: 'skus',

@@ -11,8 +11,8 @@ import {
 } from '@angular/animations';
 import {
   DistributorService,
-  Distributor
 } from '../services/distributor.service';
+import { Distributor } from 'src/app/models/Distributor';
 
 @Component({
   selector: 'app-distributors',
