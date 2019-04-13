@@ -27,18 +27,9 @@ import { TestComponent } from './test/test.component';
 import { DatabaseModule } from './dashboard/database/database.module';
 import { DeliveryPlaningModule } from './dashboard/delivery-planing/delivery-planing.module';
 import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicle-procurement.module';
-<<<<<<< HEAD
 import { BayOperationsModule } from './dashboard/bay-operations/bay-operations.module';
-=======
 import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
-import { DriverCardComponent } from './common/driver-card/driver-card.component';
 import { DashboardModule } from './dashboard/dashboard.module';
->>>>>>> 6abda702f9500e55d610372309396ed77000f654
-//import { OrderService } from '../services/order.service';
-//import { AlertModule } from 'ngx-bootstrap';
-
-
-
 
 @NgModule({
     declarations: [
@@ -56,13 +47,10 @@ import { DashboardModule } from './dashboard/dashboard.module';
         BrowserAnimationsModule,
         DashboardModule,
         CoreModule,
-<<<<<<< HEAD
         DatabaseModule,
         VehicleProcurementModule,
         DeliveryPlaningModule,
         BayOperationsModule,
-=======
->>>>>>> 6abda702f9500e55d610372309396ed77000f654
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
