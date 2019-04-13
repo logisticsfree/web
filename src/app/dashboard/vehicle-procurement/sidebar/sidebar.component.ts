@@ -7,12 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-
+  // url: string;
   constructor(
-    private router: Router
+    public router: Router
   ) { }
 
   ngOnInit() {
+    // this.url = this.router.url;
   }
 
 }
