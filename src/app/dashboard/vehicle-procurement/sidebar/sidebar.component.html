@@ -2,7 +2,10 @@
   <p class="menu-label is-hidden-touch">Navigation</p>
   <ul class="menu-list">
     <li>
-      <a [routerLink]="[{ outlets: { procurement: ['order-truck'] } }]" routerLinkActive="is-active">
+      <a [routerLink]="[{ outlets: { procurement: ['order-truck'] } }]"
+      [class.is-active]="router.url == '/vehicle-procurement/(procurement:order-vehicle)' 
+      || router.url == '/vehicle-procurement/(procurement:order-truck)'"
+       routerLinkActive="is-active">
         <span class="icon"><i class="fa fa-download"></i></span> Order Trucks
       </a>
     </li>

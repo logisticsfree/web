@@ -10,6 +10,7 @@ import { flatMap, tap, map } from 'rxjs/operators';
 import { WarehouseService } from '../../database/services/warehouse.service';
 import { TruckService } from '../services/truck.service';
 import { TripService } from '../services/trip.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-order-vehicle',

@@ -4,10 +4,9 @@ import { Warehouse } from './Warehouse';
 export interface Order {
     invoice: string;
     distributor: Distributor;
-    warehouse: Warehouse;
     volume: number;
     weight: number;
     value: number;
-    skus: {};
+    skus: any;
     status: number;
 }
