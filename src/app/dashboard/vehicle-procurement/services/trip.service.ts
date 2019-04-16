@@ -20,12 +20,12 @@ export class TripService {
             tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
             flatMap(cid => {
                 const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
-                    `ordered-trucks/${cid}`
+                    `order-requests/${cid}/order-requests/${truck.uid}`
                 );
                 const pendingTrip: Trip = {
-                    time, date, truck: truck.truck, warehouse,
+                    time, date, truck, warehouse,
                 }
-                return orderedTrucksRef.set({ [truck.truck.vid]: pendingTrip }, { merge: true }).then(res => {
+                return orderedTrucksRef.set( pendingTrip, { merge: true }).then(res => {
                     this.setTruckUnavailable(truck.uid)
                 });
             }),
