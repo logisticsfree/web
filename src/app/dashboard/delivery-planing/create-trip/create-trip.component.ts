@@ -70,6 +70,7 @@ export class CreateTripComponent implements OnInit {
 
     ngOnInit() {
         this.truckService.getOrderedTrucks().subscribe(trucks => {
+            
             this.trucks = Object.values(trucks);
         });
 

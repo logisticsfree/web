@@ -1,4 +1,6 @@
 const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+admin.initializeApp(functions.config().firebase);
 
 exports.countNameChanges = functions.firestore
     .document("companies/{userId}")
@@ -25,6 +27,76 @@ exports.countNameChanges = functions.firestore
             { merge: true }
         );
     });
+
+exports.sendNewOrderRequest = functions.firestore
+    .document("/order-requests/{companyId}/order-requests/{truckId}")
+    .onCreate((snap, context) => {
+        let newOrder = snap.data();
+        let truck = newOrder.truck;
+        let companyId = context.params.companyId;
+        let warehouse = newOrder.warehouse;
+
+        return loadUsers(truck.uid, companyId).then(
+            ({truckTokenID, companyData}) => {
+                let token = truckTokenID;
+                let companyName = companyData.name;
+
+                let payload = {
+                    notification: {
+                        title: "Firebase Notification",
+                        body: `You have new order on ${newOrder.date} at ${
+                            newOrder.time
+                        }`,
+                        sound: "default",
+                        badge: "1"
+                    },
+                    data: {
+                        title: "Firebase Notification",
+                        lat: `${warehouse.latitude}`,
+                        lng: `${warehouse.longitude}`,
+                        date: `${newOrder.date}`,
+                        time: `${newOrder.time}`,
+                        customerName: companyName,
+                        customerId: companyId,
+                        sound: "default",
+                        badge: "1"
+                    }
+                };
+                return admin.messaging().sendToDevice(token, payload);
+            }
+        );
+    });
+
+function loadUsers(truckID, companyID) {
+    return new Promise((resolve, reject) => {
+        let dbRef = admin.firestore().doc(`/tokens/${truckID}`);
+        dbRef.get().then(
+            snap => {
+                let data = snap.data();
+                resolve(data.token);
+            },
+            err => {
+                reject(err);
+            }
+        );
+    }).then(truckTokenID => {
+        return loadCustomer(truckTokenID, companyID);
+    });
+}
+function loadCustomer(truckTokenID, companyID) {
+    return new Promise((resolve, reject) => {
+        let dbRef = admin.firestore().doc(`companies/${companyID}`);
+        dbRef.get().then(
+            company => {
+                const res = { truckTokenID, companyData: company.data() };
+                resolve(res);
+            },
+            err => {
+                reject(err);
+            }
+        );
+    });
+}
 
 // exports.calculateTotalVolume = functions.firestore
 //     .document("ordered-trucks/{userId}")

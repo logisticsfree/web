@@ -68,7 +68,7 @@ export class OrderVehicleComponent implements OnInit {
         const volume = Number.parseFloat(formValues.volume);
         const amount = Number.parseFloat(formValues.amount);
 
-        this.gf.getDriverIDsWithinRadius([center.latitude, center.longitude], 60);
+        this.gf.getDriverIDsWithinRadius([center.latitude, center.longitude], 160);
 
         let geoResult: string[];
         this.gf.hits.pipe(  // get driver IDs closer to the warehouse
