@@ -16,7 +16,7 @@ export class GeofireService {
         this.geoFire = new GeoFire(this.dbRef);
     }
 
-    getDriverIDsWithinRadius(location, radius) {
+    getDriverIDsWithinRadius(location: number[], radius: number) {
         this.geoFire.query({
             center: location,
             radius
@@ -29,7 +29,7 @@ export class GeofireService {
             this.hits.next(currentHits);
         })
     }
-    getDriversWithinRadius(location, radius) {
+    getDriversWithinRadius(location: number[], radius: number) {
         this.geoFire.query({
             center: location,
             radius

@@ -27,7 +27,6 @@ export class NavbarService {
             take(1),
             flatMap(user => {
                 return this.afs.doc<User>(`users/${user.uid}`).valueChanges().pipe(
-                    take(1),
                     map(user => user.warehouse)
                 );
             })

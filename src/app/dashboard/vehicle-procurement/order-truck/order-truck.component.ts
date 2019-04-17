@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Warehouse } from 'src/app/models/Warehouse';
-import { WarehouseService } from '../../database/services/warehouse.service';
+import { NavbarService } from 'src/app/services/navbar.service';
+import { GeofireService } from 'src/app/services/geofire.service';
+
+interface location {
+    lat: number;
+    lng: number;
+    name?: string;
+}
+
 @Component({
     selector: 'app-order-truck',
     templateUrl: './order-truck.component.html',
@@ -9,16 +17,38 @@ import { WarehouseService } from '../../database/services/warehouse.service';
 })
 
 export class OrderTruckComponent implements OnInit {
-
-    warehouses: Warehouse[];
-    selectedWarehouse: Warehouse;
-
+    warehouse: Warehouse;
+    nearbyTrucks: location[];
     toggleOrderVehicle: boolean = false;
 
-    constructor(private router: Router, private warehouseService: WarehouseService) { }
+    constructor(
+        private navbarService: NavbarService,
+        private gfs: GeofireService
+    ) { }
 
     ngOnInit() {
-        
+        this.navbarService.getWarehouse().subscribe(warehouse => {
+            this.warehouse = warehouse;
+            this.getNearbyTrucks();
+        });
+    }
+
+    getNearbyTrucks() {
+        if (!this.warehouse) return;
+
+        const center = [this.warehouse.latitude, this.warehouse.longitude];
+        this.gfs.getDriversWithinRadius(center, 70);
+
+        this.gfs.hits.subscribe(trucks => {
+            this.nearbyTrucks = trucks.map<location>(truck => {
+                return {
+                    lat: truck.location[0],
+                    lng: truck.location[1],
+                };
+            })
+            console.log(this.nearbyTrucks);
+
+        })
     }
 
     toggleOrderVehicleModal() {
