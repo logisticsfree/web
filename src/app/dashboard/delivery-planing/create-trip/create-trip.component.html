@@ -13,15 +13,15 @@
             <div class="card-content">
               <div class="content">
                 <!-- <h3>{{ truck.truck.vid }}</h3> -->
-                <app-driver-card *ngIf="truck.truck" [truck]="truck.truck"></app-driver-card>
+                <app-driver-card *ngIf="truck.truck.truck" [truck]="truck.truck.truck"></app-driver-card>
 
-                <p>Max Volume: {{ truck.truck?.volume || 100}}
+                <p>Max Volume: {{ truck.truck.truck?.volume || 100}}
                   <progress class="progress is-large" [value]="getTotalVolume(truck)"
-                    [max]="truck.truck?.volume || 0">60%</progress>
+                    [max]="truck.truck.truck?.volume || 0">60%</progress>
                 </p>
-                <p>Max weight: {{ truck.truck?.weight || 100 }}
+                <p>Max weight: {{ truck.truck.truck?.weight || 100 }}
                   <progress class="progress is-large" [value]="getTotalWeight(truck)"
-                    [max]="truck.truck?.weight || 0">60%</progress>
+                    [max]="truck.truck.truck?.weight || 0">60%</progress>
                 </p>
 
                 <div *ngIf="assignOrdersView" class="columns">

@@ -22,7 +22,7 @@ export class TruckService {
 
             orderedTrucksRef
                 .update({
-                    [`${truck.truck.vid}.orders.${
+                    [`${truck.truck.truck.vid}.orders.${
                         order.invoice
                         }`]: firebase.firestore.FieldValue.delete()
                 })
@@ -35,7 +35,7 @@ export class TruckService {
             `ordered-trucks/${this.companyID}`
         );
         return orderedTrucksRef.set(
-            { [truck.truck.vid]: { estimate: truck.estimate } },
+            { [truck.truck.truck.vid]: { estimate: truck.estimate } },
             { merge: true }
         );
     }
@@ -61,6 +61,7 @@ export class TruckService {
     }
 
     updateOrderedTruck(uid, truck) {
+
         return new Promise((resolve, reject) => {
             const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
                 `ordered-trucks/${uid}`
@@ -68,7 +69,7 @@ export class TruckService {
 
             return orderRef
                 .set(
-                    { [truck.truck.vid]: { orders: truck.orders } },
+                    { [truck.truck.truck.vid]: { orders: truck.orders } },
                     { merge: true }
                 )
                 .then(res => resolve(truck))
