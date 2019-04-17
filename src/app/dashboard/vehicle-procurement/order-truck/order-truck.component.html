@@ -2,31 +2,23 @@
     <div class="field-body">
         <div class="field">
             <div class="buttons">
-                <a [routerLink]="['/vehicle-procurement', { outlets: { procurement: ['order-vehicle'] } }]" class="button is-primary">Order Vehicles</a>
+                <a [routerLink]="['/vehicle-procurement', { outlets: { procurement: ['order-vehicle'] } }]"
+                    class="button is-primary">Order Vehicles</a>
                 <button [disabled]="true" class="button is-primary">Order a Specific Vehicles</button>
-            </div>
-        </div>
-    </div>
-    <div class="field-label is-normal">
-        <label class="label">Current&nbsp;Warehouse</label>
-    </div>
-    <div class="field-body">
-        <div class="field">
-            <div class="control has-icons-left">
-                <div class="select">
-                    <select  [(ngModel)]="selectedWarehouse">
-                        <option selected>Please Select...</option>
-                        <option *ngFor="let warehouse of warehouses" [ngValue]="warehouse">{{ warehouse.name }}</option>
-                    </select>
-                </div>
-                <div class="icon is-small is-left">
-                    <i class="fas fa-globe"></i>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- <app-order-vehicle (closed)="toggleOrderVehicle = false" [toggle]="toggleOrderVehicle" [warehouse]="selectedWarehouse"></app-order-vehicle> -->
-
-<!-- <agm-map></agm-map> -->
+<div *ngIf="nearbyTrucks">
+    <agm-map 
+    [latitude]="warehouse.latitude"
+    [longitude]="warehouse.longitude"
+    [fitBounds]="true">
+        <agm-marker *ngFor="let truck of nearbyTrucks" 
+        [agmFitBounds]="true"
+        [latitude]="truck.lat" 
+        [longitude]="truck.lng"></agm-marker>
+    </agm-map>
+</div>

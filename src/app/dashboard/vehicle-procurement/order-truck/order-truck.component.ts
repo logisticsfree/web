@@ -1,36 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Warehouse } from 'src/app/models/Warehouse';
-import { WarehouseService } from '../../database/services/warehouse.service';
+import { NavbarService } from 'src/app/services/navbar.service';
+import { GeofireService } from 'src/app/services/geofire.service';
+
+interface location {
+    lat: number;
+    lng: number;
+    name?: string;
+}
+
 @Component({
-  selector: 'app-order-truck',
-  templateUrl: './order-truck.component.html',
-  styleUrls: ['./order-truck.component.scss']
+    selector: 'app-order-truck',
+    templateUrl: './order-truck.component.html',
+    styleUrls: ['./order-truck.component.scss']
 })
 
 export class OrderTruckComponent implements OnInit {
+    warehouse: Warehouse;
+    nearbyTrucks: location[];
+    toggleOrderVehicle: boolean = false;
 
-  warehouses: Warehouse[];
-  selectedWarehouse: Warehouse;
+    constructor(
+        private navbarService: NavbarService,
+        private gfs: GeofireService
+    ) { }
 
-  toggleOrderVehicle: boolean = false;
+    ngOnInit() {
+        this.navbarService.getWarehouse().subscribe(warehouse => {
+            this.warehouse = warehouse;
+            this.getNearbyTrucks();
+        });
+    }
 
-  constructor(private router: Router, private warehouseService: WarehouseService) { }
+    getNearbyTrucks() {
+        if (!this.warehouse) return;
 
-  ngOnInit() {
-    const uns = this.warehouseService
-      .getWarehouses()
-      .subscribe(warehouses => {
-        this.warehouses = Object.values(warehouses);
-        // TODO: fix if there's no warehouses added
-        // redirect to database/warehouse to add some
-        this.selectedWarehouse = this.warehouses[0];
-        uns.unsubscribe();
-      });
-  }
+        const center = [this.warehouse.latitude, this.warehouse.longitude];
+        this.gfs.getDriversWithinRadius(center, 70);
 
-  toggleOrderVehicleModal () {
-    this.toggleOrderVehicle = true;
-  }
+        this.gfs.hits.subscribe(trucks => {
+            this.nearbyTrucks = trucks.map<location>(truck => {
+                return {
+                    lat: truck.location[0],
+                    lng: truck.location[1],
+                };
+            })
+            console.log(this.nearbyTrucks);
+
+        })
+    }
+
+    toggleOrderVehicleModal() {
+        this.toggleOrderVehicle = true;
+    }
 
 }

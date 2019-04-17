@@ -1,12 +1,44 @@
-<div *ngIf="orders?.length > 0;else noOrders">
-	<ul *ngFor= "let order of order" class="collection">
-		<li class="collection-order"><strong>{{orders.invoice}}: </strong> {{orders.distributer}}</li>
-		
-	</ul>
+<div *ngIf="orders; else noOrders">
+	<div class="content">
+		<h3>Ordered Trucks</h3>
+	</div>
+	<div class="columns is-multiline">
+		<div *ngFor="let order of orders" class="column is-one-third">
+			<div class="card is-hoverable">
+				<div class="card-content">
+					<div class="content">
+						<app-driver-card *ngIf="order.truck.truck" [truck]="order.truck.truck">
+						</app-driver-card>
+						<h5>{{ order.truck.fName }} {{ order.truck.lName }}</h5>
+						<p>Order Time:
+							<strong>
+								<span> {{ order.date }} </span> @
+								<span> {{ order.time }} </span>
+							</strong>
+						</p>
+					</div>
+					<div class="buttons">
+						<div class="button is-primary" (click)="viewLocation(order)">View Location</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <ng-template #noOrders>
 	<hr>
 	<h5>There are no order to show</h5>
+</ng-template>
 
-</ng-template>	
+<div *ngIf="selectedTruck?.location" class="modal" [class.is-active]="toggleMapView">
+	<div class="modal-background" (click)="toggleMapView = false"></div>
+	<div class="modal-content box">
+		<!-- Any other Bulma elements you want -->
+		<agm-map [zoom]="12" [latitude]="selectedTruck.location.lat" [longitude]="selectedTruck.location.lng">
+			<agm-marker [title]="selectedTruck.truck.fName" [latitude]="selectedTruck.location.lat"
+				[longitude]="selectedTruck.location.lng"></agm-marker>
+		</agm-map>
+	</div>
+	<button class="modal-close is-large" (click)="toggleMapView = false" aria-label="close"></button>
+</div>
