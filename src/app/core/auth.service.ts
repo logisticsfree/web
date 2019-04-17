@@ -10,6 +10,7 @@ import {
 
 import { Observable, of, pipe } from "rxjs";
 import { switchMap, tap, take } from "rxjs/operators";
+import { Warehouse } from '../models/Warehouse';
 
 export interface User {
     uid: string;
@@ -17,6 +18,7 @@ export interface User {
     fname: string;
     lname: string;
     phone: string;
+    warehouse?: Warehouse;
 }
 export interface Company {
     uid: string;

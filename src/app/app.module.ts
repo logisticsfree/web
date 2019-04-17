@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
@@ -45,6 +45,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        FormsModule,
         DashboardModule,
         CoreModule,
         DatabaseModule,
