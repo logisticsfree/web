@@ -56,7 +56,8 @@ exports.sendNewOrderRequest = functions.firestore
                         lng: `${warehouse.longitude}`,
                         date: `${newOrder.date}`,
                         time: `${newOrder.time}`,
-                        customer: companyName,
+                        customerName: companyName,
+                        customerId: companyId,
                         sound: "default",
                         badge: "1"
                     }
