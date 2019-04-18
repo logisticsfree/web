@@ -20,6 +20,13 @@ export class OrderTruckComponent implements OnInit {
     warehouse: Warehouse;
     nearbyTrucks: location[];
     toggleOrderVehicle: boolean = false;
+    icon = {
+        url: './assets/truck-solid.svg',
+        scaledSize: {
+            width: 25,
+            height: 40
+        }
+    };
 
     constructor(
         private navbarService: NavbarService,
