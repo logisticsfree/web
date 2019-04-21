@@ -46,7 +46,7 @@ export class OrderTruckComponent implements OnInit {
         const center = [this.warehouse.latitude, this.warehouse.longitude];
         this.gfs.getDriversWithinRadius(center, 70);
 
-        this.gfs.hits.subscribe(trucks => {
+        this.gfs.trucks.subscribe(trucks => {
             this.nearbyTrucks = trucks.map<location>(truck => {
                 return {
                     lat: truck.location[0],

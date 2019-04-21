@@ -12,7 +12,8 @@
           <div *ngIf="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView" class="card is-hoverable">
             <div class="card-content">
               <div class="content">
-                <!-- <h3>{{ truck.truck.vid }}</h3> -->
+                <!-- <h3>{{ truck | json }}</h3> -->
+
                 <app-driver-card *ngIf="truck.truck.truck" [truck]="truck.truck.truck"></app-driver-card>
 
                 <p>Max Volume: {{ truck.truck.truck?.volume || 100}}

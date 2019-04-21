@@ -9,7 +9,8 @@ import { BehaviorSubject } from 'rxjs';
 export class GeofireService {
     dbRef: any;
     geoFire: any;
-    hits = new BehaviorSubject([]);
+    IDs = new BehaviorSubject([]);
+    trucks = new BehaviorSubject([]);
 
     constructor(private db: AngularFireDatabase) {
         this.dbRef = this.db.database.ref('/driver-locations');
@@ -23,10 +24,10 @@ export class GeofireService {
         }).on('key_entered', (key, location, distance) => {
             let hit = key;
 
-            let currentHits = this.hits.value;
-            currentHits.push(hit);
+            let currentIDs = this.IDs.value;
+            currentIDs.push(hit);
 
-            this.hits.next(currentHits);
+            this.IDs.next(currentIDs);
         })
     }
     getDriversWithinRadius(center: number[], radius: number) {
@@ -36,10 +37,10 @@ export class GeofireService {
         }).on('key_entered', (key, location, distance) => {
             let hit = { key, location, distance }
 
-            let currentHits = this.hits.value;
-            currentHits.push(hit);
+            let currentTrucks = this.trucks.value;
+            currentTrucks.push(hit);
 
-            this.hits.next(currentHits);
+            this.trucks.next(currentTrucks);
         })
     }
 }
