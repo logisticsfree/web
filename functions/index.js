@@ -2,6 +2,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 admin.initializeApp(functions.config().firebase);
 
+/*
 exports.countNameChanges = functions.firestore
     .document("companies/{userId}")
     .onUpdate((change, context) => {
@@ -27,7 +28,23 @@ exports.countNameChanges = functions.firestore
             { merge: true }
         );
     });
+    */
+exports.syncTruckOrder = functions.firestore
+    .document('/ordered-trucks/{companyID}/ordered-trucks/{truckID}')
+    // .onCreate((snap, context) => {
+    //     let companyId = context.params.companyID;
+    //     let truckID = context.params.truckID;
 
+    //     admin.firestore().doc(`drivers/${truckID}/orders/${companyID}`)
+    //     .set(snap.data())
+    // })
+    .onWrite((change, context) => {
+        let companyID = context.params.companyID;
+        let truckID = context.params.truckID;
+
+        return admin.firestore().doc(`drivers/${truckID}/orders/${companyID}`)
+        .set(change.after.data())
+    });
 exports.sendNewOrderRequest = functions.firestore
     .document("/order-requests/{companyId}/order-requests/{truckId}")
     .onCreate((snap, context) => {

@@ -54,7 +54,6 @@ export class OrderTruckComponent implements OnInit {
                 };
             })
             console.log(this.nearbyTrucks);
-
         })
     }
 
