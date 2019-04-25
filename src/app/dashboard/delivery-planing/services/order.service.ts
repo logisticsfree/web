@@ -91,7 +91,7 @@ export class OrderService {
                 weight: data.weight,
                 value: data.value,
                 status: 0,
-                skus: {}
+                skus: data.skus || {}
             };
 
             return orderRef

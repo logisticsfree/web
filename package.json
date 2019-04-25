@@ -26,6 +26,7 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "@ncstate/sat-popover": "^3.2.0",
     "@types/googlemaps": "^3.30.19",
     "agm-direction": "^0.7.6",
     "bootstrap": "^3.4.1",
