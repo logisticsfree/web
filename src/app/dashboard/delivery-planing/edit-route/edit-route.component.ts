@@ -28,6 +28,8 @@ export class EditRouteComponent implements OnInit {
 
     ngOnInit() {
         this.truckService.getOrderedTrucks().subscribe(trucks => {
+            console.log(trucks);
+            
             this.trucks = Object.values(trucks);
         });
     }
@@ -68,7 +70,7 @@ export class EditRouteComponent implements OnInit {
 
     selectTrip(truck) {
         this.selectedTrip = truck;
-        // console.log("selectedTrip", this.selectedTrip);
+        console.log("selectedTrip", this.selectedTrip);
     }
 
     // TODO : replace with firebase Function

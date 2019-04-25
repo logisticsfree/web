@@ -20,6 +20,13 @@ export class OrderTruckComponent implements OnInit {
     warehouse: Warehouse;
     nearbyTrucks: location[];
     toggleOrderVehicle: boolean = false;
+    icon = {
+        url: './assets/truck-solid.svg',
+        scaledSize: {
+            width: 25,
+            height: 40
+        }
+    };
 
     constructor(
         private navbarService: NavbarService,
@@ -39,7 +46,7 @@ export class OrderTruckComponent implements OnInit {
         const center = [this.warehouse.latitude, this.warehouse.longitude];
         this.gfs.getDriversWithinRadius(center, 70);
 
-        this.gfs.hits.subscribe(trucks => {
+        this.gfs.trucks.subscribe(trucks => {
             this.nearbyTrucks = trucks.map<location>(truck => {
                 return {
                     lat: truck.location[0],
@@ -47,7 +54,6 @@ export class OrderTruckComponent implements OnInit {
                 };
             })
             console.log(this.nearbyTrucks);
-
         })
     }
 

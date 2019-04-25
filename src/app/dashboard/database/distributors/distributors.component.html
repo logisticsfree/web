@@ -62,10 +62,8 @@
             </form>
         </div>
 
-            <button class="modal-close is-small" aria-label="close" (click)="toggleNewDistributorModal = false"></button>
+        <button class="modal-close is-small" aria-label="close" (click)="toggleNewDistributorModal = false"></button>
     </div>
-    
-
     <div class="column">
         <div class="card">
             <div class="card-header">
@@ -84,41 +82,40 @@
                         </div> 
                     </div>
                 </div>
-
             </div>
             <div class="column is-horizontal">
                 <div class="card-content">
-                <div *ngIf="dataSource" class="content">
-                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-horizontal">
-                        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                            <th class="md-table-header" mat-header-cell *matHeaderCellDef> {{column}} </th>
-                            <td mat-cell *matCellDef="let distributor"> {{distributor[column]}} </td>
-                        </ng-container>
+                    <div *ngIf="dataSource" class="content">
+                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-horizontal">
+                            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                                <th class="md-table-header" mat-header-cell *matHeaderCellDef> {{column}} </th>
+                                <td mat-cell *matCellDef="let distributor"> {{distributor[column]}} </td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="expandedDetail">
-                            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                    <div class="example-element-description">
-                                        <agm-map [zoom]="12" [latitude]="element.latitude" [longitude]="element.longitude">
-                                            <agm-marker [markerDraggable]="true" [title]="element.name" [latitude]="element.latitude"
-                                                [longitude]="element.longitude"></agm-marker>
-                                        </agm-map>
+                            <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                                    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                        <div class="example-element-description">
+                                            <agm-map [zoom]="12" [latitude]="element.latitude" [longitude]="element.longitude">
+                                                <agm-marker [markerDraggable]="true" [title]="element.name" [latitude]="element.latitude"
+                                                    [longitude]="element.longitude"></agm-marker>
+                                            </agm-map>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </ng-container>
+                                </td>
+                            </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
 
 
-                        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
-                            [class.example-expanded-row]="expandedElement === element" (click)="expandedElement === element ? expandedElement = null : expandedElement = element">
-                        </tr>
-                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row row-expand-should-hide"></tr>
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                                [class.example-expanded-row]="expandedElement === element" (click)="expandedElement === element ? expandedElement = null : expandedElement = element">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row row-expand-should-hide"></tr>
 
-                    </table>
-                    <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                </div>
+                        </table>
+                        <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    </div>
                 </div>
             </div>
         </div>

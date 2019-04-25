@@ -71,10 +71,10 @@ export class OrderVehicleComponent implements OnInit {
         this.gf.getDriverIDsWithinRadius([center.latitude, center.longitude], 160);
 
         let geoResult: string[];
-        this.gf.hits.pipe(  // get driver IDs closer to the warehouse
-            flatMap(hits => {   // map them to driver Docs & filter by volume
-                geoResult = hits;
-                return this.filterTrucksByVolume(hits, volume, amount)
+        this.gf.IDs.pipe(  // get driver IDs closer to the warehouse
+            flatMap(IDs => {   // map them to driver Docs & filter by volume
+                geoResult = IDs;
+                return this.filterTrucksByVolume(IDs, volume, amount)
             }),
             map(trucks => { // get the intersection of (closer & compatible volume) trucks
                 const filterdByVolume = trucks.filter(truck => geoResult.includes(truck.payload.doc.id));

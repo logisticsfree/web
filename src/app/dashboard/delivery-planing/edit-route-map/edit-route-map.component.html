@@ -20,7 +20,7 @@
 	<div class="content">
 		<div cdkDropList class="example-list is-lower-alpha" (cdkDropListDropped)="drop($event)">
 		  <div class="example-box " *ngFor="let order of orders" cdkDrag> 
-		  	<h5> <strong> {{ order.seqNo + 1 }}) </strong> {{ order.distributor.name }}</h5>
+		  	<h5> <strong> {{ (order.seqNo || 0) + 1 }}) </strong> {{ order.distributor.name }}</h5>
 		  </div>
 		</div>
 	</div>

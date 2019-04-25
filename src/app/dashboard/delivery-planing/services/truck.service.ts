@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import {
     AngularFirestore,
-    AngularFirestoreDocument
+    AngularFirestoreDocument,
+    AngularFirestoreCollection
 } from "@angular/fire/firestore";
 import * as firebase from "firebase";
 import { take, tap, flatMap } from 'rxjs/operators';
@@ -17,12 +18,12 @@ export class TruckService {
 
     removeOrder(truck, order) {
         return new Promise((resolve, reject) => {
-            const orderedTrucksRef: AngularFirestoreDocument<any> =
-                this.afs.doc(`ordered-trucks/${this.companyID}`);
+            const orderedTruckRef: AngularFirestoreDocument<any> =
+                this.afs.collection(`ordered-trucks/${this.companyID}/ordered-trucks`).doc(truck.truck.uid);
 
-            orderedTrucksRef
+            orderedTruckRef
                 .update({
-                    [`${truck.truck.truck.vid}.orders.${
+                    [`orders.${
                         order.invoice
                         }`]: firebase.firestore.FieldValue.delete()
                 })
@@ -31,45 +32,40 @@ export class TruckService {
         });
     }
     saveEstimates(truck) {
-        const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
-            `ordered-trucks/${this.companyID}`
-        );
+        const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.collection(
+            `ordered-trucks/${this.companyID}/ordered-trucks`
+        ).doc(truck.truck.uid);
         return orderedTrucksRef.set(
-            { [truck.truck.truck.vid]: { estimate: truck.estimate } },
+            { estimate: truck.estimate },
             { merge: true }
         );
     }
 
     saveOrderedTruck(truck) {
-        const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
-            `ordered-trucks/${this.companyID}`
+        const orderedTrucksRef: AngularFirestoreCollection<any> = this.afs.collection(
+            `ordered-trucks/${this.companyID}/ordered-trucks`
         );
         return this.updateOrderedTruck(this.companyID, truck);
-        // console.log(truck);
     }
 
-    updateOrders(truckId, orders) {
-        const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
-            `ordered-trucks/${this.companyID}`
-        );
-        return orderedTrucksRef.set(
-            {
-                [truckId]: { orders }
-            },
-            { merge: true }
-        );
+    updateOrders(driverID, orders) {
+        const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.collection(
+            `ordered-trucks/${this.companyID}/ordered-trucks`
+        ).doc(driverID);
+        
+        return orderedTrucksRef.set({ orders }, { merge: true });
     }
 
     updateOrderedTruck(uid, truck) {
 
         return new Promise((resolve, reject) => {
-            const orderRef: AngularFirestoreDocument<any> = this.afs.doc(
-                `ordered-trucks/${uid}`
-            );
+            const orderRef: AngularFirestoreDocument<any> = this.afs.collection(
+                `ordered-trucks/${uid}/ordered-trucks`
+            ).doc(truck.truck.uid);
 
             return orderRef
                 .set(
-                    { [truck.truck.truck.vid]: { orders: truck.orders } },
+                    { orders: truck.orders },
                     { merge: true }
                 )
                 .then(res => resolve(truck))
@@ -83,8 +79,8 @@ export class TruckService {
             take(1),
             tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
             flatMap(cid => {
-                const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
-                    `ordered-trucks/${cid}`
+                const orderedTrucksRef: AngularFirestoreCollection<any> = this.afs.collection(
+                    `ordered-trucks/${cid}/ordered-trucks`
                 );
                 return orderedTrucksRef.valueChanges();
             }),

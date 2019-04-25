@@ -16,7 +16,8 @@
     [latitude]="warehouse.latitude"
     [longitude]="warehouse.longitude"
     [fitBounds]="true">
-        <agm-marker *ngFor="let truck of nearbyTrucks" 
+        <agm-marker *ngFor="let truck of nearbyTrucks"
+        [iconUrl]="icon"
         [agmFitBounds]="true"
         [latitude]="truck.lat" 
         [longitude]="truck.lng"></agm-marker>
