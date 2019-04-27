@@ -92,8 +92,8 @@
                                     <span *ngIf="column!='id'">{{ column }}</span>
                                 </th>
                                 <td mat-cell *matCellDef="let distributor">
-                                    <div (click)="p.open()"  [satPopoverAnchorFor]="p" *ngIf="column!='id'">
-                                         <mat-form-field>
+                                    <div *ngIf="column!='id'">
+                                         <mat-form-field (click)="p.open()"  [satPopoverAnchorFor]="p">
                                             <input matInput type="text"
                                                 [(ngModel)]="distributor[column]"
                                                 [size]="distributor[column].toString().length || 5">
