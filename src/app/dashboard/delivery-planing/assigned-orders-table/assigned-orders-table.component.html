@@ -49,6 +49,11 @@
                         <th mat-header-cell class="md-table-header" *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element">
                             <div class="buttons">
+                                <a class="button is-outlined is-info is-small">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </a>
                                 <a (click)="unassignOrder(truck, element)" 
                                     class="button is-danger is-outlined is-small">
                                     <span>Remove</span>
@@ -63,7 +68,7 @@
                         <td mat-cell *matCellDef="let element" [attr.colspan]="ordersColumnsToDisplay.length">
                           <div class="example-element-detail"
                                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                               <app-split-order (onSplit)="updateOrder($event)" style="width:100%" [order]="element"></app-split-order>
+                               <app-split-order (onSplit)="splitOrder($event)" style="width:100%" [order]="element"></app-split-order>
                           </div>
                         </td>
                     </ng-container>

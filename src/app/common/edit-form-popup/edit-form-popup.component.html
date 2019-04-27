@@ -1,0 +1,13 @@
+<form (ngSubmit)="onSubmit()">
+	<div class="mat-subheading-2">Enter a new value</div>
+
+	<mat-form-field>
+		<input matInput [max]="maxQty" type="text" name="qty" [(ngModel)]="newValue">
+		<!-- <mat-hint align="end">{{comment?.length || 0}}/140</mat-hint> -->
+	</mat-form-field>
+
+	<div class="actions buttons">
+		<button type="button" class="button" color="primary" (click)="onCancel()">CANCEL</button>
+		<button type="submit" class="button is-primary" color="primary">SAVE</button>
+	</div>
+</form>

@@ -76,6 +76,9 @@ export class WarehousesComponent implements OnInit {
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
+    updateWarehouse(id, key, value) {
+        this.warehouseService.updateWarehouse(id, key, value);
+    }
     addWarehouse(formValues) {
         if (this.newWarehouseForm.invalid) {
             return;
@@ -87,19 +90,7 @@ export class WarehousesComponent implements OnInit {
             .addWarehouse(formValues)
             .then(res => {
                 this.distributorModelLoading = false;
-
                 this.newWarehouseForm.reset();
-
-                // add a new row to table
-                let newData = this.dataSource.data;
-                if (newData) {
-                    newData.push(res);
-                } else {
-                    newData = [res];
-                }
-
-                this.dataSource = new MatTableDataSource(newData);
-                this.dataSource.paginator = this.paginator;
             })
             .catch(err => (this.distributorModelLoading = false));
     }
@@ -110,12 +101,11 @@ export class WarehousesComponent implements OnInit {
                 if (!warehouses) {
                     this.dataSource = new MatTableDataSource();
                 } else {
-                    this.dataSource = new MatTableDataSource(Object.values(warehouses));
+                    this.dataSource = new MatTableDataSource(warehouses);
                 }
                 setTimeout(() => {
                     this.dataSource.paginator = this.paginator;
                 });
-                unsubscribe.unsubscribe();
             });
     }
 
@@ -144,13 +134,7 @@ export class WarehousesComponent implements OnInit {
         });
     }
 
-    get name() {
-        return this.newWarehouseForm.get("name");
-    }
-    get latitude() {
-        return this.newWarehouseForm.get("latitude");
-    }
-    get longitude() {
-        return this.newWarehouseForm.get("longitude");
-    }
+    get name() {return this.newWarehouseForm.get("name"); }
+    get latitude() {return this.newWarehouseForm.get("latitude"); }
+    get longitude() {return this.newWarehouseForm.get("longitude"); }
 }

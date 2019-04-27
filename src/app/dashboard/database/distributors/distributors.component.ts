@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import {
@@ -48,7 +48,6 @@ import { Distributor } from 'src/app/models/Distributor';
     ])
   ]
 })
-// TODO : edit rows
 export class DistributorsComponent implements OnInit {
   newDistributorForm: FormGroup;
 
@@ -74,7 +73,12 @@ export class DistributorsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  addDistritutor(formValues) {
+  updateDistributor(id, key, value) {
+    if (!id || !key || !value) return;
+    this.distributorService.updateDistributor(id, key, parseFloat(value) || value);
+  }
+
+  addDistributor(formValues) {
     if (this.newDistributorForm.invalid) {
       return;
     }
@@ -85,13 +89,6 @@ export class DistributorsComponent implements OnInit {
       .then(res => {
         this.distributorModelLoading = false;
         this.toggleNewDistributorModal = false;
-
-        // add a new row to table
-        const newData = this.dataSource.data;
-        newData.push(res);
-        this.dataSource = new MatTableDataSource(newData);
-        this.dataSource.paginator = this.paginator;
-
         this.newDistributorForm.reset();
       })
       .catch(err => (this.distributorModelLoading = false));
@@ -101,17 +98,14 @@ export class DistributorsComponent implements OnInit {
     const unsubscribe = this.distributorService
       .getDistributors()
       .subscribe(distributors => {
-        this.dataSource = new MatTableDataSource(
-          Object.values(distributors)
-        );
+        this.dataSource = new MatTableDataSource(distributors);
         this.columnsToDisplay = Object.keys(this.dataSource.data[0]).reverse();
-        // console.log(this.columnsToDisplay);
 
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
         });
 
-        unsubscribe.unsubscribe();
+        // unsubscribe.unsubscribe();
       });
   }
 
@@ -138,14 +132,7 @@ export class DistributorsComponent implements OnInit {
     });
   }
 
-  get name() {
-    return this.newDistributorForm.get('name');
-  }
-
-  get latitude() {
-    return this.newDistributorForm.get('latitude');
-  }
-  get longitude() {
-    return this.newDistributorForm.get('longitude');
-  }
+  get name() {return this.newDistributorForm.get('name'); }
+  get latitude() {return this.newDistributorForm.get('latitude'); }
+  get longitude() {return this.newDistributorForm.get('longitude'); }
 }

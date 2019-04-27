@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import {
     AngularFirestoreDocument,
+    AngularFirestoreCollection,
     AngularFirestore
 } from "@angular/fire/firestore";
 
@@ -13,7 +14,6 @@ import { Distributor } from 'src/app/models/Distributor';
     providedIn: "root"
 })
 export class DistributorService {
-    // TODO : edit table rows
     companyID: string;
     constructor(
         private userService: UserService,
@@ -26,35 +26,32 @@ export class DistributorService {
             take(1),
             tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
             flatMap(cid => {
-                const distributorRef: AngularFirestoreDocument<any> =
-                    this.afs.doc(`distributors/${cid}`);
+                const distributorRef: AngularFirestoreCollection<any> =
+                    this.afs.collection(`distributors/${cid}/distributors`);
                 return distributorRef.valueChanges();
             }),
         );
     }
-    addDistributor(values) {
-        return this.updateDistributorData(
-            this.companyID,
-            values
+    addDistributor(data) {
+        const id = this.afs.createId();
+        const distributorRef: AngularFirestoreDocument<any> = this.afs.doc(
+            `distributors/${this.companyID}/distributors/${id}`
         );
+
+        const newDistributor: Distributor = {
+            id,
+            name: data.name,
+            longitude: parseFloat(data.longitude),
+            latitude: parseFloat(data.latitude)
+        };
+
+        return distributorRef.set(newDistributor, {merge: true});
     }
 
-    updateDistributorData(companyID, data): Promise<Distributor> {
-        return new Promise((resolve, reject) => {
-            const distributorRef: AngularFirestoreDocument<any> = this.afs.doc(
-                `distributors/${companyID}`
-            );
-
-            const newDistributor: Distributor = {
-                name: data.name,
-                longitude: parseFloat(data.longitude),
-                latitude: parseFloat(data.latitude)
-            };
-
-            return distributorRef
-                .set({ [newDistributor.name]: newDistributor }, { merge: true })
-                .then(res => resolve(newDistributor))
-                .then(err => reject(err));
-        });
+    updateDistributor(id, key, value) {
+        const distributorRef: AngularFirestoreDocument<any> = this.afs.doc(
+                `distributors/${this.companyID}/distributors/${id}`
+        );
+        distributorRef.set({[key]: value}, {merge: true});
     }
 }

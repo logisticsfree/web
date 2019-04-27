@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   animate,
   state,
@@ -16,6 +16,7 @@ import { SKU } from 'src/app/models/SKU';
   selector: 'app-sku',
   templateUrl: './sku.component.html',
   styleUrls: ['./sku.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('openNewSKUModal', [
       transition('* => close', [
@@ -49,11 +50,14 @@ export class SkuComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private skuService: SkuService) { }
 
-sa =true;
   ngOnInit() {
     this.createForm();
     this.fillTable();
-    // this.dataSource.paginator = this.paginator;
+  }
+
+  updateSKU(id, key, value) {
+    if (!id || !key || !value) return;
+    this.skuService.updateSKU(id, key, value);
   }
 
   applyFilter(filterValue: string) {
@@ -72,12 +76,6 @@ sa =true;
         this.skuModelLoading = false;
         this.toggleNewSkuModal = false;
 
-        // add a new row to table
-        const newData = this.dataSource.data;
-        newData.push(res);
-        this.dataSource = new MatTableDataSource(newData);
-        this.dataSource.paginator = this.paginator;
-
         this.newSKUForm.reset();
       })
       .catch(err => (this.skuModelLoading = false));
@@ -85,16 +83,14 @@ sa =true;
 
   fillTable() {
     const unsubscribe = this.skuService.getSKUs().subscribe(skus => {
-      console.log();
-      
-      this.dataSource = new MatTableDataSource(Object.values(skus));
+      this.dataSource = new MatTableDataSource(skus);
       this.columnsToDisplay = Object.keys(this.dataSource.data[0]);
 
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
       });
 
-      unsubscribe.unsubscribe();
+      // unsubscribe.unsubscribe();
     });
   }
 

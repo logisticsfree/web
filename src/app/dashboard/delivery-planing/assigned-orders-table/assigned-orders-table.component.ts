@@ -58,7 +58,7 @@ export class AssignedOrdersTableComponent implements OnInit {
         // this.fillTable();
 
     }
-    updateOrder(order) {
+    splitOrder(order) {
         console.log('order', this.truck);
         this.truckService.updateOrders(this.truck.truck.uid, {[order.invoice]: order})
     }
