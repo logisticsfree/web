@@ -95,9 +95,9 @@ export class AssignSkusComponent implements OnInit, OnChanges {
             );
         }
         this.dataSource.paginator = this.paginator;
-        // console.log('assign-sku', this.dataSource);
 
         this.createNewSKUForm();
+
         const unc = this.skuService.getSKUs().subscribe(skus => {
             this.SKUs = Object.values(skus);
 

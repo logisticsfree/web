@@ -1,4 +1,5 @@
 export interface SKU {
+	id?: string;
     code: string;
     name: string;
     volume: number;
