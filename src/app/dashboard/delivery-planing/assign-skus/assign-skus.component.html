@@ -1,5 +1,121 @@
-<!-- SKUs table -->
-<div>
+ <div class="column is-one-third">
+    <form [formGroup]="addSKUForm" class="card"
+        (submit)="assignSKU(selectedOrder.invoice, addSKUForm.value)">
+
+        <div class="card-header">
+            <div class="card-header-title">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Add SKUs to #{{selectedOrder.invoice}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="field">
+                <label class="label">Code</label>
+                <div class="control has-icons-left has-icons-right">
+                    <!-- <input class="input" type="text" placeholder="Code" /> -->
+                    <div class="select is-success" [class.is-danger]="code.invalid && (code.dirty || code.touched)">
+                        <select ng-dropdown formControlName="code">
+                            <option>Please Select..</option>
+                            <option *ngFor="let sku of SKUs" [ngValue]="sku">
+                                {{ sku.code }} - {{ sku.name }}</option>
+                        </select>
+                    </div>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-tag"></i>
+                    </span>
+                </div>
+                <p *ngIf="!code.invalid" class="help is-success">Code is looking good</p>
+            </div>
+
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input formControlName="name" class="input is-success" type="text" placeholder="Name"
+                        [class.is-danger]="name.invalid && (name.dirty || name.touched)">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-file-signature"></i>
+                    </span>
+                    <span *ngIf="!name.invalid" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <p *ngIf="!name.invalid" class="help is-success">Name is looking good</p>
+            </div>
+
+            <div class="field">
+                <label class="label">Unite Volume</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
+                        [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-arrows-alt"></i>
+                    </span>
+                    <span *ngIf="!volume.invalid" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <p *ngIf="!volume.invalid" class="help is-success">Volume is looking good</p>
+            </div>
+
+            <div class="field">
+                <label class="label">Unite Weight</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input formControlName="weight" class="input is-success" type="text" placeholder="Weight"
+                        [class.is-danger]="weight.invalid && (weight.dirty || weight.touched)">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-weight-hanging"></i>
+                    </span>
+                    <span *ngIf="!weight.invalid" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <p *ngIf="!weight.invalid" class="help is-success">Weight is looking good</p>
+            </div>
+
+            <div class="field">
+                <label class="label">Value</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input formControlName="value" class="input is-success" type="text" placeholder="Value"
+                        [class.is-danger]="value.invalid && (value.dirty || value.touched)">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-sort-numeric-up"></i>
+                    </span>
+                    <span *ngIf="!value.invalid" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <p *ngIf="!value.invalid" class="help is-success">Value is looking good</p>
+            </div>
+
+            <div class="field">
+                <label class="label">Qty</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input formControlName="qty" class="input is-success" type="text" placeholder="Qty"
+                        [class.is-danger]="qty.invalid && (qty.dirty || qty.touched)">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-sort-numeric-up"></i>
+                    </span>
+                    <span *ngIf="!qty.invalid" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <p *ngIf="!qty.invalid" class="help is-success">Value is looking good</p>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link" [class.is-loading]="addSKUFormLoading"
+                        [disabled]="addSKUForm.invalid">Add</button>
+                </div>
+            </div>
+        </div>
+    </form>
+ </div>
+
+<div class="column">
     <div class="card">
         <div class="card-header">
             <div class="card-header-title">
@@ -12,11 +128,6 @@
                             <div class="control">
                                 <input class="input is-success" (keyup)="applySKUFilter($event.target.value)"
                                     type="text" placeholder="Filter">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button class="button is-primary" (click)="showNewSkuModal = true">Add SKU</button>
                             </div>
                         </div>
                     </div>
@@ -88,112 +199,7 @@
 </div>
 
 <!-- add new SKU modal -->
-<div class="modal" [class.is-active]="showNewSkuModal">
-    <div class="modal-background" (click)="showNewSkuModal = false"></div>
-    <form [formGroup]="addSKUForm" class="modal-content box" [@openNewSKUModal]="showNewSkuModal ? 'open' : 'close'"
-        (submit)="assignSKU(selectedOrder.invoice, addSKUForm.value)">
-        <div class="field">
-            <label class="label">Code</label>
-            <div class="control has-icons-left has-icons-right">
-                <!-- <input class="input" type="text" placeholder="Code" /> -->
-                <div class="select is-success" [class.is-danger]="code.invalid && (code.dirty || code.touched)">
-                    <select ng-dropdown formControlName="code">
-                        <option>Please Select..</option>
-                        <option *ngFor="let sku of SKUs" [ngValue]="sku">
-                            {{ sku.code }} - {{ sku.name }}</option>
-                    </select>
-                </div>
-                <span class="icon is-small is-left">
-                    <i class="fas fa-tag"></i>
-                </span>
-            </div>
-            <p *ngIf="!code.invalid" class="help is-success">Code is looking good</p>
-        </div>
-
-        <div class="field">
-            <label class="label">Name</label>
-            <div class="control has-icons-left has-icons-right">
-                <input formControlName="name" class="input is-success" type="text" placeholder="Name"
-                    [class.is-danger]="name.invalid && (name.dirty || name.touched)">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-file-signature"></i>
-                </span>
-                <span *ngIf="!name.invalid" class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-            <p *ngIf="!name.invalid" class="help is-success">Name is looking good</p>
-        </div>
-
-        <div class="field">
-            <label class="label">Unite Volume</label>
-            <div class="control has-icons-left has-icons-right">
-                <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
-                    [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-arrows-alt"></i>
-                </span>
-                <span *ngIf="!volume.invalid" class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-            <p *ngIf="!volume.invalid" class="help is-success">Volume is looking good</p>
-        </div>
-
-        <div class="field">
-            <label class="label">Unite Weight</label>
-            <div class="control has-icons-left has-icons-right">
-                <input formControlName="weight" class="input is-success" type="text" placeholder="Weight"
-                    [class.is-danger]="weight.invalid && (weight.dirty || weight.touched)">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-weight-hanging"></i>
-                </span>
-                <span *ngIf="!weight.invalid" class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-            <p *ngIf="!weight.invalid" class="help is-success">Weight is looking good</p>
-        </div>
-
-        <div class="field">
-            <label class="label">Value</label>
-            <div class="control has-icons-left has-icons-right">
-                <input formControlName="value" class="input is-success" type="text" placeholder="Value"
-                    [class.is-danger]="value.invalid && (value.dirty || value.touched)">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-sort-numeric-up"></i>
-                </span>
-                <span *ngIf="!value.invalid" class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-            <p *ngIf="!value.invalid" class="help is-success">Value is looking good</p>
-        </div>
-
-        <div class="field">
-            <label class="label">Qty</label>
-            <div class="control has-icons-left has-icons-right">
-                <input formControlName="qty" class="input is-success" type="text" placeholder="Qty"
-                    [class.is-danger]="qty.invalid && (qty.dirty || qty.touched)">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-sort-numeric-up"></i>
-                </span>
-                <span *ngIf="!qty.invalid" class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-            <p *ngIf="!qty.invalid" class="help is-success">Value is looking good</p>
-        </div>
-
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-link" [class.is-loading]="addSKUFormLoading"
-                    [disabled]="addSKUForm.invalid">Add</button>
-            </div>
-            <div class="control">
-                <button class="button is-text" (click)="showNewSkuModal = false">Cancel</button>
-            </div>
-        </div>
-    </form>
-    <button class="modal-close is-large" aria-label="close" (click)="showNewSkuModal = false"></button>
-</div>
+<!-- <div class="modal" [class.is-active]="showNewSkuModal"> -->
+    <!-- <div class="modal-background" (click)="showNewSkuModal = false"></div> -->
+    <!-- <button class="modal-close is-large" aria-label="close" (click)="showNewSkuModal = false"></button> -->
+<!-- </div> -->
