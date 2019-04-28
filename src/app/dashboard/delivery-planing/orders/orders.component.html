@@ -1,9 +1,38 @@
-<div *ngIf="!showNewOrderForm" class="buttons">
-    <button class="button is-primary" (click)="showNewOrderForm = true;orderTableState='right'">New Order</button>
+<div *ngIf="!showNewOrderForm">
+    <div class="field is-horizontal">
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" (click)="showNewOrderForm = true;orderTableState='right'">
+                    <span>Back</span>
+                    <span class="icon is-small">
+                        <span class="fas fa-arrow-circle-left"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="field-label is-normal">
+            <label class="label">SKUs&nbsp;in&nbsp;invoice&nbsp;#</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control has-icons-left">
+                    <div class="select">
+                        <select [(ngModel)]="selectedOrder">
+                            <option *ngFor="let order of orders" [ngValue]="order">
+                                {{ order.invoice }}</option>
+                        </select>
+                    </div>
+                    <div class="icon is-small is-left">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="columns">
     <!-- new Order Form -->
-    <div *ngIf="showNewOrderForm" class="column is-one-third" [@slideInOut]>
+    <div *ngIf="showNewOrderForm" class="column is-one-third" >
         <form [formGroup]="newOrderForm" class="card" (ngSubmit)="addOrder(newOrderForm.value)">
             <div class="card-header">
                 <div class="card-header-title">
@@ -13,7 +42,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="card-content">
                 <div class="field">
@@ -106,7 +134,7 @@
     </div>
 
     <!-- Orders table -->
-    <div class="column" [class.is-half]="!showNewOrderForm" [@moveLeft]="orderTableState">
+    <div class="column" *ngIf="showNewOrderForm" [class.is-half]="!showNewOrderForm" [@moveLeft]="orderTableState">
         <div class="card">
             <div class="card-header">
                 <div class="card-header-title">
@@ -130,10 +158,6 @@
                 <div *ngIf="ordersTableDataSource" class="content">
                     <table mat-table [dataSource]="ordersTableDataSource" multiTemplateDataRows
                         class="table is-striped is-hoverable">
-                        <!-- <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                            <th class="md-table-header" mat-header-cell *matHeaderCellDef> {{column}} </th>
-                            <td mat-cell *matCellDef="let sku"> {{sku[column]}} </td>
-                        </ng-container> -->
 
                         <ng-container matColumnDef="invoice">
                             <th class="md-table-header" mat-header-cell *matHeaderCellDef> Invoice No. </th>
@@ -163,17 +187,21 @@
                         </tr>
 
                     </table>
+                </div>
                     <mat-paginator #ordersPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
                     </mat-paginator>
-                </div>
             </div>
         </div>
         <br />
     </div>
 
-    <!-- SKUs table -->
-    <app-assign-skus (skuDeleted)="unassignSKU($event)" (skuAdded)="addNewlyAddedSkuToOrdersTable($event)"
-        [selectedOrder]="selectedOrder" *ngIf="!showNewOrderForm" class="column" [class.is-half]="!showNewOrderForm"
-        [@slideInOutFromLeft]>
-    </app-assign-skus>
 </div>
+<!-- SKUs table -->
+<app-assign-skus 
+    (skuDeleted)="unassignSKU($event)" 
+    (skuAdded)="addNewlyAddedSkuToOrdersTable($event)"
+    [selectedOrder]="selectedOrder" 
+    *ngIf="!showNewOrderForm" 
+    class="columns"
+    >
+</app-assign-skus>

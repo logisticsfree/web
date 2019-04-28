@@ -57,10 +57,11 @@ import { Order } from 'src/app/models/Order';
 })
 export class OrdersComponent implements OnInit {
     newOrderForm: FormGroup;
-    addSKUForm: FormGroup;
+    // addSKUForm: FormGroup;
     newOrderFormeLoading;
     ordersTableDataSource;
     SKUs;
+    orders: Order[];
     distributors;
     warehouses;
 
@@ -154,15 +155,14 @@ export class OrdersComponent implements OnInit {
     }
     fillTable() {
         const unsubscribe = this.orderService.getOrders().subscribe(orders => {
+            this.orders = Object.values(orders);
             this.ordersTableDataSource = new MatTableDataSource(
                 Object.values(orders)
             );
+            // console.log(this.ordersTableDataSource);
 
-            setTimeout(() => {
-                this.ordersTableDataSource.paginator = this.orderPaginator;
-            });
-
-            unsubscribe.unsubscribe();
+            this.ordersTableDataSource.paginator = this.orderPaginator;
+            // unsubscribe.unsubscribe();
         });
     }
 
