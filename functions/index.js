@@ -102,7 +102,7 @@ function loadUsers(truckID, companyID) {
 }
 function loadCustomer(truckTokenID, companyID) {
     return new Promise((resolve, reject) => {
-        let dbRef = admin.firestore().doc(`companies/${companyID}`);
+        let dbRef = admin.firestore().doc(`users/${companyID}`);
         dbRef.get().then(
             company => {
                 const res = { truckTokenID, companyData: company.data() };
