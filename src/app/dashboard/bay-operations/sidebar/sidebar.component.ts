@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderedTrucksService } from '../services/ordered-trucks.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  orderedTrucks: any;
 
-  constructor() { }
+  constructor(private ots: OrderedTrucksService) { }
 
   ngOnInit() {
+    this.ots.getOrderedTrucks().subscribe(trucks => {
+      this.orderedTrucks = trucks;
+    })
   }
 
 }

@@ -1,12 +1,30 @@
 <aside>
-  <p class="menu-label is-hidden-touch">Navigation</p>
-  <ul class="menu-list">
-    <li>
-      <a [routerLink]="[{ outlets: { loadingbay: ['loadingbay'] } }]" routerLinkActive="is-active">
-        <span class="icon"><i class="fa fa-puzzle-piece"></i></span> Loading Bay
-      </a>
-    </li>
-    
-    
-  </ul>
+    <p class="menu-label is-hidden-touch">Ordered&nbsp;Trucks</p>
+    <ul class="menu-list">
+        <li *ngFor="let truck of orderedTrucks">
+            <a [routerLink]="[{ outlets: { loadingbay: ['details'] } }]" [queryParams]="{driverID: truck.truck.uid}"
+                routerLinkActive="is-active">
+                <div class="tags has-addons">
+                    <span class="tag">
+                        <span class="has-text-weight-bold is-size-5">{{ truck.truck.truck.vid}}</span>
+                    </span>
+                    <span *ngIf="truck.arrived" class="tag is-success is-right">Arrived</span>
+                    <!-- <span *ngIf="truck.loading" class="tag is-warning is-right">Loading</span> -->
+                    <span *ngIf="!truck.arrived" class="tag is-danger is-right">Pending</span>
+                </div>
+            </a>
+        </li>
+        <!-- <li> -->
+        <!-- <a [routerLink]="[{ outlets: { loadingbay: ['loadingbay2'] } }]" routerLinkActive="is-active"> -->
+        <!-- <div class="tags has-addons"> -->
+        <!-- <span class="tag"> -->
+        <!-- <span class="has-text-weight-bold is-size-5">LG 9083</span> -->
+        <!-- </span> -->
+        <!-- <span class="tag is-success is-right">Arrived</span> -->
+        <!-- <span class="tag is-warning is-right">Loading</span> -->
+        <!-- <span class="tag is-danger has-text-right">Pending</span> -->
+        <!-- </div> -->
+        <!-- </a> -->
+        <!-- </li> -->
+    </ul>
 </aside>
