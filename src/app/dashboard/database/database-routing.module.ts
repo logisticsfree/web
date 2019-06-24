@@ -5,6 +5,7 @@ import { DatabaseHomeComponent } from './database-home/database-home.component';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { DistributorsComponent } from './distributors/distributors.component';
 import { WarehousesComponent } from './warehouses/warehouses.component';
+import { LoadingBayComponent } from './loading-bay/loading-bay.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,11 @@ const routes: Routes = [
                 path: 'warehouses',
                 component: WarehousesComponent,
                 outlet: 'database'
+            },
+            {
+                path: 'loading-bay',
+                component: LoadingBayComponent,
+                outlet: 'database'
             }
         ]
     }
@@ -40,4 +46,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DatabaseRoutingModule {}
+export class DatabaseRoutingModule { }

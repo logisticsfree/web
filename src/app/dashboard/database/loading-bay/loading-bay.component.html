@@ -1,0 +1,149 @@
+<div class="columns">
+    <div class="column is-half">
+        <div class="card">
+            <header style="cursor: pointer" class="card-header" (click)="toggleAddBayCard()">
+                <p class="card-header-title">
+                    Add New Loading Bay
+                </p>
+                <a (click)="toggleAddBayCard()" class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </header>
+            <div class="card-content" *ngIf="showAddBayCard">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Name</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input class="input" type="text" placeholder="Enter a name for Loading Bay"
+                                        [(ngModel)]="newBay.name" />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Vehicle&nbsp;Types</label>
+                        </div>
+                        <div class="field-body">
+                            <div style="margin-right: 10px;">
+                                <div class="control">
+                                    <div class="select">
+                                        <select #vType>
+                                            <option>Please Select...</option>
+                                            <option *ngFor="
+                                                    let type of vehicleTypes
+                                                " [ngValue]="type">{{ type }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button (click)="assignTypeToNewBay(vType)" class="button is-success is-outlined">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+                                        <span>Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content is-pulled-left">
+                    <div class="field is-horizontal" *ngIf="newBay.types">
+                        <div class="field-label is-normal">
+                            <div class="field is-grouped is-grouped-multiline">
+                                <div *ngFor="let type of getAssignedTypes(newBay)" class="control">
+                                    <div class="tags has-addons">
+                                        <a class="tag is-link">{{ type }}</a>
+                                        <a (click)="unassignTypeToNewBay(type)" class="tag is-delete"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <button (click)="addNewBay()" class="button is-primary is-outlined is-pulled-right">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span>Save</span>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let bay of allBays" style="margin-top: 10px;" class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Loading Bay : {{ bay.name }}
+                </p>
+                <a (click)="removeBay(bay.id)" class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field-body">
+                        <div style="margin-bottom: 1em;" class="field-label is-normal">
+                            <label class="label">Accessible&nbsp;Vehicle&nbsp;Types</label>
+                        </div>
+                        <!-- <h5>Accessible Vehicle Types</h5> -->
+                        <div style="margin-right: 10px;">
+                            <div class="control">
+                                <div class="select">
+                                    <select #vType>
+                                        <option>Please Select...</option>
+                                        <option *ngFor="let type of originalTypes" [ngValue]="type">{{ type }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button (click)="assignType(bay.id, vType)" class="button is-success is-outlined">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span>Add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-grouped is-grouped-multiline">
+
+                        <div *ngFor="let type of getAssignedTypes(bay)" class="control">
+                            <div class="tags has-addons">
+                                <a class="tag is-link">{{ type }}</a>
+                                <a (click)="unassignType(bay.id, bay.types, type)" class="tag is-delete"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="column is-half">
+        asdf
+    </div>
+</div>
