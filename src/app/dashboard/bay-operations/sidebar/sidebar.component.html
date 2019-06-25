@@ -8,7 +8,12 @@
                     <span class="tag">
                         <span class="has-text-weight-bold is-size-5">{{ truck.truck.truck.vid}}</span>
                     </span>
-                    <span *ngIf="truck.arrived" class="tag is-success is-right">Arrived</span>
+                    <span *ngIf="truck.arrived && !truck.bay" class="tag is-success is-right">Arrived</span>
+                    <span *ngIf="truck.arrived && truck.bay" class="tag is-warning is-right"
+                        title="Assigned to bay # {{truck?.bay.name }}">
+                        <strong>#{{ truck?.bay?.name}}</strong>
+                        <i style="margin-left: 5px;" class="fa fa-user-clock"></i>
+                    </span>
                     <!-- <span *ngIf="truck.loading" class="tag is-warning is-right">Loading</span> -->
                     <span *ngIf="!truck.arrived" class="tag is-danger is-right">Pending</span>
                 </div>

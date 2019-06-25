@@ -1,3 +1,29 @@
+<div style="margin-bottom: 10px;" *ngIf="truck?.arrived">
+    <div class="field has-addons">
+        <div class="field-label is-normal">
+            <label class="label">Assign to a Loading Bay</label>
+        </div>
+        <div class="control">
+            <div class="select is-fullwidth">
+                <select #selectBay name="country">
+                    <option [selected]="bay.id == truck?.bay?.id" *ngFor="let bay of bays" [value]="bay.id">
+                        {{ bay.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="control">
+            <button *ngIf="!truck?.bay" type="submit" (click)="assignToBay(selectBay.value)"
+                class="button is-primary">Assign</button>
+            <button *ngIf="truck?.bay" type="submit" (click)="assignToBay(selectBay.value)"
+                class="button is-warning">Change</button>
+        </div>
+    </div>
+
+    <p *ngIf="truck?.bay" style="margin-bottom: 5px; text-align: right; cursor: pointer" class="help is-size-6 is-info">
+        Already assigned to bay #{{ truck.bay.name }}
+    </p>
+</div>
 <div *ngIf="dataSource" class="card">
     <header class="card-header">
         <p class="card-header-title">
