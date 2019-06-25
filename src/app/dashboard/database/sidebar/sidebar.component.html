@@ -1,20 +1,25 @@
 <aside>
-  <p class="menu-label is-hidden-touch">Navigation</p>
-  <ul class="menu-list">
-    <li>
-      <a [routerLink]="[{ outlets: { database: ['skus'] } }]" routerLinkActive="is-active">
-        <span class="icon"><i class="fa fa-puzzle-piece"></i></span> SKUs
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="[{ outlets: { database: ['distributors'] } }]" routerLinkActive="is-active">
-        <span class="icon"><i class="fa fa-project-diagram"></i></span> Distributors
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="[{ outlets: { database: ['warehouses'] } }]" routerLinkActive="is-active">
-        <span class="icon"><i class="fa fa-warehouse"></i></span> Warehouses
-      </a>
-    </li>
-  </ul>
+    <p class="menu-label is-hidden-touch">Navigation</p>
+    <ul class="menu-list">
+        <li>
+            <a [routerLink]="[{ outlets: { database: ['skus'] } }]" routerLinkActive="is-active">
+                <span class="icon"><i class="fa fa-puzzle-piece"></i></span> SKUs
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="[{ outlets: { database: ['distributors'] } }]" routerLinkActive="is-active">
+                <span class="icon"><i class="fa fa-project-diagram"></i></span> Distributors
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="[{ outlets: { database: ['warehouses'] } }]" routerLinkActive="is-active">
+                <span class="icon"><i class="fa fa-warehouse"></i></span> Warehouses
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="[{ outlets: { database: ['loading-bay'] } }]" routerLinkActive="is-active">
+                <span class="icon"><i class="fa fa-truck-loading"></i></span> Loading Bay
+            </a>
+        </li>
+    </ul>
 </aside>

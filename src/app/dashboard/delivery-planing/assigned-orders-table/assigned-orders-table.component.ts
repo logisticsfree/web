@@ -42,8 +42,7 @@ export class AssignedOrdersTableComponent implements OnInit {
     @Input() set orders(orders: any[]) {
         this._orders = orders;
         this.ordersTableDataSource = new MatTableDataSource(orders);
-        // this.ordersTableDataSource.paginator = this.orderPaginator;
-        
+        // console.log(this.orders);
     }
     get orders() {
         return this._orders;
@@ -54,10 +53,10 @@ export class AssignedOrdersTableComponent implements OnInit {
         private truckService: TruckService
         ) {}
 
-    ngOnInit() {
-        // this.fillTable();
-
+    ngOnInit() { 
+        this.ordersTableDataSource.paginator = this.orderPaginator;
     }
+
     splitOrder(order) {
         console.log('order', this.truck);
         this.truckService.updateOrders(this.truck.truck.uid, {[order.invoice]: order})
@@ -72,8 +71,8 @@ export class AssignedOrdersTableComponent implements OnInit {
     }
 
     applyOrderFilter(filterValue: string) {
-        console.log(filterValue, this.ordersTableDataSource);
         this.ordersTableDataSource.filter = filterValue.trim().toLowerCase();
+        console.log(filterValue, this.ordersTableDataSource);
     }
 
     fillTable() {

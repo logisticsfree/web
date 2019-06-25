@@ -23,7 +23,7 @@ export class TripService {
                     `order-requests/${cid}/order-requests/${truck.uid}`
                 );
                 const pendingTrip: Trip = {
-                    time, date, truck, warehouse,
+                    time, date, truck, warehouse, companyID: cid
                 }
                 return orderedTrucksRef.set( pendingTrip, { merge: true }).then(res => {
                     this.setTruckUnavailable(truck.uid)

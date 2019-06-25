@@ -23,11 +23,11 @@
             <a routerLink="/delivery-planing" routerLinkActive="is-active" class="navbar-item">
                 Delivery Planing
             </a>
-            <a routerLink="/database" routerLinkActive="is-active" class="navbar-item">
-                Database
-            </a>
             <a routerLink="/bay-operations" routerLinkActive="is-active" class="navbar-item">
                 Bay Operations
+            </a>
+            <a routerLink="/database" routerLinkActive="is-active" class="navbar-item">
+                Database
             </a>
 
             <div class="navbar-item has-dropdown is-hoverable">
@@ -80,7 +80,7 @@
                     <a *ngIf="!user" routerLink="/login" class="button is-light">
                         Log in
                     </a>
-                    <a *ngIf="user" (click)="tryLogout()" class="button is-primary">
+                    <a *ngIf="user" (click)="tryLogout()" class="button is-warning">
                         Log out
                     </a>
                 </div>

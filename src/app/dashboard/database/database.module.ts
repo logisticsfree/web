@@ -14,6 +14,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { WarehousesComponent } from './warehouses/warehouses.component';
 import { DistributorsComponent } from './distributors/distributors.component';
 import { DatabaseHomeComponent } from './database-home/database-home.component';
+import { LoadingBayComponent } from './loading-bay/loading-bay.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { DatabaseHomeComponent } from './database-home/database-home.component';
         SidebarComponent,
         DatabaseHomeComponent,
         DistributorsComponent,
-        WarehousesComponent
+        WarehousesComponent,
+        LoadingBayComponent
     ],
     imports: [
         CommonModule,

@@ -1,0 +1,86 @@
+<div style="margin-bottom: 10px;" *ngIf="truck?.arrived">
+    <div class="field has-addons">
+        <div class="field-label is-normal">
+            <label class="label">Assign to a Loading Bay</label>
+        </div>
+        <div class="control">
+            <div class="select is-fullwidth">
+                <select #selectBay name="country">
+                    <option [selected]="bay.id == truck?.bay?.id" *ngFor="let bay of bays" [value]="bay.id">
+                        {{ bay.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="control">
+            <button *ngIf="!truck?.bay" type="submit" (click)="assignToBay(selectBay.value)"
+                class="button is-primary">Assign</button>
+            <button *ngIf="truck?.bay" type="submit" (click)="assignToBay(selectBay.value)"
+                class="button is-warning">Change</button>
+        </div>
+    </div>
+
+    <p *ngIf="truck?.bay" style="margin-bottom: 5px; text-align: right; cursor: pointer" class="help is-size-6 is-info">
+        Already assigned to bay #{{ truck.bay.name }}
+    </p>
+</div>
+<div *ngIf="dataSource" class="card">
+    <header class="card-header">
+        <p class="card-header-title">
+            Orders assigned to Truck #{{ truck.truck.truck.vid }}
+        </p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+            <div class="content">
+                <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
+                    <ng-container matColumnDef="invoice">
+                        <th class="md-table-header" mat-header-cell *matHeaderCellDef>
+                            <span>Invoice No.</span>
+                        </th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.invoice }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="locations">
+                        <th class="md-table-header" mat-header-cell *matHeaderCellDef>
+                            <span>Distributor</span>
+                        </th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.distributor.name}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="volume">
+                        <th class="md-table-header" mat-header-cell *matHeaderCellDef>
+                            <span>Volume</span>
+                        </th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.volume }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="weight">
+                        <th class="md-table-header" mat-header-cell *matHeaderCellDef>
+                            <span>Weight</span>
+                        </th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.weight }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="value">
+                        <th class="md-table-header" mat-header-cell *matHeaderCellDef>
+                            <span>Value</span>
+                        </th>
+                        <td mat-cell *matCellDef="let order">
+                            {{ order.value }}
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row">
+                    </tr>
+
+                </table>
+                <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

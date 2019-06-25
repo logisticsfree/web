@@ -31,13 +31,6 @@ exports.countNameChanges = functions.firestore
     */
 exports.syncTruckOrder = functions.firestore
     .document('/ordered-trucks/{companyID}/ordered-trucks/{truckID}')
-    // .onCreate((snap, context) => {
-    //     let companyId = context.params.companyID;
-    //     let truckID = context.params.truckID;
-
-    //     admin.firestore().doc(`drivers/${truckID}/orders/${companyID}`)
-    //     .set(snap.data())
-    // })
     .onWrite((change, context) => {
         let companyID = context.params.companyID;
         let truckID = context.params.truckID;
@@ -45,6 +38,17 @@ exports.syncTruckOrder = functions.firestore
         return admin.firestore().doc(`drivers/${truckID}/orders/${companyID}`)
         .set(change.after.data())
     });
+
+exports.syncTruckOrderInverse = functions.firestore
+    .document('drivers/{truckID}/orders/{companyID}')
+    .onWrite((change, context) => {
+        let companyID = context.params.companyID;
+        let truckID = context.params.truckID;
+
+        return admin.firestore().doc(`/ordered-trucks/${companyID}/ordered-trucks/${truckID}`)
+        .set(change.after.data())
+    });
+
 exports.sendNewOrderRequest = functions.firestore
     .document("/order-requests/{companyId}/order-requests/{truckId}")
     .onCreate((snap, context) => {
@@ -102,7 +106,7 @@ function loadUsers(truckID, companyID) {
 }
 function loadCustomer(truckTokenID, companyID) {
     return new Promise((resolve, reject) => {
-        let dbRef = admin.firestore().doc(`companies/${companyID}`);
+        let dbRef = admin.firestore().doc(`users/${companyID}`);
         dbRef.get().then(
             company => {
                 const res = { truckTokenID, companyData: company.data() };

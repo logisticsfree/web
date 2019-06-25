@@ -8,19 +8,23 @@ import { BayhomeComponent } from './bayhome/bayhome.component';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TruckListComponent } from './truck-list/truck-list.component';
+import { TruckDetailsComponent } from './truck-details/truck-details.component';
+import { DefaultViewComponent } from './default-view/default-view.component';
 
 @NgModule({
-  declarations: [SidebarComponent, LoadingbayComponent, BayhomeComponent],
+  declarations: [SidebarComponent, LoadingbayComponent, BayhomeComponent, TruckListComponent, TruckDetailsComponent, DefaultViewComponent],
   imports: [
     CommonModule,
     BayOperationsRoutingModule,
     MatTableModule,
-        MatPaginatorModule,
-        ReactiveFormsModule,
-        AgmCoreModule.forRoot({
-            apiKey: environment.firebase.apiKey
-        })
+    MatPaginatorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.firebase.apiKey
+    })
   ]
 })
 export class BayOperationsModule { }
