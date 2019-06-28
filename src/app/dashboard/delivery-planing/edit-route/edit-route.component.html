@@ -13,12 +13,12 @@
                 			<app-driver-card *ngIf="truck.truck" [truck]="truck.truck">
                 			</app-driver-card>
 							<p>Est. Time: 
-								<span *ngIf="truck.estimate"> {{ formatDuration(truck.estimate.duration) }} </span>
-								<span *ngIf="!truck.estimate" class="menu-label"> Click to calculate </span>
+								<span *ngIf="truck.routed"> {{ formatDuration(truck.estimate.duration) }} </span>
+								<span *ngIf="!truck.routed" class="menu-label"> Click to calculate </span>
 							</p>
 							<p>Est. Distance: 
-								<span *ngIf="truck.estimate"> {{ formatDistance(truck.estimate.distance) }} </span>
-								<span *ngIf="!truck.estimate" class="menu-label"> Click to calculate </span>
+								<span *ngIf="truck.routed"> {{ formatDistance(truck.estimate.distance) }} </span>
+								<span *ngIf="!truck.routed" class="menu-label"> Click to calculate </span>
 							</p>
 						</div>
 						<div class="buttons">

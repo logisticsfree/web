@@ -151,6 +151,12 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="!trucks?.length" class="section">
+                <h3 class="is-text-3">No Ordered Trucks Yet !</h3>
+                <div class="content">
+                    <a [routerLink]="['/vehicle-procurement', { outlets: { procurement: ['order-vehicle'] } }]" class="button is-primary">Order Now</a>
+                </div>
+            </div>
         </div>
         <!-- suggestions panel -->
         <div *ngIf="!assignOrdersView" class="column" [@slideInOutFromLeft]>

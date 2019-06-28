@@ -40,8 +40,9 @@ export class EditRouteMapComponent implements OnInit {
         };
 
         this.classifyOrders(orders);
+        this.updateSequence(this.trip.orders);
 
-        console.log({ this: this });
+        // console.log({ this: this });
     }
 
     drop(event: CdkDragDrop<string[]>) {
@@ -54,7 +55,7 @@ export class EditRouteMapComponent implements OnInit {
         }
         this.orders.sort((a, b) => (a.seqNo < b.seqNo ? -1 : 1));
         this.classifyOrders(this.orders);
-
+        
         this.updateSequence(this.trip.orders);
     }
 
@@ -69,7 +70,8 @@ export class EditRouteMapComponent implements OnInit {
             for (let i = 0; i < orders.length; i++) {
                 const order = orders[i];
 
-                if (!order.seqNo) order.seqNo = i;
+                // if (!order.seqNo) 
+                    order.seqNo = i;
 
                 if (i != orders.length - 1) {
                     const waypoint = {
