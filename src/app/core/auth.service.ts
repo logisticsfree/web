@@ -77,7 +77,7 @@ export class AuthService {
             )
             .then(res => {
                 this.updateUserData(res.user.uid, formValues);
-                this.router.navigate(["/user"]);
+                this.router.navigate(["/"]);
             });
     }
     // used
@@ -89,7 +89,7 @@ export class AuthService {
             )
             .then(res => {
                 this.updateCompanyData(res.user.uid, formValues);
-                this.router.navigate(["/user"]);
+                this.router.navigate(["/"]);
             });
     }
 
@@ -97,7 +97,7 @@ export class AuthService {
         return this.afAuth.auth
             .signInWithEmailAndPassword(formValues.email, formValues.password)
             .then(res => {
-                this.router.navigate(["/user"]);
+                this.router.navigate(["/"]);
             });
     }
     // Sets user data to firestore on login
