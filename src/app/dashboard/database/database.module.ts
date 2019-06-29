@@ -15,6 +15,7 @@ import { WarehousesComponent } from './warehouses/warehouses.component';
 import { DistributorsComponent } from './distributors/distributors.component';
 import { DatabaseHomeComponent } from './database-home/database-home.component';
 import { LoadingBayComponent } from './loading-bay/loading-bay.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { LoadingBayComponent } from './loading-bay/loading-bay.component';
     ],
     imports: [
         CommonModule,
+        BrowserAnimationsModule,
         SharedModule,
         SatPopoverModule,
         DatabaseRoutingModule,

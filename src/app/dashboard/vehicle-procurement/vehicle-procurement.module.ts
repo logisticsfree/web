@@ -16,6 +16,7 @@ import { OrderVehicleComponent } from './order-vehicle/order-vehicle.component';
 import { ShowOrderMapComponent } from './show-order-map/show-order-map.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from 'src/app/common/shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { SharedModule } from 'src/app/common/shared/shared.module';
     imports: [
         CommonModule,
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
         SharedModule,
         VehicleProcurementRoutingModule,
