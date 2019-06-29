@@ -12,11 +12,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TruckListComponent } from './truck-list/truck-list.component';
 import { TruckDetailsComponent } from './truck-details/truck-details.component';
 import { DefaultViewComponent } from './default-view/default-view.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [SidebarComponent, LoadingbayComponent, BayhomeComponent, TruckListComponent, TruckDetailsComponent, DefaultViewComponent],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     BayOperationsRoutingModule,
     MatTableModule,
     MatPaginatorModule,
