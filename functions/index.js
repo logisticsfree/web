@@ -32,6 +32,12 @@ exports.countNameChanges = functions.firestore
 exports.syncTruckOrder = functions.firestore
     .document('/ordered-trucks/{companyID}/ordered-trucks/{truckID}')
     .onWrite((change, context) => {
+        // discard the DELETE event
+
+        if (!change.after.exists){
+            return null;
+        }
+
         let companyID = context.params.companyID;
         let truckID = context.params.truckID;
 
@@ -49,34 +55,42 @@ exports.syncTruckOrder = functions.firestore
 //         .set(change.after.data())
 //     });
 
-exports.syncTripWithDriverTripInverse = functions.firestore
-    .document('drivers/{driverID}/trips/{companyID}')
-    .onWrite((change, context) => {
-        let companyID = context.params.companyID;
-        let driverID = context.params.driverID;
 
-        return admin.firestore().collection(`/trips`)
-            .where('driverID', '==', driverID)
-            .where('companyID', '==', companyID)
-            .limit(1).get()
-            .then(querySnap => {
-            querySnap.forEach(doc => {
-                let tripID = doc.id;
-                admin.firestore().doc(`/trips/${tripID}`).set(change.after.data(), {merge: true});
-            });
-        })
-        // .set(change.after.data(), {merge: true});
-    });
+// REMOVED: because inverse function tend to make infinite loops
+
+// exports.syncTripWithDriverTripInverse = functions.firestore
+//     .document('drivers/{driverID}/trips/{companyID}')
+//     .onWrite((change, context) => {
+//         let companyID = context.params.companyID;
+//         let driverID = context.params.driverID;
+
+//         return admin.firestore().collection(`/trips`)
+//             .where('driverID', '==', driverID)
+//             .where('companyID', '==', companyID)
+//             .limit(1).get()
+//             .then(querySnap => {
+//             querySnap.forEach(doc => {
+//                 let tripID = doc.id;
+//                 admin.firestore().doc(`/trips/${tripID}`).set(change.after.data(), {merge: true});
+//             });
+//         })
+//         // .set(change.after.data(), {merge: true});
+//     });
 
 exports.syncTripWithDriverTrip = functions.firestore
     .document('trips/{tripID}')
     .onWrite((change, context) => {
+        // discard DELETE event
+        if (!change.after.exists){
+            return null;
+        }
+
         let data = change.after.data();
         let driverID = data.driverID;
         let companyID = data.companyID;
 
         return admin.firestore().doc(`/drivers/${driverID}/trips/${companyID}`)
-        .set(change.after.data(), {merge: true});
+        .set(change.after.data());
     });
 
 exports.sendNewOrderRequest = functions.firestore
