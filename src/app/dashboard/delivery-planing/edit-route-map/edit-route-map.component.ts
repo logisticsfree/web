@@ -60,7 +60,7 @@ export class EditRouteMapComponent implements OnInit {
     }
 
     updateSequence(orders) {
-        this.truckService.updateOrders(this.trip.truck.uid, orders);
+        this.truckService.updateOrders(this.trip.tripID, orders);
     }
 
     classifyOrders(orders) {

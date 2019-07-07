@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take, map, tap, flatMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { OrderedTrucksService } from '../services/ordered-trucks.service';
@@ -19,7 +19,8 @@ export class TruckDetailsComponent implements OnInit {
   bays: any;
 
   constructor(private afs: AngularFirestore,
-    private router: ActivatedRoute,
+    private aRouter: ActivatedRoute,
+    private router: Router,
     private ots: OrderedTrucksService,
     private bayService: BayService) { }
 
@@ -29,10 +30,14 @@ export class TruckDetailsComponent implements OnInit {
     this.bayService.getBays().subscribe(bays => {
       this.bays = bays;
     })
-    this.router.queryParams.pipe(
-      map(params => params['driverID']),
-      flatMap(driverID => this.ots.getTruckDetails(driverID))
+    this.aRouter.queryParams.pipe(
+      map(params => params['tripID']),
+      flatMap(tripID => this.ots.getTruckDetails(tripID))
     ).subscribe(truck => {
+      if (!truck) {
+        this.router.navigate(['/bay-operations'])
+        return;
+      }
       this.truck = truck;
 
       let orders = Object.values(this.truck.orders);
@@ -44,6 +49,6 @@ export class TruckDetailsComponent implements OnInit {
 
   assignToBay(bayID) {
     const bay = this.bays.filter(bay => bay.id == bayID);
-    this.ots.assignToBay(this.truck.truck.uid, bay[0]).subscribe();
+    this.ots.assignToBay(this.truck.tripID, bay[0]).subscribe();
   }
 }

@@ -91,8 +91,6 @@ export class CreateTripComponent implements OnInit {
         if (order.status) this.orderService.setStatus(order, order.status);
         else this.orderService.setStatus(order, 0);
 
-        console.log(truck);
-        
         this.truckService.saveOrderedTruck(truck);
     }
 

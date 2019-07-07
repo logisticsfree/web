@@ -14,15 +14,13 @@ export class OrderedTrucksService {
     private afs: AngularFirestore
   ) { }
 
-  assignToBay(truckID: string, bay: any) {
+  assignToBay(tripID: string, bay: any) {
     const companyID$ = this.userService.getCompanyID();
     return companyID$.pipe(
       take(1),
-      tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
       map(cid => {
-        const orderedTruckRef: AngularFirestoreDocument<any> =
-          this.afs.doc(`ordered-trucks/${cid}/ordered-trucks/${truckID}`);
-        return orderedTruckRef.set({ bay }, { merge: true });
+        const orderedTruckRef: AngularFirestoreDocument<any> = this.afs.doc(`trips/${tripID}`);
+          return orderedTruckRef.set({ bay }, { merge: true });
       }),
     );
   }
@@ -31,22 +29,19 @@ export class OrderedTrucksService {
     const companyID$ = this.userService.getCompanyID();
     return companyID$.pipe(
       take(1),
-      tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
       flatMap(cid => {
-        const orderedTruckRef: AngularFirestoreCollection<any> =
-          this.afs.collection(`ordered-trucks/${cid}/ordered-trucks`);
+        const orderedTruckRef: AngularFirestoreCollection<any> = this.afs.collection('trips');
         return orderedTruckRef.valueChanges();
       }),
     );
   }
 
-  getTruckDetails(truckID: string) {
+  getTruckDetails(tripID: string) {
     const companyID$ = this.userService.getCompanyID();
     return companyID$.pipe(
       take(1),
-      tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
       flatMap(cid => {
-        return this.afs.doc(`/ordered-trucks/${cid}/ordered-trucks/${truckID}`).valueChanges()
+        return this.afs.doc(`trips/${tripID}`).valueChanges()
       }),
     );
   }
