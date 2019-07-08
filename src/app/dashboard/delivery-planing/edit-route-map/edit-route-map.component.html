@@ -8,8 +8,24 @@
 		(onChange)="onMapChange($event)"
 		[origin]="coordinates.warehouse"
 		[waypoints]="coordinates.waypoints"
+		[renderOptions]="renderOptions"
+		[optimizeWaypoints]="false"
 		[destination]="coordinates.destination">
 		</agm-direction>
+
+		        <!-- needed: because agm-direction labels going crazy -->
+        <agm-marker
+        [label]="{text: warehouse.name}"
+        [latitude]="warehouse.latitude" [longitude]="warehouse.longitude">
+        </agm-marker>
+        <agm-marker
+        [label]="{text: destination.seqNo + 1 + ''}"
+        [latitude]="destination.distributor.latitude" [longitude]="destination.distributor.longitude">
+        </agm-marker>
+        <agm-marker *ngFor="let point of waypoints"
+        [label]="{text: point.seqNo + 1 + ''}"
+        [latitude]="point.distributor.latitude" [longitude]="point.distributor.longitude">
+        </agm-marker>
 </agm-map>
 </div>
 

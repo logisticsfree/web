@@ -1,0 +1,31 @@
+<div class="columns">
+  <div class="column is-half">
+    <div class="buttons">
+      <a routerLink="/delivery-tracking" class="button is-primary">
+        <span class="icon">
+          <i class="fas fa-backspace"></i>
+        </span>
+        <span>Back</span>
+      </a>
+      <h2 class="is-size-3">#{{ trip?.truck?.truck?.vid }}</h2>
+    </div>
+    <app-truck-location-map *ngIf="trip" [trip]="trip" [truckID]="trip?.driverID"></app-truck-location-map>
+  </div>
+  <div class="column is-half">
+    <div class="content">
+      <h3>Rearrange the Order</h3>
+      <p class="menu-label is-hidden-touch">drag and drop to change the order</p>
+      <div class="content">
+        <div cdkDropList class="example-list is-lower-alpha" (cdkDropListDropped)="drop($event)">
+          <div class="example-box" [class.is-completed]="order.completed" *ngFor="let order of orders" cdkDrag> 
+            <h5> <strong> {{ (order.seqNo || 0) + 1 }}) </strong> {{ order.distributor.name }}
+              <span *ngIf="order.completed">
+                <i class="fas fa-check-circle" title="delivered"></i>
+              </span>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

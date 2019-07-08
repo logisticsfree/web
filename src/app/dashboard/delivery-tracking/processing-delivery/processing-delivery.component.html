@@ -1,0 +1,32 @@
+<div class="columns is-multiline">
+  <div *ngFor="let trip of trips" class="column is-half">
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          {{ trip.truck.truck.vid }}
+          <!-- <app-driver-card></app-driver-card> -->
+        </p>
+        <a href="#" class="card-header-icon" aria-label="more options">
+          <span class="icon">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </a>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <div  class="tags">
+            <span *ngFor="let dist of getDistributors(trip)" class="tag is-primary">{{ dist.distributor.name }}</span>
+          </div>
+          <!-- <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a> -->
+          <!-- <br> -->
+          <!-- <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time> -->
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a [routerLink]="['/delivery-tracking', { outlets: { tracking: ['trip-details'] } }]"
+          [queryParams]="{tripID: trip.tripID}"
+          class="card-footer-item">View Details</a>
+      </footer>
+    </div>
+  </div>
+</div>

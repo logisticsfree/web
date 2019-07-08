@@ -44,6 +44,9 @@ export class EditRouteMapComponent implements OnInit {
 
         // console.log({ this: this });
     }
+    public renderOptions = {
+        suppressMarkers: true,
+    };
 
     drop(event: CdkDragDrop<string[]>) {
         if (event.previousIndex === event.currentIndex) return;

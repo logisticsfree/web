@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import {
@@ -13,7 +11,6 @@ import {
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
-
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -31,6 +28,7 @@ import { VehicleProcurementModule } from './dashboard/vehicle-procurement/vehicl
 import { BayOperationsModule } from './dashboard/bay-operations/bay-operations.module';
 import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { DeliveryTrackingModule } from './dashboard/delivery-tracking/delivery-tracking.module';
 
 @NgModule({
     declarations: [
@@ -52,6 +50,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
         DatabaseModule,
         VehicleProcurementModule,
         DeliveryPlaningModule,
+        DeliveryTrackingModule,
         BayOperationsModule,
         AppRoutingModule,
         ReactiveFormsModule,
