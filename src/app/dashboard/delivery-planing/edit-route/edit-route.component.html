@@ -1,8 +1,8 @@
+<div class="columns">
+	<div class="column is-scrolable is-one-third">
 <div class="content">
 	<h1>Select a Truck</h1>
 </div>
-<div class="columns">
-	<div class="column is-scrolable is-one-third">
 		<div class="columns is-multiline is-fullheight" *ngIf="trucks" >
 			<div *ngFor="let truck of trucksWithOrders" class="column is-full" 
 			[class.fade]="selectedTrip && selectedTrip?.truck.vid !== truck?.truck.vid">

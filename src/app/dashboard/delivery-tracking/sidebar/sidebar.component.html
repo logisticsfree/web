@@ -1,0 +1,15 @@
+<aside>
+    <p class="menu-label is-hidden-touch">Navigation</p>
+    <ul class="menu-list">
+        <li>
+            <a [routerLink]="[{ outlets: { tracking: ['processing'] } }]" routerLinkActive="is-active">
+                <span class="icon"><i class="fa fa-truck-moving"></i></span> On Processing
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="[{ outlets: { tracking: ['history'] } }]" routerLinkActive="is-active">
+                <span class="icon"><i class="fa fa-history"></i></span> History
+            </a>
+        </li>
+    </ul>
+</aside>
