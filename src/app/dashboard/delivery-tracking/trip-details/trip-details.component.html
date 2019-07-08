@@ -9,6 +9,8 @@
       </a>
       <h2 class="is-size-3">#{{ trip?.truck?.truck?.vid }}</h2>
     </div>
+    
+    <h2 class="is-size-5">Estimated Duration: {{ formatDuration( trip?.estimate.duration )}}</h2>
     <app-truck-location-map *ngIf="trip" [trip]="trip" [truckID]="trip?.driverID"></app-truck-location-map>
   </div>
   <div class="column is-half">

@@ -29,4 +29,16 @@
       </footer>
     </div>
   </div>
+  <section *ngIf="!trips?.length" class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          No Processing Orders At the Moment
+          <span class="is-size-1">
+            <i class="fas fa-smile"></i>
+          </span>
+        </h1>
+      </div>
+    </div>
+  </section>
 </div>

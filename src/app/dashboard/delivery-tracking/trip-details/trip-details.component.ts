@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, flatMap, tap } from 'rxjs/operators';
 import { TripService } from '../services/trip.service';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-trip-details',
@@ -29,7 +30,7 @@ export class TripDetailsComponent implements OnInit {
             flatMap(tripID => this.tripService.getTruckDetails(tripID)),
         ).subscribe(trip => {        
             if (!trip) {
-                this.router.navigate(['/bay-operations'])
+                this.router.navigate(['/delivery-tracking'])
                 return;
             }
             this.trip = trip;
@@ -57,5 +58,18 @@ export class TripDetailsComponent implements OnInit {
 
     rearrangeOrders(orders) {
         this.tripService.updateOrders(this.trip.tripID, orders);
+    }
+
+    
+    formatDuration(time) {
+        return moment.duration(time, "seconds").humanize();
+    }
+    formatDistance(distance) {
+        let km = distance / 1000;
+        if (km < 1) {
+            return distance + " m";
+        } else {
+            return km + " km";
+        }
     }
 }

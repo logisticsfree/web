@@ -94,12 +94,6 @@ export class TruckLocationMapComponent implements OnInit {
             lat: last.latitude,
             lng: last.longitude
         };
-
-        // this.markerOptions.destination.label = this.destination.distributor.name;
-
-        // console.log(this.coordinates.destination, this.destination.distributor);
-        console.log(this.destination);
-        
     }
 
     onMapChange(event) {
