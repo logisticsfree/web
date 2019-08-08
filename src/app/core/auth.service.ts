@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { auth } from "firebase/app";
-import { AngularFireAuth } from "@angular/fire/auth";
+import { auth } from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
 import {
     AngularFirestore,
     AngularFirestoreDocument
-} from "@angular/fire/firestore";
+} from '@angular/fire/firestore';
 
-import { Observable, of, pipe } from "rxjs";
-import { switchMap, tap, take } from "rxjs/operators";
+import { Observable, of, pipe, Subject } from 'rxjs';
+import { switchMap, tap, take } from 'rxjs/operators';
 import { Warehouse } from '../models/Warehouse';
 
 export interface User {
@@ -26,8 +26,9 @@ export interface Company {
     phone: string;
 }
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
+
     userData$: Observable<User | Company>;
     userAuth: firebase.User;
     userData: User | Company;
@@ -45,8 +46,8 @@ export class AuthService {
 
                     const userRef = this.afs
                         .doc<User | Company>(`users/${user.uid}`)
-                        .valueChanges();
-                        userRef.pipe(take(1)).toPromise();
+                        .valueChanges()
+                        .pipe(take(1));
 
                     return userRef;
                 } else {
@@ -54,6 +55,7 @@ export class AuthService {
                 }
             })
         );
+
     }
 
     // NOT used
@@ -77,7 +79,7 @@ export class AuthService {
             )
             .then(res => {
                 this.updateUserData(res.user.uid, formValues);
-                this.router.navigate(["/"]);
+                this.router.navigate(['/']);
             });
     }
     // used
@@ -89,7 +91,7 @@ export class AuthService {
             )
             .then(res => {
                 this.updateCompanyData(res.user.uid, formValues);
-                this.router.navigate(["/"]);
+                this.router.navigate(['/']);
             });
     }
 
@@ -97,7 +99,7 @@ export class AuthService {
         return this.afAuth.auth
             .signInWithEmailAndPassword(formValues.email, formValues.password)
             .then(res => {
-                this.router.navigate(["/"]);
+                this.router.navigate(['/']);
             });
     }
     // Sets user data to firestore on login
@@ -134,7 +136,7 @@ export class AuthService {
 
     signOut() {
         this.afAuth.auth.signOut().then(() => {
-            this.router.navigate(["/login"]);
+            this.router.navigate(['/login']);
         });
     }
 }

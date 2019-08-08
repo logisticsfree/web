@@ -1,36 +1,42 @@
-import { Injectable } from "@angular/core";
-import { AuthService } from "src/app/core/auth.service";
+import { Injectable } from '@angular/core';
+import { AuthService } from 'src/app/core/auth.service';
 import {
     AngularFirestore,
     AngularFirestoreDocument,
     AngularFirestoreCollection
-} from "@angular/fire/firestore";
+} from '@angular/fire/firestore';
 import { flatMap, tap, take } from 'rxjs/operators';
 
 import { UserService } from 'src/app/core/user.service';
 import { Warehouse } from 'src/app/models/Warehouse';
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 export class WarehouseService {
     companyID: string;
 
-    constructor(private userService: UserService, private afs: AngularFirestore) {}
+    constructor(private userService: UserService, private afs: AngularFirestore) { }
 
     getWarehouses() {
         const companyID$ = this.userService.getCompanyID();
         return companyID$.pipe(
-            take(1),
             tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
             flatMap(cid => {
-                const warehouseRef: AngularFirestoreCollection<any> = this.afs.collection(
-                    `warehouses/${cid}/warehouses`
-                );
-                return warehouseRef.valueChanges();
+                console.log('warehouse', cid);
+
+                if (!cid) {
+                    return [];
+                } else {
+                    const warehouseRef: AngularFirestoreCollection<any> = this.afs.collection(
+                        `warehouses/${cid}/warehouses`
+                    );
+                    return warehouseRef.valueChanges();
+                }
             }),
         );
     }
+
     addWarehouse(data) {
         const id = this.afs.createId();
         const warehouseRef: AngularFirestoreDocument<any> = this.afs.doc(
@@ -45,17 +51,17 @@ export class WarehouseService {
         };
 
         return warehouseRef
-            .set(newDistributor, { merge: true })
+            .set(newDistributor, { merge: true });
     }
 
     updateWarehouse(id, key, value) {
-        if (!id || !key || !value) return;
+        if (!id || !key || !value) { return; }
         value = parseFloat(value) || value;
         const warehouseRef: AngularFirestoreDocument<any> = this.afs.doc(
             `warehouses/${this.companyID}/warehouses/${id}`
         );
 
         return warehouseRef
-            .set({ [key]: value }, { merge: true })
+            .set({ [key]: value }, { merge: true });
     }
 }

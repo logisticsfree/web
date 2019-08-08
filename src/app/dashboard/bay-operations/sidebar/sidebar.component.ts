@@ -14,7 +14,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.ots.getOrderedTrucks().subscribe(trucks => {
       this.orderedTrucks = trucks;
-    })
+    });
   }
 
 }
