@@ -16,6 +16,6 @@
         "max-line-length": [
             true,
             100
-        ],
+        ]
     }
 }

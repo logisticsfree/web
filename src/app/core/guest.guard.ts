@@ -24,7 +24,7 @@ export class GuestGuard implements CanActivate {
       tap(loggedIn => {
         if (!loggedIn) {
           console.log('access denied: guest');
-          this.router.navigate(['/user']);
+          this.router.navigate(['/']);
         }
       })
     );
