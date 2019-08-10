@@ -51,62 +51,16 @@ export class CreateTripComponent implements OnInit {
     // TODO: fix animation
 
     trucks: any;
-    ordersTableDataSource: any;
-    ordersColumnsToDisplay: string[] = [
-        'invoice',
-        'distributor',
-        'volume',
-        'weight',
-        'actions'
-    ];
-
-    assignOrdersView: boolean = false;
-    assignOrdersViewData: any = {};
-    cardStatus: string = 'open';
 
     constructor(
         private truckService: TruckService,
-        private orderService: OrderService
-    ) {}
-
-    @ViewChild('ordersPaginator') orderPaginator: MatPaginator;
+    ) { }
 
     ngOnInit() {
         this.truckService.getOrderedTrucks().subscribe(trucks => {
             this.trucks = trucks;
         });
 
-        this.fillTable();
-    }
-
-    assignOrder(truck, order) {
-        order.status = 1;
-        if (truck.orders) {
-            truck.orders[order.invoice] = order;
-        } else {
-            truck.orders = { [order.invoice]: order };
-        }
-        truck.routed = false;
-
-        if (order.status) this.orderService.setStatus(order, order.status);
-        else this.orderService.setStatus(order, 0);
-
-        this.truckService.saveOrderedTruck(truck);
-    }
-
-    showAssignOrdersView(truck) {
-        if (this.assignOrdersView) {
-            this.assignOrdersView = false;
-            delete this.assignOrdersViewData[truck.truck.vid];
-        } else {
-            this.assignOrdersView = true;
-            this.assignOrdersViewData[truck.truck.vid] = truck;
-        }
-        this.toggleCardStats();
-    }
-
-    applyOrderFilter(filterValue: string) {
-        this.ordersTableDataSource.filter = filterValue.trim().toLowerCase();
     }
 
     // TODO : replace with firebase Function
@@ -127,23 +81,6 @@ export class CreateTripComponent implements OnInit {
             totalVolume += parseFloat(order['volume']);
         });
         return totalVolume;
-    }
-
-    fillTable() {
-        const unsubscribe = this.orderService.getOrders().subscribe(orders => {
-            let pendingOrders = Object.values(orders).filter(order =>
-                order['status'] ? null : order
-            );
-            this.ordersTableDataSource = new MatTableDataSource(pendingOrders);
-
-            setTimeout(() => {
-                this.ordersTableDataSource.paginator = this.orderPaginator;
-            });
-        });
-    }
-
-    toggleCardStats() {
-        this.cardStatus = this.cardStatus === 'open' ? 'close' : 'open';
     }
 
     getOrders(truck) {

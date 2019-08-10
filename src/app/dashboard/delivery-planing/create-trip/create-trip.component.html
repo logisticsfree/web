@@ -1,19 +1,14 @@
 <div>
     <div class="columns">
-        <div class="column" [class.is-two-thirds]="!assignOrdersView">
+        <div class="column is-two-thirds">
             <div class="content">
-                <h1 *ngIf="!assignOrdersView">Available Trucks</h1>
-                <h1 *ngIf="assignOrdersView">Assign Orders</h1>
+                <h1>Available Trucks</h1>
             </div>
             <div class="columns is-multiline">
-                <div [@grow]="assignOrdersView ? 'open' : 'close'" *ngFor="let truck of trucks"
-                    [class.column]="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView"
-                    [class.is-full]="assignOrdersView" [class.is-6]="!assignOrdersView">
-                    <div *ngIf="assignOrdersViewData[truck?.truck?.vid] || !assignOrdersView" class="card is-hoverable">
+                <div [@grow]="assignOrdersView ? 'open' : 'close'" *ngFor="let truck of trucks" class="column is-half">
+                    <div class="card is-hoverable">
                         <div class="card-content">
                             <div class="content">
-                                <!-- <h3>{{ truck | json }}</h3> -->
-
                                 <app-driver-card *ngIf="truck.truck.truck" [truck]="truck.truck.truck">
                                 </app-driver-card>
 
@@ -25,126 +20,10 @@
                                     <progress class="progress is-small" [value]="getTotalWeight(truck)"
                                         [max]="truck.truck.truck?.weight || 0">60%</progress>
                                 </p>
-                                <div *ngIf="assignOrdersView" class="columns">
-                                    <app-assigned-orders-table [truck]="truck" [orders]="getOrders(truck)" class="column is-half">
-                                    </app-assigned-orders-table>
-                     <!--                <div class="column if-half">
-                                        <aside class="menu">
-                                            <p class="menu-label">
-                                                Assigned Orders
-                                            </p>
-                                            <ul class="menu-list">
-                                                <li *ngFor="let order of getOrders(truck)"><a>Invoice No:
-                                                        <strong>{{ order.invoice }}</strong> -
-                                                        Distributor: <strong>{{ order.distributor.name }}</strong>
-
-                                                        <button (click)="unassignOrder(truck, order)"
-                                                            style="margin-left:10px"
-                                                            class="button is-danger is-outlined is-small">
-                                                            <span>Remove</span>
-                                                            <span class="icon is-small">
-                                                                <i class="fas fa-times"></i>
-                                                            </span>
-                                                        </button>
-
-                                                    </a></li>
-                                            </ul>
-                                        </aside>
-                                    </div> -->
-                                    <!-- Orders Table -->
-                                    <div class="column is-half">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-header-title">
-                                                    <div class="field is-horizontal">
-                                                        <div class="field-label is-normal">
-                                                            <label class="label">Pending&nbsp;Orders</label>
-                                                        </div>
-                                                        <div class="field-body">
-                                                            <div class="field">
-                                                                <div class="control">
-                                                                    <input class="input is-success"
-                                                                        (keyup)="applyOrderFilter($event.target.value)"
-                                                                        type="text" placeholder="Filter">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="card-content">
-                                                <div *ngIf="ordersTableDataSource" class="content">
-                                                    <table mat-table [dataSource]="ordersTableDataSource"
-                                                        multiTemplateDataRows class="table is-striped is-hoverable">
-
-                                                        <ng-container matColumnDef="invoice">
-                                                            <th class="md-table-header" mat-header-cell
-                                                                *matHeaderCellDef> Invoice No. </th>
-                                                            <td mat-cell *matCellDef="let element"> {{element.invoice}}
-                                                            </td>
-                                                        </ng-container>
-                                                        <ng-container matColumnDef="distributor">
-                                                            <th mat-header-cell class="md-table-header"
-                                                                *matHeaderCellDef> Distributor </th>
-                                                            <td mat-cell *matCellDef="let element">
-                                                                {{element.distributor.name}} </td>
-                                                        </ng-container>
-                                                        <ng-container matColumnDef="volume">
-                                                            <th mat-header-cell class="md-table-header"
-                                                                *matHeaderCellDef> Volume </th>
-                                                            <td mat-cell *matCellDef="let element"> {{element.volume}}
-                                                            </td>
-                                                        </ng-container>
-                                                        <ng-container matColumnDef="weight">
-                                                            <th mat-header-cell class="md-table-header"
-                                                                *matHeaderCellDef> Weight </th>
-                                                            <td mat-cell *matCellDef="let element"> {{element.weight}}
-                                                            </td>
-                                                        </ng-container>
-                                                        <ng-container matColumnDef="value">
-                                                            <th mat-header-cell class="md-table-header"
-                                                                *matHeaderCellDef> Value </th>
-                                                            <td mat-cell *matCellDef="let element"> {{element.value}}
-                                                            </td>
-                                                        </ng-container>
-                                                        <tr mat-header-row *matHeaderRowDef="ordersColumnsToDisplay">
-                                                        </tr>
-                                                        <tr [class.is-selected]="element === selectedOrder" mat-row
-                                                            (click)="assignOrder(truck, element);orderTableState='left'"
-                                                            *matRowDef="let element; columns: ordersColumnsToDisplay;"
-                                                            class="example-element-row">
-                                                        </tr>
-
-                                                        <ng-container matColumnDef="actions">
-                                                            <th mat-header-cell class="md-table-header"
-                                                                *matHeaderCellDef></th>
-                                                            <td mat-cell *matCellDef="let element">
-                                                                <a class="button is-success is-outlined is-small">
-                                                                    <span>Add</span>
-                                                                    <span class="icon is-small">
-                                                                        <i class="fas fa-plus"></i>
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </ng-container>
-
-                                                    </table>
-                                                    <mat-paginator #ordersPaginator [pageSizeOptions]="[5, 10, 20]"
-                                                        showFirstLastButtons>
-                                                    </mat-paginator>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br />
-                                    </div>
-                                    <!-- end Orders Table -->
-                                </div>
                                 <div class="buttons">
-                                    <button *ngIf="assignOrdersView" (click)="showAssignOrdersView(truck)"
-                                        class="button is-primary">Dismiss</button>
-                                    <button *ngIf="!assignOrdersView" (click)="showAssignOrdersView(truck)"
-                                        class="button is-primary">Assign Orders</button>
+                                    <a [routerLink]="['/delivery-planing', { outlets: { delivery: ['assign-orders'] } }]"
+                                        [queryParams]="{tripID: truck.tripID}" class="button is-primary">Assign
+                                        orders</a>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +33,8 @@
             <div *ngIf="!trucks?.length" class="section">
                 <h3 class="is-text-3">No Ordered Trucks Yet !</h3>
                 <div class="content">
-                    <a [routerLink]="['/vehicle-procurement', { outlets: { procurement: ['order-vehicle'] } }]" class="button is-primary">Order Now</a>
+                    <a [routerLink]="['/vehicle-procurement', { outlets: { procurement: ['order-vehicle'] } }]"
+                        class="button is-primary">Order Now</a>
                 </div>
             </div>
         </div>

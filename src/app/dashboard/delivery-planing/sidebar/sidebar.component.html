@@ -7,7 +7,8 @@
             </a>
         </li>
         <li>
-            <a [routerLink]="[{ outlets: { delivery: ['create-trip'] } }]" routerLinkActive="is-active">
+            <a [routerLink]="[{ outlets: { delivery: ['create-trip'] } }]"
+                [ngClass]="{ 'is-active': isCreateTripRoute() }">
                 <span class="icon"><i class="fa fa-drafting-compass"></i></span> Create Trip
             </a>
         </li>

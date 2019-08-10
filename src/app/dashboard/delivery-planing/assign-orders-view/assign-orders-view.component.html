@@ -1,0 +1,41 @@
+<div>
+  <div class="columns">
+    <div class="column">
+      <div class="content">
+        <h1>Assign Orders</h1>
+      </div>
+      <div class="columns is-multiline">
+        <div [@grow]="assignOrdersView ? 'open' : 'close'" *ngIf="!!truck" class="is-full">
+          <div class="card is-hoverable">
+            <div class="card-content">
+              <div class="content">
+                <app-driver-card *ngIf="truck.truck.truck" [truck]="truck.truck.truck">
+                </app-driver-card>
+
+                <p>Max Volume: {{ truck.truck.truck?.volume || 100}}
+                  <progress class="progress is-small" [value]="getTotalVolume(truck)"
+                    [max]="truck.truck.truck?.volume || 0">60%</progress>
+                </p>
+                <p>Max weight: {{ truck.truck.truck?.weight || 100 }}
+                  <progress class="progress is-small" [value]="getTotalWeight(truck)"
+                    [max]="truck.truck.truck?.weight || 0">60%</progress>
+                </p>
+                <div class="columns">
+                  <app-assigned-orders-table [truck]="truck" [orders]="getOrders(truck)" class="column is-half">
+                  </app-assigned-orders-table>
+
+                  <app-pending-orders-table [truck]="truck" class="column is-half">
+                  </app-pending-orders-table>
+                </div>
+                <div class="buttons">
+                  <a [routerLink]="['/delivery-planing', { outlets: { delivery: ['create-trip'] } }]"
+                    class="button is-primary">Dismiss</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

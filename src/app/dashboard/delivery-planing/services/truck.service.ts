@@ -65,12 +65,23 @@ export class TruckService {
         });
     }
 
+    getTruckDetails(tripID: string) {
+        const companyID$ = this.userService.getCompanyID();
+            return companyID$.pipe(
+            take(1),
+            flatMap(cid => {
+                return this.afs.doc(`trips/${tripID}`).valueChanges()
+            }),
+        );
+    }
+
     // used:
     getOrderedTrucks() {
         const companyID$ = this.userService.getCompanyID();
         return companyID$.pipe(
             take(1),
-            tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
+            // this method always called first in this service. hence we can use this to cache companyID
+            tap(cid => this.companyID = cid), 
             flatMap(cid => {
                 const orderedTrucksRef: AngularFirestoreCollection<any> = this.afs.collection('trips', ref => {
                     return ref.where('companyID', '==', cid);

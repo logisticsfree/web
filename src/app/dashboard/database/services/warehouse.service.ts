@@ -23,8 +23,6 @@ export class WarehouseService {
         return companyID$.pipe(
             tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
             flatMap(cid => {
-                console.log('warehouse', cid);
-
                 if (!cid) {
                     return [];
                 } else {
