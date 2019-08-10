@@ -16,9 +16,6 @@ export class UserService {
 
     getCompanyID() {
         return this.auth.userData$.pipe(
-            // take(1),
-            tap(u => console.log('u', u)),
-            // map(user => (user['companyID'] ? user['companyID'] : user.uid)),
             map(user => {
                 if (user) {
                     if (user['companyID']) {

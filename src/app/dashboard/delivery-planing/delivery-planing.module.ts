@@ -26,6 +26,8 @@ import { SharedModule } from 'src/app/common/shared/shared.module';
 import { AssignedOrdersTableComponent } from './assigned-orders-table/assigned-orders-table.component';
 import { SplitOrderComponent } from './split-order/split-order.component';
 import { SplitOrderFormComponent } from './split-order-form/split-order-form.component';
+import { AssignOrdersViewComponent } from './assign-orders-view/assign-orders-view.component';
+import { PendingOrdersTableComponent } from './pending-orders-table/pending-orders-table.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +40,9 @@ import { SplitOrderFormComponent } from './split-order-form/split-order-form.com
         EditRouteMapComponent,
         AssignedOrdersTableComponent,
         SplitOrderComponent,
-        SplitOrderFormComponent
+        SplitOrderFormComponent,
+        AssignOrdersViewComponent,
+        PendingOrdersTableComponent
     ],
     imports: [
         CommonModule,

@@ -6,6 +6,7 @@ import { OrdersComponent } from "./orders/orders.component";
 import { CreateTripComponent } from "./create-trip/create-trip.component";
 import { AssignSkusComponent } from "./assign-skus/assign-skus.component";
 import { EditRouteComponent } from "./edit-route/edit-route.component";
+import { AssignOrdersViewComponent } from './assign-orders-view/assign-orders-view.component';
 
 const routes: Routes = [
     {
@@ -32,7 +33,12 @@ const routes: Routes = [
             {
                 path: "create-trip",
                 component: CreateTripComponent,
-                outlet: "delivery"
+                outlet: "delivery",
+            },
+            {
+                path: 'assign-orders',
+                component: AssignOrdersViewComponent,
+                outlet: "delivery",
             },
             {
                 path: "edit-route",
