@@ -29,6 +29,8 @@ import { BayOperationsModule } from './dashboard/bay-operations/bay-operations.m
 import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DeliveryTrackingModule } from './dashboard/delivery-tracking/delivery-tracking.module';
+import { StatsModule } from './dashboard/stats/stats.module';
+import { AngularFireFunctionsModule, FUNCTIONS_ORIGIN } from '@angular/fire/functions';
 
 @NgModule({
     declarations: [
@@ -52,17 +54,22 @@ import { DeliveryTrackingModule } from './dashboard/delivery-tracking/delivery-t
         DeliveryPlaningModule,
         DeliveryTrackingModule,
         BayOperationsModule,
+        StatsModule,
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFirestoreModule,
+        AngularFireFunctionsModule,
         // AngularFireAuthModule,
         // NgxSpinnerModule,
         CoreModule
         //AlertModule.forRoot()
     ],
-    providers: [{ provide: FirestoreSettingsToken, useValue: {} }, SkuService],
+    providers: [
+        { provide: FirestoreSettingsToken, useValue: {} },
+        // { provide: FUNCTIONS_ORIGIN, useValue: 'http://localhost:5000' },
+        SkuService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

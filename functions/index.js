@@ -1,5 +1,8 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const cors = require('cors')({
+    origin: true
+});
 admin.initializeApp(functions.config().firebase);
 
 /*
@@ -34,7 +37,7 @@ exports.syncTruckOrder = functions.firestore
     .onWrite((change, context) => {
         // discard the DELETE event
 
-        if (!change.after.exists){
+        if (!change.after.exists) {
             return null;
         }
 
@@ -42,7 +45,7 @@ exports.syncTruckOrder = functions.firestore
         let truckID = context.params.truckID;
 
         return admin.firestore().doc(`drivers/${truckID}/orders/${companyID}`)
-        .set(change.after.data())
+            .set(change.after.data())
     });
 
 // exports.syncTruckOrderInverse = functions.firestore
@@ -81,7 +84,7 @@ exports.syncTripWithDriverTrip = functions.firestore
     .document('trips/{tripID}')
     .onWrite((change, context) => {
         // discard DELETE event
-        if (!change.after.exists){
+        if (!change.after.exists) {
             return null;
         }
 
@@ -90,7 +93,7 @@ exports.syncTripWithDriverTrip = functions.firestore
         let companyID = data.companyID;
 
         return admin.firestore().doc(`/drivers/${driverID}/trips/${companyID}`)
-        .set(change.after.data());
+            .set(change.after.data());
     });
 
 exports.sendNewOrderRequest = functions.firestore
@@ -102,7 +105,7 @@ exports.sendNewOrderRequest = functions.firestore
         let warehouse = newOrder.warehouse;
 
         return loadUsers(truck.uid, companyId).then(
-            ({truckTokenID, companyData}) => {
+            ({ truckTokenID, companyData }) => {
                 let token = truckTokenID;
                 let companyName = companyData.name;
 
@@ -111,7 +114,7 @@ exports.sendNewOrderRequest = functions.firestore
                         title: "Firebase Notification",
                         body: `You have new order on ${newOrder.date} at ${
                             newOrder.time
-                        }`,
+                            }`,
                         sound: "default",
                         badge: "1"
                     },
@@ -162,6 +165,23 @@ function loadCustomer(truckTokenID, companyID) {
         );
     });
 }
+
+// not used
+exports.getTripStats = functions.https.onRequest((req, res) => {
+    const customerID = req.query.customerID;
+
+
+    admin.firestore().collection('completed-trips').where('customerID', '==', customerID)
+        .where('')
+
+    cors(req, res, () => {
+        res.send({
+            'status': 200,
+            'data': 'asdf' + req.query.nma
+        });
+
+    });
+})
 
 // exports.calculateTotalVolume = functions.firestore
 //     .document("ordered-trucks/{userId}")
