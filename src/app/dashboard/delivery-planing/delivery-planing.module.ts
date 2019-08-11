@@ -8,14 +8,16 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
 import { DeliveryHomeComponent } from "./delivery-home/delivery-home.component";
 import { CreateTripComponent } from "./create-trip/create-trip.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { 
-    MatTableModule, 
+import {
+    MatTableModule,
     MatPaginatorModule,
-    MatFormFieldModule, 
-    MatInputModule, } from "@angular/material";
+    MatFormFieldModule,
+    MatInputModule,
+} from "@angular/material";
 import { SatPopoverModule } from '@ncstate/sat-popover';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { AssignSkusComponent } from "./assign-skus/assign-skus.component";
+import { NgxPaginationModule } from 'ngx-pagination';
 import { DriverCardComponent } from "src/app/common/driver-card/driver-card.component";
 import { EditRouteComponent } from "./edit-route/edit-route.component";
 import { EditRouteMapComponent } from "./edit-route-map/edit-route-map.component";
@@ -50,6 +52,7 @@ import { PendingOrdersTableComponent } from './pending-orders-table/pending-orde
         ReactiveFormsModule,
         SharedModule,
         DeliveryPlaningRoutingModule,
+        NgxPaginationModule,
         SatPopoverModule,
         MatTableModule,
         MatPaginatorModule,
@@ -62,4 +65,4 @@ import { PendingOrdersTableComponent } from './pending-orders-table/pending-orde
         AgmDirectionModule
     ],
 })
-export class DeliveryPlaningModule {}
+export class DeliveryPlaningModule { }

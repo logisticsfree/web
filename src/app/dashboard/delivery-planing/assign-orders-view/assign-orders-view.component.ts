@@ -54,7 +54,6 @@ export class AssignOrdersViewComponent implements OnInit {
       map(params => params["tripID"]),
       flatMap(tripID => this.truckService.getTruckDetails(tripID))
     ).subscribe(truck => {
-      console.log(truck);
       if (!truck) {
         // TODO: replace with appropriate error msg
         this.router.navigate(['/delivery-planing/(delivery:create-trip)'])

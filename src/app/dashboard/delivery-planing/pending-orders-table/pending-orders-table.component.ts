@@ -21,6 +21,9 @@ export class PendingOrdersTableComponent implements OnInit {
   constructor(private orderService: OrderService,
     private truckService: TruckService) { }
 
+  orders: any;
+  page: number = 1;
+
   @ViewChild('paginator') paginator: MatPaginator;
   @Input() truck: any;
 
@@ -48,6 +51,8 @@ export class PendingOrdersTableComponent implements OnInit {
       let pendingOrders = Object.values(orders).filter(order =>
         order['status'] ? null : order
       );
+      this.orders = Object.values(pendingOrders);
+
       this.dataSource = new MatTableDataSource(pendingOrders);
 
       setTimeout(() => {
