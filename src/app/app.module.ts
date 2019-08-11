@@ -62,7 +62,7 @@ import { DeliveryTrackingModule } from './dashboard/delivery-tracking/delivery-t
         CoreModule
         //AlertModule.forRoot()
     ],
-    providers: [{ provide: FirestoreSettingsToken, useValue: {}}, SkuService],
+    providers: [{ provide: FirestoreSettingsToken, useValue: {} }, SkuService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

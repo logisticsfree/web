@@ -8,8 +8,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input class="input is-success" (keyup)="applyFilter($event.target.value)" type="text"
-                placeholder="Filter">
+              <input class="input is-success" [(ngModel)]="filterPhrase" type="text" placeholder="Filter">
             </div>
           </div>
         </div>
@@ -19,7 +18,39 @@
   </div>
   <div class="card-content">
     <div *ngIf="dataSource" class="content">
-      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Invoice No.</th>
+            <th>Distrubotor</th>
+            <th>Volume</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let order of dataSource.data | filter: 'distributor.name': filterPhrase | paginate: { itemsPerPage: 5, currentPage: page}"
+            (click)="assignOrder(truck, order)">
+            <td>{{ order.invoice }}</td>
+            <td>{{ order.distributor.name }}</td>
+            <td>{{ order.volume}}</td>
+            <td>{{ order.weight }}</td>
+            <td>
+              <a class="button is-success is-outlined is-small">
+                <span>Add</span>
+                <span class="icon is-small">
+                  <i class="fas fa-plus"></i>
+                </span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
+      <!-- <app-pagination-controller (pageChange)="page = $event"></app-pagination-controller> -->
+
+      <!-- <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
 
         <ng-container matColumnDef="invoice">
           <th class="md-table-header" mat-header-cell *matHeaderCellDef> Invoice No. </th>
@@ -67,7 +98,8 @@
 
       </table>
       <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-      </mat-paginator>
+      </mat-paginator> -->
     </div>
+    <app-pagination-controller (pageChange)="page = $event" [autoHide]="true"></app-pagination-controller>
   </div>
 </div>
