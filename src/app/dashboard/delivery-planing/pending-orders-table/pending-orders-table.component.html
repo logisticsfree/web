@@ -8,8 +8,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input class="input is-success" (keyup)="applyFilter($event.target.value)" type="text"
-                placeholder="Filter">
+              <input class="input is-success" [(ngModel)]="filterPhrase" type="text" placeholder="Filter">
             </div>
           </div>
         </div>
@@ -29,7 +28,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let order of dataSource.data | paginate: { itemsPerPage: 5, currentPage: page}"
+          <tr
+            *ngFor="let order of dataSource.data | filter: 'distributor.name': filterPhrase | paginate: { itemsPerPage: 5, currentPage: page}"
             (click)="assignOrder(truck, order)">
             <td>{{ order.invoice }}</td>
             <td>{{ order.distributor.name }}</td>

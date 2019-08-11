@@ -23,6 +23,7 @@ export class PendingOrdersTableComponent implements OnInit {
 
   orders: any;
   page: number = 1;
+  filterPhrase: string = '';
 
   @ViewChild('paginator') paginator: MatPaginator;
   @Input() truck: any;
