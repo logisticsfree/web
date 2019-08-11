@@ -1,4 +1,4 @@
-import { Warehouse } from '../models/Warehouse';
+import { Warehouse } from './Warehouse';
 
 export interface Trip {
     date: string;

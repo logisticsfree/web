@@ -1,14 +1,14 @@
 <div class="columns">
     <div class="column is-one-third">
         <div class="form" [class.is-active]="toggleNewDistributorModal">
-            <div class="form-background" (click)="toggleNewDistributorModal = false"></div>
             <form [formGroup]="newDistributorForm" class="form-content box"
                 (ngSubmit)="addDistributor(newDistributorForm.value)">
 
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input formControlName="name" class="input is-success" type="text" placeholder="Name" [class.is-danger]="name.invalid && (name.dirty || name.touched)">
+                        <input formControlName="name" class="input is-success" type="text" placeholder="Name"
+                            [class.is-danger]="name.invalid && (name.dirty || name.touched)">
                         <span class="icon is-small is-left">
                             <i class="fas fa-file-signature"></i>
                         </span>
@@ -25,7 +25,8 @@
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-right has-icons-left">
-                                <input formControlName="latitude" class="input is-success" type="text" placeholder="Latitude"
+                                <input formControlName="latitude" class="input is-success" type="text"
+                                    placeholder="Latitude"
                                     [class.is-danger]="latitude.invalid && (latitude.dirty || latitude.touched)">
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-arrows-alt-v"></i>
@@ -37,7 +38,8 @@
                         </div>
                         <div class="field">
                             <p class="control is-expanded has-icons-left has-icons-right">
-                                <input formControlName="longitude" class="input is-success" type="text" placeholder="Longitude"
+                                <input formControlName="longitude" class="input is-success" type="text"
+                                    placeholder="Longitude"
                                     [class.is-danger]="longitude.invalid && (longitude.dirty || longitude.touched)">
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-arrows-alt-h"></i>
@@ -48,15 +50,14 @@
                             </p>
                         </div>
                     </div>
-                    <p *ngIf="!latitude.invalid && !longitude.invalid" class="help is-success">Location is looking good</p>
+                    <p *ngIf="!latitude.invalid && !longitude.invalid" class="help is-success">Location is looking good
+                    </p>
                 </div>
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-link" [disabled]="newDistributorForm.invalid" [class.is-loading]="distributorModelLoading">Add</button>
-                    </div>
-                    <div class="control">
-                        <button class="button is-text" (click)="toggleNewDistributorModal = false">Cancel</button>
+                        <button class="button is-link" [disabled]="newDistributorForm.invalid"
+                            [class.is-loading]="distributorModelLoading">Add</button>
                     </div>
                 </div>
             </form>
@@ -75,11 +76,11 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-success" (keyup)="applyFilter($event.target.value)" type="text"
-                                        placeholder="Filter">
+                                    <input class="input is-success" (keyup)="applyFilter($event.target.value)"
+                                        type="text" placeholder="Filter">
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,22 +89,18 @@
                     <div *ngIf="dataSource" class="content">
                         <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-horizontal">
                             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                                <th class="md-table-header" mat-header-cell *matHeaderCellDef> 
+                                <th class="md-table-header" mat-header-cell *matHeaderCellDef>
                                     <span *ngIf="column!='id'">{{ column }}</span>
                                 </th>
                                 <td mat-cell *matCellDef="let distributor">
                                     <div *ngIf="column!='id'">
-                                         <mat-form-field (click)="p.open()"  [satPopoverAnchor]="p">
-                                            <input matInput type="text"
-                                                [(ngModel)]="distributor[column]"
+                                        <mat-form-field (click)="p.open()" [satPopoverAnchor]="p">
+                                            <input matInput type="text" [(ngModel)]="distributor[column]"
                                                 [size]="distributor[column].toString().length || 5">
                                         </mat-form-field>
 
-                                        <sat-popover #p
-                                              hasBackdrop
-                                              xAlign="start"
-                                              yAlign="start"
-                                              (closed)="updateDistributor(distributor.id, column, $event)">
+                                        <sat-popover #p hasBackdrop xAlign="start" yAlign="start"
+                                            (closed)="updateDistributor(distributor.id, column, $event)">
                                             <app-edit-form-popup [value]="distributor[column]"></app-edit-form-popup>
                                         </sat-popover>
                                     </div>
@@ -112,11 +109,14 @@
 
                             <ng-container matColumnDef="expandedDetail">
                                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                                    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div class="example-element-detail"
+                                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                         <div class="example-element-description">
-                                            <agm-map [zoom]="12" [latitude]="element.latitude" [longitude]="element.longitude">
-                                                <agm-marker [markerDraggable]="true" [title]="element.name" [latitude]="element.latitude"
-                                                    [longitude]="element.longitude"></agm-marker>
+                                            <agm-map [zoom]="12" [latitude]="element.latitude"
+                                                [longitude]="element.longitude">
+                                                <agm-marker [markerDraggable]="true" [title]="element.name"
+                                                    [latitude]="element.latitude" [longitude]="element.longitude">
+                                                </agm-marker>
                                             </agm-map>
                                         </div>
                                     </div>
@@ -127,9 +127,11 @@
 
 
                             <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
-                                [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = element">
+                                [class.example-expanded-row]="expandedElement === element"
+                                (click)="expandedElement = element">
                             </tr>
-                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row row-expand-should-hide"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                                class="example-detail-row row-expand-should-hide"></tr>
 
                         </table>
                         <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

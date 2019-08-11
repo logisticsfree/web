@@ -58,7 +58,7 @@ import { DeliveryTrackingModule } from './dashboard/delivery-tracking/delivery-t
         AngularFireDatabaseModule,
         AngularFirestoreModule,
         // AngularFireAuthModule,
-        NgxSpinnerModule,
+        // NgxSpinnerModule,
         CoreModule
         //AlertModule.forRoot()
     ],

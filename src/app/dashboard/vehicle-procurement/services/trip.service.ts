@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { UserService } from 'src/app/core/user.service';
 import { take, tap, flatMap } from 'rxjs/operators';
 import { Warehouse } from 'src/app/models/Warehouse';
-import { Trip } from 'src/app/modals/Trip';
+import { Trip } from 'src/app/models/Trip';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +25,7 @@ export class TripService {
                 const pendingTrip: Trip = {
                     time, date, truck, warehouse, companyID: cid
                 }
-                return orderedTrucksRef.set( pendingTrip, { merge: true }).then(res => {
+                return orderedTrucksRef.set(pendingTrip, { merge: true }).then(res => {
                     this.setTruckUnavailable(truck.uid)
                 });
             }),
