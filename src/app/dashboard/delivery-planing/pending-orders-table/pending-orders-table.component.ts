@@ -25,7 +25,6 @@ export class PendingOrdersTableComponent implements OnInit {
   page: number = 1;
   filterPhrase: string = '';
 
-  @ViewChild('paginator') paginator: MatPaginator;
   @Input() truck: any;
 
   ngOnInit() {
@@ -53,17 +52,6 @@ export class PendingOrdersTableComponent implements OnInit {
         order['status'] ? null : order
       );
       this.orders = Object.values(pendingOrders);
-
-      this.dataSource = new MatTableDataSource(pendingOrders);
-
-      setTimeout(() => {
-        this.dataSource.paginator = this.paginator;
-      });
     });
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(filterValue, this.dataSource);
   }
 }
