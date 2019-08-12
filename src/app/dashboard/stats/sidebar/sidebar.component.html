@@ -1,0 +1,20 @@
+<aside>
+  <p class="menu-label is-hidden-touch">Navigation</p>
+  <ul class="menu-list">
+    <li>
+      <a [routerLink]="[{ outlets: { stats: ['dashboard'] } }]" routerLinkActive="is-active">
+        <span class="icon"><i class="fa fa-truck"></i></span> Dashboard
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="[{ outlets: { procurement: ['order-truck'] } }]" routerLinkActive="is-active">
+        <span class="icon"><i class="fa fa-download"></i></span> Order Trucks
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="[{ outlets: { procurement: ['history'] } }]" routerLinkActive="is-active">
+        <span class="icon"><i class="fa fa-history"></i></span> History
+      </a>
+    </li>
+  </ul>
+</aside>

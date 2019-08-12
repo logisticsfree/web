@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { UserService } from 'src/app/core/user.service';
 import { take, tap, flatMap } from 'rxjs/operators';
 import { Warehouse } from 'src/app/models/Warehouse';
-import { Trip } from 'src/app/modals/Trip';
+import { Trip } from 'src/app/models/Trip';
 import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
@@ -15,10 +15,10 @@ export class TruckService {
     constructor(private db: AngularFireDatabase, private userService: UserService) { }
 
     getNearbyTrucks() {
-        
+
     }
 
-    getLocation (truckId) {
+    getLocation(truckId) {
         return this.db.object(`driver-locations/${truckId}/l`).valueChanges();
     }
 
