@@ -24,7 +24,7 @@ export class EditRouteComponent implements OnInit {
 
     selectedTrip: any;
 
-    constructor(private truckService: TruckService) {}
+    constructor(private truckService: TruckService) { }
 
     ngOnInit() {
         this.truckService.getOrderedTrucks().subscribe(trucks => {
@@ -44,8 +44,8 @@ export class EditRouteComponent implements OnInit {
         const estimates = { distance, duration };
         if (
             this.selectedTrip.estimate &&
-            this.selectedTrip.estimate.duration == estimates.duration &&
-            this.selectedTrip.estimate.distance == estimates.distance
+            this.selectedTrip.estimate.duration === estimates.duration &&
+            this.selectedTrip.estimate.distance === estimates.distance
         ) {
             return;
         }
