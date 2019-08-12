@@ -1,24 +1,28 @@
 <div class="columns">
 	<div class="column is-scrolable is-one-third">
-<div class="content">
-	<h1>Select a Truck</h1>
-</div>
-		<div class="columns is-multiline is-fullheight" *ngIf="trucks" >
-			<div *ngFor="let truck of trucksWithOrders" class="column is-full" 
-			[class.fade]="selectedTrip && selectedTrip?.truck.vid !== truck?.truck.vid">
-				<div class="card is-hoverable" (click)="selectTrip(truck)" 
-				[class.is-selected]="selectedTrip && selectedTrip?.truck.vid === truck?.truck.vid">
+		<div class="content">
+			<h1>Select a Truck</h1>
+		</div>
+		<div class="columns is-multiline is-fullheight" *ngIf="trucks">
+			<div *ngFor="let truck of trucksWithOrders" class="column is-full"
+				[class.fade]="selectedTrip && selectedTrip?.truck.vid !== truck?.truck.vid">
+				<div class="card is-hoverable" (click)="selectTrip(truck)"
+					[class.is-selected]="selectedTrip && selectedTrip?.truck.vid === truck?.truck.vid">
 					<div class="card-content">
 						<div class="content">
-                			<app-driver-card *ngIf="truck.truck" [truck]="truck.truck">
+							<app-driver-card *ngIf="truck.truck" [truck]="truck.truck">
 							</app-driver-card>
-							<p>Est. Time: 
-								<span *ngIf="truck.estimate && truck.routed"> {{ formatDuration(truck.estimate.duration) }} </span>
-								<span *ngIf="!truck.estimate || !truck.routed" class="menu-label"> Click to calculate </span>
+							<p>Est. Time:
+								<span *ngIf="truck.estimate && truck.routed">
+									{{ formatDuration(truck.estimate.duration) }} </span>
+								<span *ngIf="!truck.estimate || !truck.routed" class="menu-label"> Click to calculate
+								</span>
 							</p>
-							<p>Est. Distance: 
-								<span *ngIf="truck.estimate && truck.routed"> {{ formatDistance(truck.estimate.distance) }} </span>
-								<span *ngIf="!truck.estimate || !truck.routed" class="menu-label"> Click to calculate </span>
+							<p>Est. Distance:
+								<span *ngIf="truck.estimate && truck.routed">
+									{{ formatDistance(truck.estimate.distance) }} </span>
+								<span *ngIf="!truck.estimate || !truck.routed" class="menu-label"> Click to calculate
+								</span>
 							</p>
 						</div>
 						<div class="buttons">

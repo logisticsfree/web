@@ -3,7 +3,7 @@
 </div>
 <form [formGroup]="orderVehiclesForm" class="box" (ngSubmit)="placeOrder(orderVehiclesForm.value)">
     <div class="field">
-        <label class="label">Volume</label>
+        <label class="label">Volume (m<sup>3</sup>)</label>
         <div class="control has-icons-left has-icons-right">
             <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
                 [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)" />
@@ -18,7 +18,7 @@
     </div>
 
     <div class="field">
-        <label class="label">Amount</label>
+        <label class="label">Number of Vehicles</label>
         <div class="control has-icons-left has-icons-right">
             <input formControlName="amount" class="input is-success" type="text" placeholder="Amount"
                 [class.is-danger]="amount.invalid && (amount.dirty || amount.touched)">
@@ -63,20 +63,42 @@
             </div>
         </div>
     </div>
+
+
     <div class="field">
-        <label class="label">Warehouse</label>
-        <div class="control has-icons-left">
-            <div class="select">
-                <select ng-dropdown formControlName="warehouse">
-                    <option>Please Select...</option>
-                    <option *ngFor="let warehouse of warehouses" [ngValue]="warehouse">{{ warehouse.name }}</option>
-                </select>
+        <div class="field-body">
+            <div class="field">
+                <label class="label">Warehouse</label>
+                <div class="control has-icons-left">
+                    <div class="select">
+                        <select ng-dropdown formControlName="warehouse">
+                            <option>Please Select...</option>
+                            <option *ngFor="let warehouse of warehouses" [ngValue]="warehouse">{{ warehouse.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="icon is-small is-left">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                </div>
             </div>
-            <div class="icon is-small is-left">
-                <i class="fas fa-globe"></i>
+            <div class="field">
+                <label class="label">Type</label>
+                <div class="control has-icons-left">
+                    <div class="select">
+                        <select ng-dropdown formControlName="type">
+                            <option>Non A/C</option>
+                            <option>A/C</option>
+                        </select>
+                    </div>
+                    <div class="icon is-small is-left">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="buttons">
         <button [disabled]="orderVehiclesForm.invalid" class="button is-primary">Place order</button>
     </div>

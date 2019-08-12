@@ -2,13 +2,12 @@
   <p class="menu-label is-hidden-touch">Navigation</p>
   <ul class="menu-list">
     <li>
-      <a [routerLink]="[{ outlets: { procurement: ['order-truck'] } }]" 
-      [class.is-active]="router.url === '/vehicle-procurement/(procurement:order-vehicle)' 
+      <a [routerLink]="[{ outlets: { procurement: ['order-truck'] } }]" [class.is-active]="router.url === '/vehicle-procurement/(procurement:order-vehicle)' 
       || router.url === '/vehicle-procurement/(procurement:order-truck)'">
         <span class="icon"><i class="fa fa-download"></i></span> Order Trucks
       </a>
     </li>
-    <li>
+    <!-- <li>
       <a [routerLink]="[{ outlets: { procurement: ['orders'] } }]" routerLinkActive="is-active">
         <span class="icon"><i class="fa fa-truck"></i></span> Orders
       </a>
@@ -17,6 +16,6 @@
       <a [routerLink]="[{ outlets: { procurement: ['history'] } }]" routerLinkActive="is-active">
         <span class="icon"><i class="fa fa-history"></i></span> History
       </a>
-    </li>
+    </li> -->
   </ul>
 </aside>

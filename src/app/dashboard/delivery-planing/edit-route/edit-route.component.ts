@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { TruckService } from "../services/truck.service";
-import * as moment from "moment";
+import { Component, OnInit } from '@angular/core';
+import { TruckService } from '../services/truck.service';
+import * as moment from 'moment';
 
 @Component({
-    selector: "app-edit-route",
-    templateUrl: "./edit-route.component.html",
-    styleUrls: ["./edit-route.component.scss"]
+    selector: 'app-edit-route',
+    templateUrl: './edit-route.component.html',
+    styleUrls: ['./edit-route.component.scss']
 })
 export class EditRouteComponent implements OnInit {
     trucks: any;
     get trucksWithOrders() {
         return this.trucks.filter(truck => {
             if (
-                Object.keys(truck["orders"]).length === 0 &&
-                truck["orders"].constructor === Object
+                Object.keys(truck['orders']).length === 0 &&
+                truck['orders'].constructor === Object
             ) {
                 return null;
             } else {
@@ -41,7 +41,7 @@ export class EditRouteComponent implements OnInit {
             duration += leg.duration.value;
         });
 
-        let estimates = { distance, duration };
+        const estimates = { distance, duration };
         if (
             this.selectedTrip.estimate &&
             this.selectedTrip.estimate.duration == estimates.duration &&
@@ -56,14 +56,14 @@ export class EditRouteComponent implements OnInit {
     }
 
     formatDuration(time) {
-        return moment.duration(time, "seconds").humanize();
+        return moment.duration(time, 'seconds').humanize();
     }
     formatDistance(distance) {
-        let km = distance / 1000;
+        const km = distance / 1000;
         if (km < 1) {
-            return distance + " m";
+            return distance + ' m';
         } else {
-            return km + " km";
+            return km + ' km';
         }
     }
 
@@ -74,20 +74,20 @@ export class EditRouteComponent implements OnInit {
     // TODO : replace with firebase Function
     getTotalWeight(truck) {
         // this.selectedTrip = truck;
-        if (!truck.orders) return 0;
+        if (!truck.orders) { return 0; }
         let totalWeight = 0;
         Object.values(truck.orders).forEach(order => {
-            totalWeight += parseFloat(order["weight"]);
+            totalWeight += parseFloat(order['weight']);
         });
         return totalWeight;
     }
 
     // TODO : replace with firebase Function
     getTotalVolume(truck) {
-        if (!truck.orders) return 0;
+        if (!truck.orders) { return 0; }
         let totalVolume = 0;
         Object.values(truck.orders).forEach(order => {
-            totalVolume += parseFloat(order["volume"]);
+            totalVolume += parseFloat(order['volume']);
         });
         return totalVolume;
     }
