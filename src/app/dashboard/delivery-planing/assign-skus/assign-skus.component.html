@@ -133,6 +133,7 @@
                 </div>
             </div>
         </div>
+        <progress class="progress is-small" [value]="getTotalVolume(truck)" [max]="selectedOrder.volume">60%</progress>
         <div class="card-content">
             <div class="content">
                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
@@ -179,13 +180,6 @@
                         </td>
                     </ng-container>
 
-                    <!-- <ng-container cdkColumnDef="actions"> -->
-                    <!-- <md-header-cell> Actions </md-header-cell> -->
-                    <!-- <md-cell *cdkCellDef="let row"> -->
-                    <!-- <button md-raised-button>Edit</button> -->
-                    <!-- </md-cell> -->
-                    <!-- </ng-container> -->
-
                 </table>
                 <div class="has-text-centered" *ngIf="!dataSource.data">
                     No Records found
@@ -196,9 +190,3 @@
     </div>
     <br />
 </div>
-
-<!-- add new SKU modal -->
-<!-- <div class="modal" [class.is-active]="showNewSkuModal"> -->
-<!-- <div class="modal-background" (click)="showNewSkuModal = false"></div> -->
-<!-- <button class="modal-close is-large" aria-label="close" (click)="showNewSkuModal = false"></button> -->
-<!-- </div> -->

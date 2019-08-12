@@ -137,6 +137,7 @@
     <div class="column" *ngIf="showNewOrderForm" [class.is-half]="!showNewOrderForm" [@moveLeft]="orderTableState">
         <div class="card">
             <div class="card-header">
+
                 <div class="card-header-title">
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
@@ -155,8 +156,8 @@
 
             </div>
             <div class="card-content">
-                <div *ngIf="ordersTableDataSource" class="content">
-                    <table mat-table [dataSource]="ordersTableDataSource" multiTemplateDataRows
+                <div *ngIf="dataSource" class="content">
+                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows
                         class="table is-striped is-hoverable">
 
                         <ng-container matColumnDef="invoice">
