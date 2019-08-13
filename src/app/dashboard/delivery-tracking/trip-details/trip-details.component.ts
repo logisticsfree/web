@@ -3,38 +3,38 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, flatMap, tap } from 'rxjs/operators';
 import { TripService } from '../services/trip.service';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 @Component({
-  selector: 'app-trip-details',
-  templateUrl: './trip-details.component.html',
-  styleUrls: ['./trip-details.component.scss']
+    selector: 'app-trip-details',
+    templateUrl: './trip-details.component.html',
+    styleUrls: ['./trip-details.component.scss']
 })
 export class TripDetailsComponent implements OnInit {
 
-  trip: any;
-  orders: any;
-  waypoints = [];
-  coordinates = {};
-  destination: any;
-  warehouse: any;
+    trip: any;
+    orders: any;
+    waypoints = [];
+    coordinates = {};
+    destination: any;
+    warehouse: any;
 
-  constructor(
-    private aRouter: ActivatedRoute,
-    private router: Router,
-    private tripService: TripService) { }
+    constructor(
+        private aRouter: ActivatedRoute,
+        private router: Router,
+        private tripService: TripService) { }
 
     ngOnInit() {
         this.aRouter.queryParams.pipe(
             map(params => params['tripID']),
             flatMap(tripID => this.tripService.getTruckDetails(tripID)),
-        ).subscribe(trip => {        
+        ).subscribe(trip => {
             if (!trip) {
-                this.router.navigate(['/delivery-tracking'])
+                this.router.navigate(['/delivery-tracking']);
                 return;
             }
             this.trip = trip;
-            let orders: any[] = Object.values(trip['orders']);
+            const orders: any[] = Object.values(trip['orders']);
             orders.sort((a, b) => (a.seqNo < b.seqNo ? -1 : 1));
 
             this.orders = orders;
@@ -44,7 +44,7 @@ export class TripDetailsComponent implements OnInit {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        if (event.previousIndex === event.currentIndex) return;
+        if (event.previousIndex === event.currentIndex) { return; }
         moveItemInArray(this.orders, event.previousIndex, event.currentIndex);
 
         // rearrange the sequence no. of orders
@@ -52,7 +52,7 @@ export class TripDetailsComponent implements OnInit {
             this.orders[i].seqNo = i;
         }
         this.orders.sort((a, b) => (a.seqNo < b.seqNo ? -1 : 1));
-        
+
         this.rearrangeOrders(this.trip.orders);
     }
 
@@ -60,16 +60,16 @@ export class TripDetailsComponent implements OnInit {
         this.tripService.updateOrders(this.trip.tripID, orders);
     }
 
-    
+
     formatDuration(time) {
-        return moment.duration(time, "seconds").humanize();
+        return moment.duration(time, 'seconds').humanize();
     }
     formatDistance(distance) {
-        let km = distance / 1000;
+        const km = distance / 1000;
         if (km < 1) {
-            return distance + " m";
+            return distance + ' m';
         } else {
-            return km + " km";
+            return km + ' km';
         }
     }
 }
