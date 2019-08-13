@@ -100,16 +100,19 @@ export class AssignSkusComponent implements OnInit, OnChanges {
 
         const unc = this.skuService.getSKUs().subscribe(skus => {
             this.SKUs = Object.values(skus);
+            console.log(this.selectedOrder);
+
 
             unc.unsubscribe();
         });
 
         this.addSKUForm.get('code').valueChanges.subscribe(val => {
-            if (!val) return;
+            if (!val) { return; }
 
             Object.keys(val).forEach(key => {
-                if (key != 'code')
+                if (key !== 'code') {
                     this.addSKUForm.patchValue({ [key]: val[key] });
+                }
             });
         });
     }
@@ -131,10 +134,10 @@ export class AssignSkusComponent implements OnInit, OnChanges {
     unassignSKU(invoice, sku) {
         this.unassignSKULoading[sku.code] = true;
         this.orderService.unassignSKU(invoice, sku).then(res => {
-            let updatedData = this.dataSource.data;
+            const updatedData = this.dataSource.data;
 
             for (let i = 0; i < updatedData.length; i++) {
-                if (updatedData[i].code == sku.code) {
+                if (updatedData[i].code === sku.code) {
                     updatedData.splice(i, 1);
                 }
             }
@@ -168,6 +171,14 @@ export class AssignSkusComponent implements OnInit, OnChanges {
                 this.addSKUFormLoading = false;
                 this.showNewSkuModal = false;
             });
+    }
+
+    getTotalVolume(truck) {
+        let volume = 0;
+        Object.values(this.selectedOrder.skus).forEach(sku => {
+            volume += Number(sku['volume']) * Number(sku['qty']);
+        });
+        return volume;
     }
 
     createNewSKUForm() {

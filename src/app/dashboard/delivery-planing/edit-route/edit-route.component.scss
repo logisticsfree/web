@@ -2,7 +2,7 @@
 	height: 100%;
 
 	.columns {
-		height: 100vh;
+		// height: 100vh;
 		display: flex;
 		overflow-y: auto;
 		flex-direction: row;
@@ -17,3 +17,14 @@
 .is-hoverable:hover {
 	background: #ededed;
 }
+
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 40%;
+}
+// .placeholder {
+// 	-ms-transform: translateY(50%);
+// 	transform: translateY(50%);
+// }

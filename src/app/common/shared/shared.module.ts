@@ -9,10 +9,13 @@ import {
   MatPaginatorModule,
   MatFormFieldModule,
   MatInputModule,
-} from "@angular/material";
-import { PaginationControllerComponent } from '../pagination-controller/pagination-controller.component';
+} from '@angular/material';
+import {
+  PaginationControllerComponent
+} from '../pagination-controller/pagination-controller.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from '../filter.pipe';
+import { PlaceholderPostComponent } from '../placeholder-post/placeholder-post.component';
 
 @NgModule({
   imports: [
@@ -22,7 +25,20 @@ import { FilterPipe } from '../filter.pipe';
     MatFormFieldModule,
     NgxPaginationModule,
   ],
-  declarations: [DriverCardComponent, EditFormPopupComponent, PaginationControllerComponent, FilterPipe],
-  exports: [DriverCardComponent, EditFormPopupComponent, PaginationControllerComponent, FilterPipe]
+  declarations: [
+    DriverCardComponent,
+    EditFormPopupComponent,
+    PaginationControllerComponent,
+    PlaceholderPostComponent,
+    FilterPipe,
+  ],
+
+  exports: [
+    DriverCardComponent,
+    EditFormPopupComponent,
+    PaginationControllerComponent,
+    PlaceholderPostComponent,
+    FilterPipe,
+  ]
 })
 export class SharedModule { }

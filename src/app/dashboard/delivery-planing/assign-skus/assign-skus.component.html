@@ -1,6 +1,5 @@
- <div class="column is-one-third">
-    <form [formGroup]="addSKUForm" class="card"
-        (submit)="assignSKU(selectedOrder.invoice, addSKUForm.value)">
+<div class="column is-one-third">
+    <form [formGroup]="addSKUForm" class="card" (submit)="assignSKU(selectedOrder.invoice, addSKUForm.value)">
 
         <div class="card-header">
             <div class="card-header-title">
@@ -46,7 +45,7 @@
             </div>
 
             <div class="field">
-                <label class="label">Unite Volume</label>
+                <label class="label">Unite Volume (m<sup>3</sup>)</label>
                 <div class="control has-icons-left has-icons-right">
                     <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
                         [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)">
@@ -61,7 +60,7 @@
             </div>
 
             <div class="field">
-                <label class="label">Unite Weight</label>
+                <label class="label">Unite Weight (kg)</label>
                 <div class="control has-icons-left has-icons-right">
                     <input formControlName="weight" class="input is-success" type="text" placeholder="Weight"
                         [class.is-danger]="weight.invalid && (weight.dirty || weight.touched)">
@@ -76,7 +75,7 @@
             </div>
 
             <div class="field">
-                <label class="label">Value</label>
+                <label class="label">Value (LKR)</label>
                 <div class="control has-icons-left has-icons-right">
                     <input formControlName="value" class="input is-success" type="text" placeholder="Value"
                         [class.is-danger]="value.invalid && (value.dirty || value.touched)">
@@ -113,7 +112,7 @@
             </div>
         </div>
     </form>
- </div>
+</div>
 
 <div class="column">
     <div class="card">
@@ -134,6 +133,7 @@
                 </div>
             </div>
         </div>
+        <progress class="progress is-small" [value]="getTotalVolume(truck)" [max]="selectedOrder.volume">60%</progress>
         <div class="card-content">
             <div class="content">
                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
@@ -180,13 +180,6 @@
                         </td>
                     </ng-container>
 
-                    <!-- <ng-container cdkColumnDef="actions"> -->
-                    <!-- <md-header-cell> Actions </md-header-cell> -->
-                    <!-- <md-cell *cdkCellDef="let row"> -->
-                    <!-- <button md-raised-button>Edit</button> -->
-                    <!-- </md-cell> -->
-                    <!-- </ng-container> -->
-
                 </table>
                 <div class="has-text-centered" *ngIf="!dataSource.data">
                     No Records found
@@ -197,9 +190,3 @@
     </div>
     <br />
 </div>
-
-<!-- add new SKU modal -->
-<!-- <div class="modal" [class.is-active]="showNewSkuModal"> -->
-    <!-- <div class="modal-background" (click)="showNewSkuModal = false"></div> -->
-    <!-- <button class="modal-close is-large" aria-label="close" (click)="showNewSkuModal = false"></button> -->
-<!-- </div> -->

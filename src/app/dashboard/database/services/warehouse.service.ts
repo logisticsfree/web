@@ -21,7 +21,9 @@ export class WarehouseService {
     getWarehouses() {
         const companyID$ = this.userService.getCompanyID();
         return companyID$.pipe(
-            tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
+            // this method always called first in this service.
+            // hence we can use this to cache companyID
+            tap(cid => this.companyID = cid),
             flatMap(cid => {
                 if (!cid) {
                     return [];

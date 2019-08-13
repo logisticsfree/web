@@ -32,7 +32,7 @@
 </div>
 <div class="columns">
     <!-- new Order Form -->
-    <div *ngIf="showNewOrderForm" class="column is-one-third" >
+    <div *ngIf="showNewOrderForm" class="column is-one-third">
         <form [formGroup]="newOrderForm" class="card" (ngSubmit)="addOrder(newOrderForm.value)">
             <div class="card-header">
                 <div class="card-header-title">
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Order Volume</label>
+                    <label class="label">Order Volume (m<sup>3</sup>)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
                             [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)">
@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Order Weight</label>
+                    <label class="label">Order Weight (kg)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="weight" class="input is-success" type="text" placeholder="Weight"
                             [class.is-danger]="weight.invalid && (weight.dirty || weight.touched)">
@@ -109,7 +109,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Order Value</label>
+                    <label class="label">Order Value (LKR)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="value" class="input is-success" type="text" placeholder="Value"
                             [class.is-danger]="value.invalid && (value.dirty || value.touched)">
@@ -137,6 +137,7 @@
     <div class="column" *ngIf="showNewOrderForm" [class.is-half]="!showNewOrderForm" [@moveLeft]="orderTableState">
         <div class="card">
             <div class="card-header">
+
                 <div class="card-header-title">
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
@@ -155,8 +156,8 @@
 
             </div>
             <div class="card-content">
-                <div *ngIf="ordersTableDataSource" class="content">
-                    <table mat-table [dataSource]="ordersTableDataSource" multiTemplateDataRows
+                <div *ngIf="dataSource" class="content">
+                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows
                         class="table is-striped is-hoverable">
 
                         <ng-container matColumnDef="invoice">
@@ -188,8 +189,8 @@
 
                     </table>
                 </div>
-                    <mat-paginator #ordersPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-                    </mat-paginator>
+                <mat-paginator #ordersPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+                </mat-paginator>
             </div>
         </div>
         <br />
@@ -197,11 +198,6 @@
 
 </div>
 <!-- SKUs table -->
-<app-assign-skus 
-    (skuDeleted)="unassignSKU($event)" 
-    (skuAdded)="addNewlyAddedSkuToOrdersTable($event)"
-    [selectedOrder]="selectedOrder" 
-    *ngIf="!showNewOrderForm" 
-    class="columns"
-    >
+<app-assign-skus (skuDeleted)="unassignSKU($event)" (skuAdded)="addNewlyAddedSkuToOrdersTable($event)"
+    [selectedOrder]="selectedOrder" *ngIf="!showNewOrderForm" class="columns">
 </app-assign-skus>

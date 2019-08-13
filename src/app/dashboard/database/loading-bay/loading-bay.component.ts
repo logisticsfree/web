@@ -31,7 +31,7 @@ export class LoadingBayComponent implements OnInit {
   }
   assignType(bayID: string, typeBox) {
     const type = typeBox.options[typeBox.selectedIndex].value;
-    if (type == 'Please Select...') return;
+    if (type === 'Please Select...') { return; }
 
     this.bayService.assignType(bayID, type).subscribe();
   }
@@ -47,7 +47,7 @@ export class LoadingBayComponent implements OnInit {
 
   assignTypeToNewBay(typeBox) {
     const type = typeBox.options[typeBox.selectedIndex].value;
-    if (type == 'Please Select...') return;
+    if (type === 'Please Select...') { return; }
 
     this.newBay['types'][type] = true;
     const index = this.vehicleTypes.indexOf(type);
@@ -64,14 +64,14 @@ export class LoadingBayComponent implements OnInit {
     this.bayService.removeBay(bayID).subscribe();
   }
   addNewBay() {
-    if (!this.newBay['name']) return;
-    if (!Object.keys(this.newBay.types).length) return;
+    if (!this.newBay['name']) { return; }
+    if (!Object.keys(this.newBay.types).length) { return; }
 
 
     this.bayService.addBay(this.newBay).subscribe(res => {
       this.newBay = { types: {} };
       this.vehicleTypes = this.originalTypes.slice();
-    })
+    });
   }
 
 }

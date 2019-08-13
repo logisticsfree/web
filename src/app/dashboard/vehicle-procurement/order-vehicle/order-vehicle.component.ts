@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import * as firebase from 'firebase';
 
@@ -51,22 +51,24 @@ export class OrderVehicleComponent implements OnInit {
     ngOnInit() {
         this.warehouseService.getWarehouses().subscribe(warehouses => {
             this.warehouses = Object.values(warehouses);
-        })
+        });
         this.createForm();
     }
 
     sendOrder(truck) {
         console.log(truck);
-        this.tripService.addPendingTrip(truck, this.date.value, this.time.value, this.warehouse.value)
+        this.tripService
+            .addPendingTrip(truck, this.date.value, this.time.value, this.warehouse.value)
             .toPromise().then(res => console.log(res));
 
     }
 
     placeOrder(formValues) {
-        if (this.orderVehiclesForm.invalid) return null;
+        if (this.orderVehiclesForm.invalid) { return null; }
         const center = formValues.warehouse;
         const volume = Number.parseFloat(formValues.volume);
         const amount = Number.parseFloat(formValues.amount);
+        const type = formValues.type;
 
         this.gf.getDriverIDsWithinRadius([center.latitude, center.longitude], 160);
 
@@ -74,25 +76,30 @@ export class OrderVehicleComponent implements OnInit {
         this.gf.IDs.pipe(  // get driver IDs closer to the warehouse
             flatMap(IDs => {   // map them to driver Docs & filter by volume
                 geoResult = IDs;
-                return this.filterTrucksByVolume(IDs, volume, amount)
+                return this.filterTrucksByVolumeAndType(IDs, volume, type, amount);
             }),
             map(trucks => { // get the intersection of (closer & compatible volume) trucks
-                const filterdByVolume = trucks.filter(truck => geoResult.includes(truck.payload.doc.id));
-                // console.log(filterdByVolume);
+                const filterdByVolume = trucks.filter(truck => {
+                    return geoResult.includes(truck.payload.doc.id);
+                });
 
                 return filterdByVolume;
             }),
         ).subscribe(availableTrucks => {
-            this.availableTrucks = availableTrucks.map(truck => truck.payload.doc.data());
+            return this.availableTrucks = availableTrucks.map(truck => truck.payload.doc.data());
         });
 
         // this.orderVehiclesForm.reset();
     }
 
-    filterTrucksByVolume(trucksIDs: string[], volume: number, amount: number) {
-        // TODO: optimize the query, instead of query for volume for whole db, only query for geoResults (use truckIDs)
-        return this.afs.collection('drivers', driverRef => driverRef.where('truck.volume', '>=', volume).where('available', '==', true))
-            .snapshotChanges();
+    filterTrucksByVolumeAndType(trucksIDs: string[], volume: number, type: string, amount: number) {
+        // TODO: optimize the query,
+        // instead of query for volume for whole db, only query for geoResults (use truckIDs)
+        return this.afs.collection('drivers', driverRef => {
+            return driverRef.where('truck.volume', '>=', volume)
+                .where('truck.type', '==', type)
+                .where('available', '==', true);
+        }).snapshotChanges();
     }
 
     createForm() {
@@ -107,7 +114,7 @@ export class OrderVehicleComponent implements OnInit {
             ],
             date: [
                 '',
-                [Validators.required]
+                [Validators.required, validateDate()]
             ],
             time: [
                 '',
@@ -117,6 +124,10 @@ export class OrderVehicleComponent implements OnInit {
                 'Please Select...',
                 [Validators.required, Validators.pattern('((?!Select).)*')]
             ],
+            type: [
+                'Non A/C',
+                [Validators.required]
+            ],
         });
     }
 
@@ -125,4 +136,13 @@ export class OrderVehicleComponent implements OnInit {
     get time() { return this.orderVehiclesForm.get('time'); }
     get amount() { return this.orderVehiclesForm.get('amount'); }
     get warehouse() { return this.orderVehiclesForm.get('warehouse'); }
+    get type() { return this.orderVehiclesForm.get('type'); }
+}
+export function validateDate(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+        if (new Date(control.value) < new Date()) {
+            return { date: true };
+        }
+        return null;
+    };
 }
