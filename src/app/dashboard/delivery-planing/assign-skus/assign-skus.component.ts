@@ -173,7 +173,7 @@ export class AssignSkusComponent implements OnInit, OnChanges {
             });
     }
 
-    getTotalVolume(truck) {
+    getTotalVolume() {
         let volume = 0;
         Object.values(this.selectedOrder.skus).forEach(sku => {
             volume += Number(sku['volume']) * Number(sku['qty']);
