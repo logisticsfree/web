@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { OrderService } from '../services/order.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { TruckService } from '../services/truck.service';
 
 @Component({
@@ -22,8 +21,8 @@ export class PendingOrdersTableComponent implements OnInit {
     private truckService: TruckService) { }
 
   orders: any;
-  page: number = 1;
-  filterPhrase: string = '';
+  page = 1;
+  filterPhrase = '';
 
   @Input() truck: any;
 
@@ -40,15 +39,18 @@ export class PendingOrdersTableComponent implements OnInit {
     }
     truck.routed = false;
 
-    if (order.status) this.orderService.setStatus(order, order.status);
-    else this.orderService.setStatus(order, 0);
+    if (order.status) {
+      this.orderService.setStatus(order, order.status);
+    } else {
+      this.orderService.setStatus(order, 0);
+    }
 
     this.truckService.saveOrderedTruck(truck);
   }
 
   fillTable() {
     this.orderService.getOrders().subscribe(orders => {
-      let pendingOrders = Object.values(orders).filter(order =>
+      const pendingOrders = Object.values(orders).filter(order =>
         order['status'] ? null : order
       );
       this.orders = Object.values(pendingOrders);

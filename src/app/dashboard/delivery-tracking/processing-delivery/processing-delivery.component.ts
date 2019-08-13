@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TripService } from '../services/trip.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-processing-delivery',
@@ -16,11 +17,13 @@ export class ProcessingDeliveryComponent implements OnInit {
   }
 
   getDistributors(trip) {
-    let dists = [];
+    const dists = [];
     Object.keys(trip.orders).forEach(key => {
       dists.push(trip.orders[key]);
     });
     return dists;
   }
-
+  formatDuration(time) {
+    return moment.duration(time, 'seconds').humanize();
+  }
 }

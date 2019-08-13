@@ -12,17 +12,25 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { AgmDirectionModule } from 'agm-direction';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { HistoryComponent } from './history/history.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  declarations: [TrackingHomeComponent, ProcessingDeliveryComponent, SidebarComponent, TripDetailsComponent, TruckLocationMapComponent],
+  declarations: [
+    TrackingHomeComponent,
+    ProcessingDeliveryComponent,
+    SidebarComponent,
+    TripDetailsComponent,
+    TruckLocationMapComponent,
+    HistoryComponent
+  ],
   imports: [
     CommonModule,
     DeliveryTrackingRoutingModule,
+    NgxPaginationModule,
     SharedModule,
-        AgmCoreModule.forRoot({
-        apiKey: environment.firebase.apiKey
+    AgmCoreModule.forRoot({
+      apiKey: environment.firebase.apiKey
     }),
     AgmDirectionModule,
     DragDropModule
