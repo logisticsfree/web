@@ -31,6 +31,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { DeliveryTrackingModule } from './dashboard/delivery-tracking/delivery-tracking.module';
 import { StatsModule } from './dashboard/stats/stats.module';
 import { AngularFireFunctionsModule, FUNCTIONS_ORIGIN } from '@angular/fire/functions';
+import { SettingsModule } from './dashboard/settings/settings.module';
 
 @NgModule({
     declarations: [
@@ -55,6 +56,7 @@ import { AngularFireFunctionsModule, FUNCTIONS_ORIGIN } from '@angular/fire/func
         DeliveryTrackingModule,
         BayOperationsModule,
         StatsModule,
+        SettingsModule,
         AppRoutingModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),

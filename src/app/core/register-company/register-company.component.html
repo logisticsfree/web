@@ -6,8 +6,9 @@
     <div class="field-body">
       <div class="field">
         <div class="control is-expanded has-icons-left has-icons-right">
-          <input formControlName="name" autocomplete="name" [class.is-danger]="name.invalid && (name.dirty || name.touched)"
-            class="input" type="text" placeholder="Company Name">
+          <input formControlName="name" autocomplete="name"
+            [class.is-danger]="name.invalid && (name.dirty || name.touched)" class="input" type="text"
+            placeholder="Company Name">
           <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -38,8 +39,8 @@
           </p>
           <p class="control is-expanded has-icons-right has-icons-left">
 
-            <input formControlName="phone" class="input" type="tel" autocomplete="tel-local" [class.is-danger]="phone.invalid && (phone.dirty || phone.touched)"
-              placeholder="Your phone number">
+            <input formControlName="phone" class="input" type="tel" autocomplete="tel-local"
+              [class.is-danger]="phone.invalid && (phone.dirty || phone.touched)" placeholder="Your phone number">
             <span class="icon is-small is-right" *ngIf="phone.errors">
               <i class="fas fa-exclamation-triangle"></i>
             </span>
@@ -50,7 +51,8 @@
         </div>
         <p class="help">Do not enter the first zero</p>
         <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-          <p *ngIf="phone.errors.required || phone.errors.minlength || phone.errors.pattern" class="help is-danger">Please
+          <p *ngIf="phone.errors.required || phone.errors.minlength || phone.errors.pattern" class="help is-danger">
+            Please
             enter valid
             phone number</p>
         </div>
@@ -65,8 +67,8 @@
     <div class="field-body">
       <div class="field">
         <div class="control has-icons-left has-icons-right">
-          <input formControlName="email" class="input" autocomplete="email" type="email" [class.is-danger]="email.invalid && (email.dirty || email.touched)"
-            placeholder="Enter your email">
+          <input formControlName="email" class="input" autocomplete="email" type="email"
+            [class.is-danger]="email.invalid && (email.dirty || email.touched)" placeholder="Enter your email">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -114,12 +116,13 @@
 
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Confirm-Password</label>
+      <label class="label">Confirm&#8209;Password</label>
     </div>
     <div class="field-body">
       <div class="field">
         <div class="control has-icons-left has-icons-right">
-          <input formControlName="cpassword" [class.is-danger]="(cpassword.invalid || registerForm.hasError('notSame')) && (cpassword.dirty || cpassword.touched)"
+          <input formControlName="cpassword"
+            [class.is-danger]="(cpassword.invalid || registerForm.hasError('notSame')) && (cpassword.dirty || cpassword.touched)"
             class="input" autocomplete="new-password" type="password" placeholder="Re-enter the password">
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
@@ -151,7 +154,8 @@
           </button>
         </div>
         <div class="control">
-          <button class="button is-text" routerLink="/login">Already a member? <a style="margin-left:.5em;">Signin</a></button>
+          <button class="button is-text" routerLink="/login">Already a member? <a
+              style="margin-left:.5em;">Signin</a></button>
         </div>
       </div>
     </div>
