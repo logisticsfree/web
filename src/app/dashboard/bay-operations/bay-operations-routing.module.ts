@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/core/auth.guard';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { LoadingbayComponent } from './loadingbay/loadingbay.component';
 import { BayhomeComponent } from './bayhome/bayhome.component';
 import { TruckDetailsComponent } from './truck-details/truck-details.component';
 import { DefaultViewComponent } from './default-view/default-view.component';
@@ -16,13 +14,8 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
-                path: "",
+                path: '',
                 component: DefaultViewComponent,
-                outlet: 'loadingbay'
-            },
-            {
-                path: 'loadingbay',
-                component: LoadingbayComponent,
                 outlet: 'loadingbay'
             },
             {
@@ -30,11 +23,8 @@ const routes: Routes = [
                 component: TruckDetailsComponent,
                 outlet: 'loadingbay'
             }
-
         ]
-
     }
-
 ];
 
 @NgModule({

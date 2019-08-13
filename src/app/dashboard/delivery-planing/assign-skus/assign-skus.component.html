@@ -133,7 +133,7 @@
                 </div>
             </div>
         </div>
-        <progress class="progress is-small" [value]="getTotalVolume(truck)" [max]="selectedOrder.volume">60%</progress>
+        <progress class="progress is-small" [value]="getTotalVolume()" [max]="selectedOrder.volume">60%</progress>
         <div class="card-content">
             <div class="content">
                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
