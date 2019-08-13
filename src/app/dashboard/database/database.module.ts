@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatabaseRoutingModule } from './database-routing.module';
 
-import { MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule
+} from '@angular/material';
 import { SatPopoverModule } from '@ncstate/sat-popover';
 import { AgmCoreModule } from '@agm/core';
 
@@ -16,6 +21,8 @@ import { DistributorsComponent } from './distributors/distributors.component';
 import { DatabaseHomeComponent } from './database-home/database-home.component';
 import { LoadingBayComponent } from './loading-bay/loading-bay.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoadingOfficersComponent } from './loading-officers/loading-officers.component';
+import { LoadingOfficersTableRowComponent } from './loading-officers-table-row/loading-officers-table-row.component';
 
 @NgModule({
     declarations: [
@@ -24,11 +31,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         DatabaseHomeComponent,
         DistributorsComponent,
         WarehousesComponent,
-        LoadingBayComponent
+        LoadingBayComponent,
+        LoadingOfficersComponent,
+        LoadingOfficersTableRowComponent
     ],
     imports: [
         CommonModule,
         BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
         SharedModule,
         SatPopoverModule,
         DatabaseRoutingModule,
@@ -36,11 +47,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatInputModule,
         MatTableModule,
         MatPaginatorModule,
-        FormsModule,
-        ReactiveFormsModule,
         AgmCoreModule.forRoot({
             apiKey: environment.firebase.apiKey
         })
     ]
 })
-export class DatabaseModule {}
+export class DatabaseModule { }

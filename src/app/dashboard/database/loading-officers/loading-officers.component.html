@@ -1,0 +1,67 @@
+<div class="content">
+  <h4>Loading Officers</h4>
+</div>
+<div class="card">
+  <div class="card-content">
+    <form class="content" #form="ngForm" (ngSubmit)="addOfficer(form)">
+      <div class="field">
+        <div class="field-body">
+          <div class="field">
+            <label class="label">Officer Name</label>
+            <div class="control">
+              <input [(ngModel)]="officer.name" class="input" type="text" name="name" #name="ngModel" required
+                placeholder="Enter officer's name">
+            </div>
+            <div *ngIf="name.invalid && !name.pristine" class="help is-danger">Invalid officer name!</div>
+          </div>
+          <div class="field">
+            <label class="label">Preferred Bay</label>
+            <div class="control has-icons-left">
+              <div class="select">
+                <select ng-dropdown required [(ngModel)]="officer.prefBay" #prefBay="ngModel" name="prefBay"
+                  pattern="((?!Please).)*">
+                  <option>Please select...</option>
+                  <option *ngFor="let bay of bays">{{ bay.name }}</option>
+                </select>
+              </div>
+              <p *ngIf="prefBay.invalid && !prefBay.pristine" class="help is-danger">Invalid preferred bay!</p>
+              <div class="icon is-small is-left">
+                <i class="fas fa-globe"></i>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" style="color: white">-</label>
+            <div class="control">
+              <button class="button is-success is-outlined" [disabled]="!form.form.valid">
+                <span>Add</span>
+                <span class="icon is-small">
+                  <i class="fas fa-plus"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div style="margin-top: 10px;" class="card">
+  <div class="card-content">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th>Officer Name</th>
+          <th>Preferred Bay</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr app-loading-officers-table-row [officer]="ofcr" *ngFor="let ofcr of officers">
+        </tr>
+        <tr>
+          <td style="text-align: center;" *ngIf="!officers?.length" colspan="3">No officers found!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
