@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SettingsHomeComponent } from './settings-home/settings-home.component';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 const routes: Routes = [{
   path: 'settings',
@@ -17,6 +18,11 @@ const routes: Routes = [{
     {
       path: 'user-management',
       component: UserManagementComponent,
+      outlet: 'settings',
+    },
+    {
+      path: 'add-user',
+      component: AddUserComponent,
       outlet: 'settings',
     },
   ]

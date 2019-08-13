@@ -1,3 +1,20 @@
-<p>
-  sidebar works!
-</p>
+<aside>
+  <p class="menu-label is-hidden-touch">Navigation</p>
+  <ul class="menu-list">
+    <li>
+      <a [routerLink]="[{ outlets: { settings: ['user-management'] } }]" [class.is-active]="isUserManagement()">
+        <span class="icon"><i class="fa fa-users-cog"></i></span> User Management
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="[{ outlets: { settings: ['order-truck'] } }]" routerLinkActive="is-active">
+        <span class="icon"><i class="fa fa-download"></i></span> Order Trucks
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="[{ outlets: { settings: ['history'] } }]" routerLinkActive="is-active">
+        <span class="icon"><i class="fa fa-history"></i></span> History
+      </a>
+    </li>
+  </ul>
+</aside>
