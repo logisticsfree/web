@@ -15,33 +15,43 @@ export class DashboardComponent implements OnInit {
   public lineChartLabels: Label[] = [];
   public lineChartOptions = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          steps: 10,
+          stepValue: 10,
+          min: 0,
+        }
+      }]
+    }
   };
   public lineChartColors: Color[] = [
     {
+      backgroundColor: '#ffdd57',
       borderColor: 'lightblue',
     },
   ];
   public lineChartLegend = true;
-  public lineChartType = 'line';
+  public lineChartType = 'bar';
   public lineChartPlugins = [];
 
   constructor(private tripService: TripsService) { }
 
-  currentTrips: number = 0;
+  currentTrips = 0;
 
   ngOnInit() {
     this.drawTripsGraph();
     this.tripService.getCurrentTrips().subscribe(res => {
       this.currentTrips = res.length;
-    })
+    });
   }
 
   drawTripsGraph() {
     this.tripService.getCompletedTrips().subscribe(res => {
       this.lineChartData = [];
       this.lineChartLabels = [];
-      let data = [];
+      const data = [];
 
       Object.keys(res).sort().forEach(key => {
         data.push(res[key]);
