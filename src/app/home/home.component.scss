@@ -1,0 +1,29 @@
+.hero {
+    min-height: 620px;
+    padding-bottom: 50px;
+    background: #ffffff;
+    background-image: url(/assets/bg_shape.svg), linear-gradient(#ffffff, #F4F6FA);
+    background-repeat: no-repeat;
+    background-position: top right;
+    position: relative;
+}
+.logistics-page .top-content {
+    width: 50%;
+    position: absolute;
+    padding: 0 0 0 5%;
+    top: 200px;
+    z-index: 5;
+}
+.banner-img img {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+}
+.title {
+    font-size: 70px;
+}
+.subtitle {
+    font-size: 20px;
+    padding: 0 25% 0 0;
+    line-height: 30px;
+}
