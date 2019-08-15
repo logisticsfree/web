@@ -17,16 +17,18 @@ export class TripService {
         const companyID$ = this.userService.getCompanyID();
         return companyID$.pipe(
             take(1),
-            tap(cid => this.companyID = cid), // this method always called first in this service. hence we can use this to cache companyID
+            // this method always called first in this service.
+            // hence we can use this to cache companyID
+            tap(cid => this.companyID = cid),
             flatMap(cid => {
                 const orderedTrucksRef: AngularFirestoreDocument<any> = this.afs.doc(
                     `order-requests/${cid}/order-requests/${truck.uid}`
                 );
                 const pendingTrip: Trip = {
                     time, date, truck, warehouse, companyID: cid
-                }
+                };
                 return orderedTrucksRef.set(pendingTrip, { merge: true }).then(res => {
-                    this.setTruckUnavailable(truck.uid)
+                    this.setTruckUnavailable(truck.uid);
                 });
             }),
         );

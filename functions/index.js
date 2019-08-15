@@ -110,14 +110,14 @@ exports.sendNewOrderRequest = functions.firestore
                 let companyName = companyData.name;
 
                 let payload = {
-                    notification: {
+                    /* notification: {
                         title: "Firebase Notification",
                         body: `You have new order on ${newOrder.date} at ${
                             newOrder.time
                             }`,
                         sound: "default",
                         badge: "1"
-                    },
+                    }, */
                     data: {
                         title: "Firebase Notification",
                         lat: `${warehouse.latitude}`,

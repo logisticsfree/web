@@ -61,10 +61,6 @@ export class AssignOrdersViewComponent implements OnInit {
       }
       this.truck = truck;
 
-      let orders = Object.values(this.truck.orders);
-      // this.dataSource = new MatTableDataSource(orders);
-      // this.columnsToDisplay = ['invoice', 'locations', 'volume', 'weight', 'value'];
-      // this.dataSource.paginator = this.paginator;
     });
   }
   // TODO : replace with firebase Function

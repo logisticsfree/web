@@ -1,0 +1,99 @@
+.hero {
+    min-height: 620px;
+    padding-bottom: 50px;
+    background: #ffffff;
+    background-image: url(/assets/bg_shape.svg), linear-gradient(#ffffff, #F4F6FA);
+    background-repeat: no-repeat;
+    background-position: top right;
+    position: relative;
+}
+.logistics-page .top-content {
+    width: 50%;
+    position: absolute;
+    padding: 0 0 0 5%;
+    top: 200px;
+    z-index: 5;
+}
+.banner-img img {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+}
+.title {
+    font-size: 70px;
+}
+.subtitle {
+    font-size: 20px;
+    padding: 0 25% 0 0;
+    line-height: 30px;
+}
+.industry-wrap .section-wrap img {
+    display: block;
+    margin: 0 auto;
+    width: 120px;
+}
+.industry-wrap .section-wrap h2 {
+    font-size: 22px;
+    padding: 5px 15px;
+    line-height: 30px;
+    text-align: center;
+    color: #434343;
+}
+.industry-wrap p {
+    margin: 15px 0px;
+    font-size: 18px;
+    line-height: 35px;
+    color: #778777;
+}
+.industry-wrap .section-wrap p {
+    padding: 0px 15px 0;
+    margin: 0px;
+    font-size: 17px;
+    line-height: 35px;
+    color: #778777;
+    text-align: center;
+    margin-bottom: 70px;
+}
+footer .bottom-links {
+    background: #393e42;
+    background-image: url(/assets/wall.png);
+    background-repeat: repeat;
+    padding: 50px 30px 30px;
+    color: white;
+    display: inline-block;
+    width: 100%;
+}
+footer .bottom-links .last-footer {
+    width: 75%;
+    margin: 0 auto;
+}
+footer .bottom-links .last-footer .copyrights {
+    font: 10px "montserrat-regular";
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 35px 0 0px;
+    padding: 25px 0 0px;
+    align-items: center;
+}
+footer .bottom-links .last-footer .copyrights .download-wrap {
+    padding-right: 0 !important;
+    display: flex;
+}
+footer .bottom-links .last-footer .copyrights .download-wrap a {
+    line-height: 38px;
+}
+footer .bottom-links .last-footer .copyrights .download-wrap img {
+    background: transparent;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+footer .bottom-links .last-footer .copyrights .download-wrap a:last-child img {
+    margin-left: 20px;
+}
+footer .bottom-links .last-footer .copyrights .address {
+    padding: 0;
+    text-align: center;
+    line-height: 1.5;
+}
