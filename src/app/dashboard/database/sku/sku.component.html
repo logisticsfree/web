@@ -2,8 +2,7 @@
     <div class="column is-one-third">
         <div class="form" [class.is-active]="toggleNewSkuModal">
             <div class="form-background" (click)="toggleNewSkuModal = false"></div>
-            <form [formGroup]="newSKUForm" class="form-content box"
-                (submit)="addSKU(newSKUForm.value)">
+            <form [formGroup]="newSKUForm" class="form-content box" (submit)="addSKU(newSKUForm.value)">
                 <div class="field">
                     <label class="label">Create New Skus</label>
                     <label class="label">Code</label>
@@ -36,7 +35,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Unite Volume</label>
+                    <label class="label">Unite Volume (m<sup>3</sup>)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
                             [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)">
@@ -51,7 +50,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Unite Weight</label>
+                    <label class="label">Unite Weight (kg)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="weight" class="input is-success" type="text" placeholder="Weight"
                             [class.is-danger]="weight.invalid && (weight.dirty || weight.touched)">
@@ -66,7 +65,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Value</label>
+                    <label class="label">Value (LKR)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="value" class="input is-success" type="text" placeholder="Value"
                             [class.is-danger]="value.invalid && (value.dirty || value.touched)">
@@ -90,9 +89,9 @@
                     </div>
                 </div>
             </form>
-        </div>    
-            <button class="modal-close is-small" aria-label="close" (click)="toggleNewSkuModal = false">
-            </button>
+        </div>
+        <button class="modal-close is-small" aria-label="close" (click)="toggleNewSkuModal = false">
+        </button>
     </div>
 
     <div class="column">
@@ -106,8 +105,8 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-success" (keyup)="applyFilter($event.target.value)" type="text"
-                                        placeholder="Filter">
+                                    <input class="input is-success" (keyup)="applyFilter($event.target.value)"
+                                        type="text" placeholder="Filter">
                                 </div>
                             </div>
                         </div>
@@ -117,25 +116,22 @@
             </div>
             <div class="column is-horizontal">
                 <div class="card-content">
-                <div *ngIf="dataSource" class="content">
-                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="table is-striped is-hoverable">
+                    <div *ngIf="dataSource" class="content">
+                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows
+                            class="table is-striped is-hoverable">
                             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
                                 <th class="md-table-header" mat-header-cell *matHeaderCellDef>
                                     <span *ngIf="column!='id'">{{column}}</span>
                                 </th>
                                 <td mat-cell *matCellDef="let sku">
                                     <div *ngIf="column!='id'">
-                                         <mat-form-field (click)="p.open()"  [satPopoverAnchor]="p">
-                                            <input matInput type="text"
-                                                [(ngModel)]="sku[column]"
+                                        <mat-form-field (click)="p.open()" [satPopoverAnchor]="p">
+                                            <input matInput type="text" [(ngModel)]="sku[column]"
                                                 [size]="sku[column].toString().length || 5">
                                         </mat-form-field>
 
-                                        <sat-popover #p
-                                              hasBackdrop
-                                              xAlign="start"
-                                              yAlign="start"
-                                              (closed)="updateSKU(sku.id, column, $event)">
+                                        <sat-popover #p hasBackdrop xAlign="start" yAlign="start"
+                                            (closed)="updateSKU(sku.id, column, $event)">
                                             <app-edit-form-popup [value]="sku[column]"></app-edit-form-popup>
                                         </sat-popover>
                                     </div>
@@ -143,14 +139,15 @@
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row">
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                                class="example-element-row">
                             </tr>
 
                         </table>
                         <mat-paginator #page [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    </div>
                 </div>
-                </div>
-            </div>    
+            </div>
         </div>
     </div>
 </div>
