@@ -4,7 +4,7 @@
             <div class="form-background" (click)="toggleNewSkuModal = false"></div>
             <form [formGroup]="newSKUForm" class="form-content box" (submit)="addSKU(newSKUForm.value)">
                 <div class="field">
-                    <label class="label">Create New Skus</label>
+                    <label class="label">Create New SKUs</label>
                     <label class="label">Code</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="code" class="input is-success" type="text" placeholder="Code"
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Unite Volume (m<sup>3</sup>)</label>
+                    <label class="label">Unit Volume (m<sup>3</sup>)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="volume" class="input is-success" type="text" placeholder="Volume"
                             [class.is-danger]="volume.invalid && (volume.dirty || volume.touched)">
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Unite Weight (kg)</label>
+                    <label class="label">Unit Weight (kg)</label>
                     <div class="control has-icons-left has-icons-right">
                         <input formControlName="weight" class="input is-success" type="text" placeholder="Weight"
                             [class.is-danger]="weight.invalid && (weight.dirty || weight.touched)">
