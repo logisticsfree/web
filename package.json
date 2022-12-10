@@ -34,7 +34,7 @@
     "bulma-extensions": "^6.2.7",
     "chart.js": "^2.8.0",
     "core-js": "^2.6.9",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase": "^5.11.1",
     "geofire": "^5.0.1",
     "geofirestore": "^3.3.1",
